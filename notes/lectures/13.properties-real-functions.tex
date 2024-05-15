@@ -355,3 +355,248 @@ $\theta: \subseteq \R^N \to \R$ изчислима
         \min(\xi_1, \xi_2) = \xi_1 + \xi_2 - \max(\xi_1, \xi_2)
     \end{equation}
 \end{proof}
+
+\subsection{Още реални функции}
+Днес, 2024-05-15.
+
+\begin{theorem}[Реципрочно]
+    $\xi \mapsto \frac{1}{\xi}$ е изчислима реална функция в $\R - \{0\}$
+\end{theorem}
+\begin{proof}
+    Нека имаме име на $\xi$:
+    \begin{equation}
+        \left|\frac{f(i) - g(i)}{h(i) + 1} - \xi \right| < \frac{1}{i+1}
+    \end{equation}
+    Разглеждаме реципрочното на името:
+    \begin{equation}\label{eq:recip-xi}
+        \left|\frac{h(i) + 1}{f(i) - g(i)} - \xi \right| = \frac{\left|\xi - \frac{f(i) - g(i)}{h(i+1)}\right|}{\frac{\left|f(i) - g(i)\right|}{h(i+1)}. |\xi|}
+    \end{equation}
+    Следния частичен функционал ще ни даде $k$, т.ч. грешката е достатъчно малка
+    \begin{equation}
+        M(f,g,h) = \mu\ k:\; \left(\frac{\left|f(k) - g(k)\right|}{h(k) + 1} \geq \frac{2}{k+1}\right)
+    \end{equation}
+
+    \begin{equation}\tag{$k = M(f,g,h)$}
+        |\xi| > \frac{|f(k) - g(k)|}{h(k) + 1} - \frac{1}{k+1} \geq \frac{1}{k+1}
+    \end{equation}
+    За $i \geq 2k+1$ имаме:
+    \begin{equation}
+        \frac{|f(i) + g(i)|}{h(i) + 1} > |\xi| - \frac{1}{i+1} > \frac{1}{k+1} - \frac{1}{2k+2} = \frac{1}{2k+2}
+    \end{equation}
+
+    Значи в \eqref{eq:recip-xi} можем да заместим:
+    \begin{equation}
+        \frac{\left|\xi - \frac{f(i) - g(i)}{h(i+1)}\right|}{\frac{\left|f(i) - g(i)\right|}{h(i+1)}. |\xi|} < \frac{2(k+1)^2}{i+1} = \frac{1}{t+1}
+    \end{equation}
+    Сега ще искаме да определим $i$ спрямо $t$:
+    \begin{eqnarray}
+        k = M(f, g, h) = \mu\ k:\; \left(\frac{\left|f(k) - g(k)\right|}{h(k) + 1} \geq \frac{2}{k+1}\right)\\
+        i = E(f, g, h)(t) = 2(k+1)^2(t+1) \dot{-} 1 \\
+        F(f, g, h)(t) = \begin{cases}
+            h(i) + 1 & , f(i) > g(i)  \\
+            0        & , \text{иначе}
+        \end{cases} \\
+        G(f, g, h)(t) = \begin{cases}
+            h(i) + 1 & , f(i) < g(i)  \\
+            0        & , \text{иначе}
+        \end{cases} \\
+        H(f, g, h)(t) = |f(i) - g(i)| \dot - 1
+    \end{eqnarray}
+\end{proof}
+\begin{corollary}
+    $\xi_1, \xi_2 \mapsto \frac{\xi_1}{\xi_2}$ е изчислима.
+\end{corollary}
+\begin{proof}
+    $\frac{\xi_1}{\xi_2} = \xi_1. \frac{1}{\xi_2}$
+\end{proof}
+
+\begin{theorem}[Логаритъм]
+    $\xi \mapsto \log \xi$ е изчислима в $\R^+$
+\end{theorem}
+\begin{proof}
+    На части:
+
+    \begin{itemize}
+        \item[(1 стъпка)] Разглеждаме $n \mapsto \log\left(1 + \frac{1}{n}\right) : \N \to \R$.
+              \begin{equation}
+                  \log (1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \dots
+              \end{equation}
+              Тогава:
+              \begin{equation}
+                  \log \left(1 + \frac{1}{n}\right) = \sum_{s \in \N^+} \frac{(-1)^{s+1}}{s(n+1)^s} = \sum_{s=1}^{t+1} \frac{(-1)^{s+1}}{s(n+1)^s} + \sum_{s = t+2}^\infty \frac{(-1)^{s+1}}{s(n+1)^s}
+              \end{equation}
+              \begin{equation}
+                  \left|\sum_{s = t+2}^\infty \underbrace{\frac{(-1)^{s+1}}{s(n+1)^s}}_{\text{монотонно намаляваща}} \right| \overset{\text{Лайбниц}}{\leq} \frac{1}{(t+2)(n+1)^{t+2}} < \frac{1}{t+1}
+              \end{equation}
+        \item[(2 стъпка)] Разглеждаме $n \mapsto \log\left(n+1\right) : \N \to \R$.
+              \begin{equation}
+                  \log (n+1) = \sum_{m=1}^n \log(n+1) - \log n = \underbrace{\sum_{m=0}^n \log \left( 1 + \frac{1}{m+1}\right)}_{\text{изчислима сума}}
+              \end{equation}
+              Значи $n \mapsto \log\left(n+1\right)$ е изчислима функция
+        \item[(3 стъпка)] Разглеждаме $\langle m, n \rangle \mapsto \log\left(\frac{m+1}{n+1}\right) = \log(m+1) - \log(n+1) : \Q \to \R$ - също е изчислима. Има $a, b, c$:
+        \begin{equation}
+            \left|\frac{a(m,n,t) - b(m,n,t)}{c(m,n,t) + 1} - \log \frac{m+1}{n+1}\right| < \frac{1}{t+1}
+        \end{equation}
+        \item[(4 стъпка)]
+        \begin{equation}
+            \left| \frac{|f(i) - g(i)|}{h(i) + 1}- \xi\right| < \frac{1}{i+1}
+        \end{equation}
+        Дефинираме:
+        \begin{equation}
+            k = M(f, g, h) = \mu\ k:\; \left(\frac{\left|f(k) - g(k)\right|}{h(k) + 1} \geq \frac{2}{k+1}\right)
+        \end{equation}
+        Както при реципрочното $\xi > \frac{1}{k+1}$. $i > 2k+1$
+        \begin{equation}
+            \frac{|f(i) - g(i)|}{h(i) + 1} > \frac{1}{2k+1}
+        \end{equation}
+        \begin{equation}
+            \frac{m+1}{n+1} = \frac{|f(i) - g(i)|}{h(i) + 1}
+        \end{equation}
+        \begin{eqnarray}
+            F(f,g,h)(i) = a(m,n,i) \\
+            G(f,g,h)(i) = b(m,n,i) \\
+            H(f,g,h)(i) = c(m,n,i)
+        \end{eqnarray}
+
+        Сега искаме да покажем подходяща грешка:
+        \begin{eqnarray}
+            \left|\frac{a(m,n,i) - b(m,n,i)}{c(m,n,i) + 1} - \log\xi\right| = \left|\underbrace{\frac{a(m,n,i) - b(m,n,i)}{c(m,n,i) + 1} - \log\frac{m+1}{n+1}}_{< \frac{1}{i+1}} + \log\frac{m+1}{n+1} - \log\xi \right| \\
+            < \frac{1}{i+1} + \left| \log\frac{m+1}{n+1} - \log\xi \right| \overset{\log\frac{m+1}{n+1}=\frac{1}{\xi'}\left(\frac{m+1}{n+1} - \xi\right)}{=} \frac{1}{i+1} + \left| \frac{1}{\xi'}\left|\frac{m+1}{n+1} - \xi\right| - \log \xi\right| \\
+            \overset{\frac{m+1}{n+1} = =\frac{1}{\frac{|f(i) - g(i)|}{h(i)+1}}}{<} \frac{1}{i+1} + \frac{1}{\frac{|f(i) - g(i)|}{h(i)+1}} . \frac{1}{i+1} < \frac{1}{i+1} + \frac{2k+1}{i+1} < \frac{2k+3}{i+1}
+        \end{eqnarray}
+        Нека $i = (2k+3)(t+1) \dot - 1$
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}[Експоненциране]
+    $\xi \mapsto e^\xi$ е изчислима реална фунцкия в $\R$
+\end{theorem}
+\begin{proof}
+    Нека $\xi \in \R$ с име $\langle f, g, h \rangle$
+    \begin{equation}
+        \left|\frac{f(i) - g(i)}{h(i) + 1} - \xi \right| < \frac{1}{i+1}
+    \end{equation}
+    Ще дефинираме индуктивно редици $\{u_k\}_{k \in \N}$ и $\{v_k\}_{k \in \N}$ от рационални числа, т.ч.:
+    \begin{equation}
+        0 < u_k \leq u_{k+1} < v_{k+1} \leq v_k\;\; v_{k+1} - u_{k+1} \leq \frac{2}{3}(v_k - u_k)
+    \end{equation}
+    и допълнително:
+    \begin{equation}
+        \log u_k < \xi < \log v_k
+    \end{equation}
+    Което ще ни гарантира:
+    \begin{equation}
+        u_k < e^\xi < v_k
+    \end{equation}
+    \begin{itemize}
+        \item[(База)] Дефинираме $u_0, v_0$. Искаме:
+        \begin{eqnarray}
+            0 < u_0 < v_0\\
+            u_0 < e^\xi < v_0
+        \end{eqnarray}
+        Имаме горна граница за $|\xi|$ - $|\xi| \leq |f(0) - g(0)| + 1$
+        \begin{eqnarray}
+            v_0 = 3^{|f(0) - g(0)| + 1}\\
+            u_0 = \frac{1}{v_0}
+        \end{eqnarray}
+        За да се убедим в отношението на $u_0 \& v_0$:
+        \begin{eqnarray}
+            u_0 < e^\xi \iff \frac{1}{v_0} < e^\xi \iff v_0 > e^\xi \leq e^{|\xi|} < v_0
+        \end{eqnarray}
+        \item[(Стъпка)] Нека са дефинирани $u_k \& v_k$ и изпълняват неравествата. Разделяме $[u_k;v_k]$ на 3 части с еднаква дължина:
+        
+        \begin{equation}
+            \begin{split}
+            \tilde{u_k} = \frac{2u_k + v_k}{3} \\
+            \tilde{v_k} = \frac{u_k + 2v_k}{3} \\
+            \log \tilde{u_k} < \log \tilde{v_k}
+            \end{split}
+        \end{equation}
+        Нека $a,b,c: \N^2 \to \N$ са от дефиницията на $\log \frac{m+1}{n+1}$.
+        \begin{equation}
+            \begin{split}
+                \frac{m+1}{n+1} = \tilde{u_k} \\
+                \frac{m'+1}{n'+1} = \tilde{v_k} \\
+                \lim_{t\to\infty} \max \left( \left| \frac{a(m,n,t) - b(m,n,t)}{c(m,n,t) + 1} - \frac{f(t)-g(t)}{h(t) + 1} \right|, \left| \frac{a(m',n',t) - b(m',n',t)}{c(m',n',t) + 1} - \frac{f(t)-g(t)}{h(t) + 1} \right| \right) \\
+                = \max (|\log \tilde u_k - \xi|, |\log \tilde v_k - \xi|) > 0
+            \end{split}
+        \end{equation}
+        Нека:
+        \begin{equation}
+            \begin{split}
+                a = a(m,n,t)\\
+                b = b(m,n,t)\\
+                c = c(m,n,t)\\
+                a' = a(m',n',t)\\
+                b' = b(m',n',t)\\
+                c' = c(m',n',t)\\
+                t_k = \mu\ t:\; \max\left(\abs{\frac{a - b}{c+1} - \frac{f(t)-g(t)}{h(t)+1}}, \abs{\frac{a' - b'}{c'+1} - \frac{f(t)-g(t)}{h(t)+1}} \geq \frac{2}{t+1}\right) \\
+                a_k = a(m,n,t_k)\\
+                b_k = b(m,n,t_k)\\
+                c_k = c(m,n,t_k)\\
+                a_k' = a(m',n',t_k)\\
+                b_k' = b(m',n',t_k)\\
+                c_k' = c(m',n',t_k)\\
+                f_k = f(t_k) \\
+                g_k = g(t_k) \\
+                h_k = h(t_k)
+            \end{split}
+        \end{equation}
+        \begin{itemize}
+            \item[(1 сл.)] Нека $\frac{a_k - b_k}{c_k + 1} - \frac{f_k - g_k}{h_k} \geq \frac{2}{t_k+1}$.
+            
+            Да разгледаме:
+            \begin{equation}
+                \log \tilde u_k - \xi > \frac{a_k - b_k}{c_k+1} - \frac{1}{t_k+1} - \left(\frac{f_k-g_k}{h_k + 1} + \frac{1}{t_k +1}\right) \geq 0
+            \end{equation}
+            Значи $\log \tilde u_k > \xi$
+
+            Избираме:
+            \begin{equation}
+                \begin{split}
+                    u_{k+1} = u_k \\
+                    v_{k+1} = \tilde u_k
+                \end{split}
+            \end{equation}
+
+            \item[(2 сл.)] Нека $\frac{f_k - g_k}{h_k} - \frac{a_k - b_k}{c_k + 1} > \frac{2}{t_k+1}$.
+            
+            Да разгледаме:
+            \begin{equation}
+                \xi - \log \tilde u_k > \frac{f_k - g_k}{h_k} - \frac{a_k - b_k}{c_k + 1} > 0
+            \end{equation}
+            Значи $\log \tilde u_k < \xi$
+
+            Избираме:
+            \begin{equation}
+                \begin{split}
+                    u_{k+1} = \tilde u_k \\
+                    v_{k+1} = v_k
+                \end{split}
+            \end{equation}
+        \item[(3. сл.)] Нека $\frac{a_k' - b_k}{c_k' + 1} - \frac{f_k - g_k}{h_k} \geq \frac{2}{t_k+1}$.
+            
+            Значи $\log \tilde v_k > \xi$
+
+            Избираме:
+            \begin{equation}
+                \begin{split}
+                    u_{k+1} = u_k \\
+                    v_{k+1} = \tilde v_k
+                \end{split}
+            \end{equation}
+        \item[(4. сл.)] Нека $\frac{a_k' - b_k}{c_k' + 1} - \frac{f_k - g_k}{h_k} \geq \frac{2}{t_k+1}$.
+            
+            Значи $\log \tilde v_k < \xi$
+
+            Избираме:
+            \begin{equation}
+                \begin{split}
+                    u_{k+1} = \tilde v_k \\
+                    v_{k+1} = v_k
+                \end{split}
+            \end{equation}
+        \end{itemize}
+        $u_k, v_k$ са $\mu$-рекурсивни функционали над $f,g,h,k$
+    \end{itemize}
+\end{proof}
