@@ -7,7 +7,7 @@ $\theta: \subseteq \R^N \to \R$ изчислима
     \begin{split}
         \forall \overrightarrow\xi \in \dom\theta,\ \forall f_1, \dots f_N,\ g_1, \dots, g_N,\ h_1, \dots, h_N: \N \to \N,\ \forall k,\ i:\; \left[\left| \frac{f_k(i) - g_k(i)}{h_k(i) + 1}\right| < \frac{1}{i+1} \right]\\
         \Longrightarrow \exists \underbrace{F, G, H}_{\text{изчислителна система}} \text{- изчислими оператори},\ \forall i:\; \\
-        \left| \frac{F(f_1, g_1, h_1, f_2, g_2, h_2, \dots, f_N, g_N, h_N)(i) - G(f_1, g_1, h_1, f_2, g_2, h_2, \dots, f_N, g_N, h_N)(i)}{H(f_1, g_1, h_1, f_2, g_2, h_2, \dots, f_N, g_N, h_N)(i)} - \theta(\overrightarrow\xi)\right| < \frac{1}{i+1}
+        \left| \frac{F(\overrightarrow{f}, \overrightarrow{g}, \overrightarrow{h})(i) - G(\overrightarrow{f}, \overrightarrow{g}, \overrightarrow{h})(i)}{H(\overrightarrow{f}, \overrightarrow{g}, \overrightarrow{h})(i)} - \theta(\overrightarrow\xi)\right| < \frac{1}{i+1}
     \end{split}
 \end{equation}
 \subsection{Изчислителни системи на някои функции}
@@ -515,21 +515,21 @@ $\theta: \subseteq \R^N \to \R$ изчислима
         Нека $a,b,c: \N^2 \to \N$ са от дефиницията на $\log \frac{m+1}{n+1}$.
         \begin{equation}
             \begin{split}
-                \frac{m+1}{n+1} = \tilde{u_k} \\
-                \frac{m'+1}{n'+1} = \tilde{v_k} \\
-                \lim_{t\to\infty} \max \left( \left| \frac{a(m,n,t) - b(m,n,t)}{c(m,n,t) + 1} - \frac{f(t)-g(t)}{h(t) + 1} \right|, \left| \frac{a(m',n',t) - b(m',n',t)}{c(m',n',t) + 1} - \frac{f(t)-g(t)}{h(t) + 1} \right| \right) \\
-                = \max (|\log \tilde u_k - \xi|, |\log \tilde v_k - \xi|) > 0
-            \end{split}
-        \end{equation}
-        Нека:
-        \begin{equation}
-            \begin{split}
                 a = a(m,n,t)\\
                 b = b(m,n,t)\\
                 c = c(m,n,t)\\
                 a' = a(m',n',t)\\
                 b' = b(m',n',t)\\
                 c' = c(m',n',t)\\
+                \frac{m+1}{n+1} = \tilde{u_k} \\
+                \frac{m'+1}{n'+1} = \tilde{v_k} \\
+                \lim_{t\to\infty} \max \left( \left| \frac{a - b}{c + 1} - \frac{f(t)-g(t)}{h(t) + 1} \right|,\left| \frac{a - b}{c + 1} - \frac{f(t)-g(t)}{h(t) + 1} \right| \right) \\
+                = \max (|\log \tilde u_k - \xi|, |\log \tilde v_k - \xi|) > 0
+            \end{split}
+        \end{equation}
+        Нека:
+        \begin{equation}
+            \begin{split}
                 t_k = \mu\ t:\; \max\left(\abs{\frac{a - b}{c+1} - \frac{f(t)-g(t)}{h(t)+1}}, \abs{\frac{a' - b'}{c'+1} - \frac{f(t)-g(t)}{h(t)+1}} \geq \frac{2}{t+1}\right) \\
                 a_k = a(m,n,t_k)\\
                 b_k = b(m,n,t_k)\\

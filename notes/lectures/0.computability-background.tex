@@ -279,11 +279,12 @@
             Тогава
             \begin{equation*}
                 \begin{split}
-                    & f(\textbf{x}, y) = z \\ 
-                    & \iff \exists z_0, \dots z_y (f_0(\textbf{x}) = z_0 \& \forall i < y z_{i+1} = f_1(\textbf{x}, i, z_i) \& z_y = z) \\
-                    & \iff \exists z_0, \dots z_y (\exists w_0 h_0(\textbf{x}, z_0, w_0) = 0 \& \forall i < y \exists w_{i+1} (f_1(\textbf{x}, i, z_i, z_{i+1}, w_{i+1}) = 0) \& z_y = z) \\
-                    & z \text{ е код на } z_0, \dots z_y, w_0, w_1, \dots, w_y \\
-                    & \iff \exists z ( h_0(\textbf{x}, \gamma(z, 0), \gamma(z, y+1) + \sum\limits_{i<y} h_1(\textbf{x}, i, \gamma(z, i), \gamma(z, i+1), \gamma(z, i+y+1) + |\gamma(z, y) - z| = 0 )
+                    f(\textbf{x}, y) = z \\ 
+                    \iff \exists z_0, \dots z_y (f_0(\textbf{x}) = z_0 \& \forall i < y z_{i+1} = f_1(\textbf{x}, i, z_i) \& z_y = z) \\
+                    \iff \exists z_0, \dots z_y (\exists w_0 h_0(\textbf{x}, z_0, w_0) = 0 \& \forall i < y \exists w_{i+1} (f_1(\textbf{x}, i, z_i, z_{i+1}, w_{i+1}) = 0) \& z_y = z) \\
+                    z \text{ е код на } z_0, \dots z_y, w_0, w_1, \dots, w_y \\
+                    \iff \exists z ( h_0(\textbf{x}, \gamma(z, 0), \gamma(z, y+1) \\
+                    + \sum\limits_{i<y} h_1(\textbf{x}, i, \gamma(z, i), \gamma(z, i+1), \gamma(z, i+y+1) + |\gamma(z, y) - z| = 0 )
                 \end{split}
             \end{equation*}
             \subitem[минимизация]

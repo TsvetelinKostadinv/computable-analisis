@@ -41,7 +41,9 @@ $a_n$ е монотонна и сходяща към изчислима гран
             \subitem $\lambda \textbf{u}, x. 0$
             \subitem $\lambda \textbf{u}, x. x+1$
         \item[Стъпка] Операциите:
-            \subitem Суперпозиция $F \in \mathcal F_{m,k}, F_1, \dots, F_k \in \mathcal F_{m,l}$. Тогава $\lambda \textbf{u}, \textbf{x}. F(\textbf{u}, F_1(\textbf{u}, \textbf{x}), \dots, F_k(\textbf{u}, \textbf{x}))$
+            \subitem Суперпозиция $F \in \mathcal F_{m,k}, F_1, \dots, F_k \in \mathcal F_{m,l}$.
+            
+            Тогава $\lambda \textbf{u}, \textbf{x}. F(\textbf{u}, F_1(\textbf{u}, \textbf{x}), \dots, F_k(\textbf{u}, \textbf{x}))$
             \subitem Примитивна рекурсия $F_0, F_1$. 
             \begin{equation*}
                 \begin{cases}
@@ -82,7 +84,7 @@ $a_n$ е монотонна и сходяща към изчислима гран
     е изчислима
 \end{corollary}
 \begin{corollary}[Монотонност]
-    Ако $\textbf{u} \subseteq \textbf{v}$ - покомпонентно подфункции, $F$ - $\mu$-рекурсивен функционал.
+    Ако $\textbf{u} \subseteq \textbf{v}$ - покомпонентно подфункции, $F$ - $\mu$ - рекурсивен функционал.
     \begin{equation*}
         F(\textbf{u}, \textbf{x}) = y \Rightarrow F(\textbf{v}, \textbf{x}) = y
     \end{equation*}
