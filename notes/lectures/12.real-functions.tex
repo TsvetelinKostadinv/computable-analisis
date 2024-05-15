@@ -1,0 +1,90 @@
+\section{Реални функции}
+\begin{definition}
+    $\theta: \subseteq \R^{N} \to \R$ - реална функция
+\end{definition}
+Искаме да именуваме $\R^N$ по някакъв начин. Ще работим с:
+\begin{equation}
+    d_N(\overrightarrow{\xi}, \overrightarrow{\eta}) = \max\{|\xi_1 - \eta_1|, \dots, |\xi_N - \eta_N|\} = \max\limits{i \leq N} \{|\xi_i - \eta_i|\}
+\end{equation}
+метрика в $\R^N$ (важи неравенството на триъгълника).
+
+Лесно се съобразява, че $\Q^N$ са гъсто подмножество на $\R^N$. Ще дефинираме нотация на множеството $\alpha_N: \N \to \Q^N$:
+\begin{equation}
+    \begin{split}
+        N > 1:\; \alpha_N(n) = (\nu_\Q((n)_0), \nu_\Q((n)_1), \dots, \nu_\Q((n)_{N-1}))
+        N=1: \alpha_1 = \nu_\Q
+    \end{split}
+\end{equation}
+И сега искаме именуваща система $\nu_N: \subseteq \mathbb T \to \R^N$:
+\begin{equation}
+    \nu_N(t) = \overrightarrow{\xi} \bydef d_N(\alpha_N(t(i)), \overrightarrow{\xi}) < \frac{1}{i+1}
+\end{equation}
+\begin{definition}
+    $\overrightarrow{\xi}$ е $\nu_\N$-изчислим $\bydef$ съществува изчислимо $t: \N \to \N:\; \overrightarrow\xi = \nu_N(t)$
+\end{definition}
+Потвърждава досегашното ни разбиране:
+\begin{equation}
+    \begin{split}
+        \text{съществува изчислимо }t: \N \to \N:\; \overrightarrow\xi = \nu_N(t) \\
+        \iff \text{съществува изчислимо }t: \N \to \N,\ \forall i\in \N:\; d_N(|\alpha_N(t(i)), \overrightarrow\xi|) < \frac{1}{i+1} \\
+        \iff \text{съществува изчислимо }t: \N \to \N,\ \forall i,\ k\in \N:\;|(\alpha_N(t(i)))_k, \xi_k| < \frac{1}{i+1} \\
+        \iff \forall k:\; \xi_k \text{ е изчислимо реално число}
+        {} \\
+        t_1, \dots, t_N \text{ са изчислими имена на } \xi_1, \dots, \xi_N \\
+        t(i) = \pi(t_1(i), \dots, t_N(i))
+    \end{split}
+\end{equation}
+\begin{definition}
+    $\theta: \subseteq \R^N \to \R$ е изчислимо, ако е $\langle \nu_N, \nu_1 \rangle$-изчислима, т.е. има изчислима $\langle \nu_N, \nu_1 \rangle$-реализация
+\end{definition}
+\begin{proposition}
+    $\theta: \subseteq \R^N \to \R$ е изчислима $\iff$ съществуват $\underbrace{F, G, H}_{\text{изчислителна система}}$ - изчислими оператори, т.ч.:
+    \begin{equation}
+        \begin{split}
+            \forall \overrightarrow\xi \in \dom\theta,\ \forall f_1, \dots f_N,\ g_1, \dots, g_N,\ h_1, \dots, h_N: \N \to \N,\ \forall k,\ i:\; \left[\left| \frac{f_k(i) - g_k(i)}{h_k(i) + 1}\right| < \frac{1}{i+1} \right]\\
+            \longrightarrow \forall i:\; \left| \frac{F(f_1, g_1, h_1, f_2, g_2, h_2, \dots, f_N, g_N, h_N)(i) - G(f_1, g_1, h_1, f_2, g_2, h_2, \dots, f_N, g_N, h_N)(i)}{H(f_1, g_1, h_1, f_2, g_2, h_2, \dots, f_N, g_N, h_N)(i)} - \theta(\overrightarrow\xi)\right| < \frac{1}{i+1}
+        \end{split}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    \begin{itemize}
+        \item[$(\Rightarrow)$] Нека $\Gamma$ е изчислима $\langle \nu_N, \nu_1\rangle$-реализация на $\theta$.
+        \begin{equation}
+            \theta(\underbrace{\nu_N(t)}_{=\overrightarrow\xi}) = \nu_1(\Gamma(t))
+        \end{equation}
+        
+        Нека е изпълнена предпоставката.
+        
+        Можем да дефинираме $F, G, H$ по следния начин:
+        \begin{equation}
+            \begin{split}
+                \Delta(f_1, \dots, h_N)(i) = \left(\frac{f_1(i) - g_1(i)}{h_1(i) + 1}, \dots, \frac{f_N(i) - g_N(i)}{h_N(i) + 1}\right)\\
+                F(f_1, f_2, \dots, h_N)(i) = (\Gamma (\Delta(f_1, \dots, h_N))(i))_0 \\
+                G(f_1, f_2, \dots, h_N)(i) = (\Gamma (\Delta(f_1, \dots, h_N))(i))_1 \\ 
+                H(f_1, f_2, \dots, h_N)(i) = (\Gamma (\Delta(f_1, \dots, h_N))(i))_2
+            \end{split}
+        \end{equation}
+        \item[$(\Rightarrow)$] Нека $F, G, H$ - оператори удовлетворяващи условието. Търсим $\langle \nu_N, \nu_1 \rangle$-реализация $\Gamma$ на $\theta$. $t$ е $\nu_N$-име на $\overrightarrow\xi \in \dom\theta$
+        \begin{equation}
+            \Gamma(t)(i) = \pi(F(f_1, \dots, h_N)(i), G(f_1, \dots h_N)(i), H(f_1, \dots h_N)(i))
+        \end{equation}
+        За подходящи функции:
+        \begin{equation}
+            \begin{split}
+                f_k(i) = ((t(i))_k)_0 \\
+                g_k(i) = ((t(i))_k)_1 \\
+                h_k(i) = ((t(i))_k)_2 \\
+            \end{split}
+        \end{equation}
+    \end{itemize}
+\end{proof}
+
+\subsection{Интересно представяне}
+\begin{itemize}
+    \item С факториелите - \href{https://en.wikipedia.org/wiki/Factorial_number_system}{Factorial number system}
+    \begin{equation}
+        \rho_!(t) = \alpha \iff \sum_{i\in\N^+} t(i).i!
+    \end{equation}
+    \item \href{https://en.wikipedia.org/wiki/Dedekind_cut}{Dedekind cuts}
+\end{itemize}
+

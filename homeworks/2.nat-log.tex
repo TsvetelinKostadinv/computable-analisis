@@ -1,0 +1,151 @@
+\begin{problem}[Двоичен логаритъм е изчислим] \label{exercise:log2-3-prim-rec}
+    Докажете, че реалното число $\log_2 3$ е примитивно рекурсивно.
+\end{problem}
+\begin{hint}
+    Нека $\left\{a_n\right\}_{n=0}^\infty$ е монотонно намаляваща редица (естествено е да се поиска $\forall n\in \N;\; a_n \geq 0$). Тогава:
+    \begin{equation}\tag{Лайбниц}\label{eq:sum-Leibniz}
+        \left\lvert \sum\limits_{k=N}^\infty (-1)^k a_k\right\rvert \leq a_N
+    \end{equation}
+\end{hint}
+\begin{solution}
+    От свойствата на логаритъма е известно, че:
+    \begin{equation*}
+        \log_2 3 = \frac{\log 3}{\log 2}
+    \end{equation*}
+    Където $\log$ ще означава логаритъм при основа $e$ (Неперовото число). Понеже делението запазва примитивната рекурсия, значи ще е достатъчно да покажем, че $\log 3$ и $\log 2$ са изчислими.
+
+    Подходите за $\log 3$ и $\log 2$ ще бъдат сходни, така че ще докажем за $a \in \{2, 3\}$.
+
+    Разглеждаме развитието в ред на Тейлър на $\log a$ около т. $e$:
+    \begin{equation} \label{eq:taylor-exp-log-1}
+        \begin{split}
+            & \log a = \log e + \frac{\log'(e)}{1!} (a - e) + \frac{\log''(e)}{2!} (a - e)^2 + \dots + \frac{\log^{(k)}e}{k!}(a-e)^k + \dots \\
+            & \log a = \sum_{k=0}^\infty \frac{\log^{(k)}e}{k!}(a-e)^k
+        \end{split}
+    \end{equation}
+    Сега отчитаме, че:
+    \begin{equation}\label{eq:general-derivative-of-log-e}
+        \begin{split}
+            & \log e = 1 \\
+            & \log' e = \frac{1}{e} \\
+            & \log'' e = -\frac{1}{e^2} \\
+            & \log''' e = \frac{2}{e^3} \\
+            & \vdots \\
+            & \log^{(k+1)} e = (-1)^{k} \frac{k!}{e^{k+1}}, k \geq 1
+        \end{split}
+    \end{equation}
+    Общия член на сумата $k\geq 1$, използвайки \eqref{eq:general-derivative-of-log-e}, е:
+    \begin{equation}
+        \frac{\log^{(k+1)} e}{(k+1)!}(a-e)^{k+1} =  (-1)^{k} \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}
+    \end{equation}
+    
+    Тогава \eqref{eq:taylor-exp-log-1} придобива вид:
+    \begin{equation}\label{eq:taylor-exp-log-2}
+        \begin{split}
+            & \log a = 1 + \frac{(a-e)}{e} - \frac{(a-e)^2}{2e^2} + \frac{(a-e)^3}{3e^3} - \dots + (-1)^{k} \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}  + \dots \\
+            & \log a = 1 + \frac{1}{e} + \sum_{k=1}^\infty (-1)^{k} \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}
+        \end{split}
+    \end{equation}
+    Известно е, че $e$ е примитивно рекурсивно. Нека с $f_e: \N \to \Q$ означим неговото име.
+    
+    С такова представяне, най-естествения кандидат за приближаваща функция на $\log a$ е $f_a: \N \to \Q$:
+    \begin{equation}
+        f_{\log a}(n) = 1 + \frac{1}{f_e(n)} + \sum_{k=1}^n (-1)^{k} \frac{(a-f_e(n))^{k+1}}{(k+1)f_e(n)^{k+1}}
+    \end{equation}
+
+    Нека положим $d = a - e$ за краткост. Съобразяваме, че $|d| < 1$. 
+    
+    Сега трябва да оценим грешката между $\log a$ и $f_{\log a}$:
+    \begin{equation}
+        \begin{split}
+            & |f_{\log a}(n) - \log a| = \\
+            = & \left| 1 + \frac{1}{f_e(n)} + \sum_{k=1}^n (-1)^{k} \frac{(a-f_e(n))^{k+1}}{(k+1)f_e(n)^{k+1}} - \left(1 + \frac{1}{e} + \sum_{k=1}^\infty (-1)^{k} \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}\right)\right| \\
+            = & \left| \left(\frac{1}{f_e(n)} - \frac{1}{e}\right) + \sum_{k=1}^n (-1)^{k} \left(\frac{(a-f_e(n))^{k+1}}{(k+1)f_e(n)^{k+1}} - \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}\right) + \sum_{k=n+1}^\infty \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}\right| \\
+            \overset{\text{неравенство на}\triangle}{\leq} & \left| \underbrace{\frac{1}{f_e(n)} - \frac{1}{e}}_{\eqref{eq:e-rev}} \right| \\
+            + & \left| \underbrace{\sum_{k=1}^n (-1)^{k} \left(\frac{(a-f_e(n))^{k+1}}{(k+1)f_e(n)^{k+1}} - \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}\right)}_{\eqref{eq:finite-sum-diff}} \right| \\ 
+            + & \left| \underbrace{\sum_{k=n+1}^\infty (-1)^k\frac{(a-e)^{k+1}}{(k+1)e^{k+1}}}_{\eqref{eq:infinite-sum-diff}} \right|
+        \end{split}
+    \end{equation}
+    И разглеждаме:
+    \begin{equation} \label{eq:e-rev} \tag{$\star$}
+        \left|\frac{1}{f_e(h_1(n))} - \frac{1}{e}\right| \leq \frac{1}{3(n + 1)}
+    \end{equation}
+    За подходящо отместване $h_1(n) = 3(C+A^2)(n+1)$ - примитивно рекурсивна функция (където $A$ и $C$ са константи известни от твърдението свързано с реципрочно на примитивно рекурсивно число).
+
+    За втората сума имаме:
+    \begin{equation} \label{eq:finite-sum-diff} \tag{$\star\star$}
+    \begin{split}
+        \left| \sum_{k=1}^n (-1)^{k} \frac{(a-f_e(n))^{k+1}}{(k+1)f_e(n)^{k+1}} - \frac{(a-e)^{k+1}}{(k+1)e^{k+1}} \right| \\
+        = \left| \sum_{k=1}^n (-1)^{k} \frac{e^{k+1}(a-f_e(n))^{k+1} - f_e(n)^{k+1}(a-e)^{k+1}}{(k+1)e^{k+1}f_e(n)^{k+1}}\right|
+    \end{split}
+    \end{equation}
+    Израза в числителя може да се оцени с подходяща функция:
+    \begin{equation}
+        f_k(x) \overset{def}{=} \left(x.e^{k+1} + (1-x).f_e(n)^{k+1}\right)\left(a - \left((1 - x).e^{k+1} + x.f_e(n)^{k+1}\right)\right)
+    \end{equation}
+    Ще ни трябва и нейната производна:
+    \begin{equation}
+        \begin{split}
+            f_k'(x) = \left(e^{k+1} - f_e(n)^{k+1}\right)\left(a - \left((1 - x).e^{k+1} + x.f_e(n)^{k+1}\right)\right)\\
+            + \left(x.e^{k+1} + (1-x).f_e(n)^{k+1}\right)\left(e^{k+1} - f_e(n)^{k+1}\right)\\
+            = \left(e^{k+1} - f_e(n)^{k+1}\right)\left( \left(a - \left((1 - x).e^{k+1} + x.f_e(n)^{k+1}\right)\right) + \left(x.e^{k+1} + (1-x).f_e(n)^{k+1}\right) \right)
+        \end{split}
+    \end{equation}
+    \begin{equation}
+        \begin{split}
+            |f_k'(x)| \leq \frac{1}{n+1}\left|\left(a - \left((1 - x).e^{k+1} + x.f_e(n)^{k+1}\right)\right) + \left(x.e^{k+1} + (1-x).f_e(n)^{k+1}\right) \right|\\
+            \leq \frac{1}{n+1}\left(\left|a - \left((1 - x).e^{k+1} + x.f_e(n)^{k+1}\right)\right| + \left|x.e^{k+1} + (1-x).f_e(n)^{k+1}\right|\right) \\
+            \leq \frac{1}{n+1}\left(a - e - \frac{1}{n+1} + e + \frac{1}{n+1} \right) = \frac{a}{n+1}
+        \end{split}
+    \end{equation}
+    Сега сумата можем да опростим така:
+    \begin{equation}
+        \begin{split}
+            \left| \sum_{k=1}^n (-1)^{k} \frac{e^{k+1}(a-f_e(n))^{k+1} - f_e(n)^{k+1}(a-e)^{k+1}}{(k+1)e^{k+1}f_e(n)^{k+1}}\right| \\
+            = \left| \sum_{k=1}^n (-1)^{k} \frac{f_k(1) - f_k(0)}{(k+1)e^{k+1}f_e(n)^{k+1}}\right| \\
+            \leq \sum_{k=1}^n \frac{\left|f_k(1) - f_k(0)\right|}{(k+1)e^{k+1}f_e(n)^{k+1}} \\
+            \overset{\text{Т-ма за кр. нар.}}{=} \sum_{k=1}^n \frac{\left|f_k'(\xi_k)\right|}{(k+1)e^{k+1}f_e(n)^{k+1}}\\
+            \leq \sum_{k=1}^n \frac{a}{(k+1)(n+1)e^{k+1}f_e(n)^{k+1}}
+        \end{split}
+    \end{equation}
+    Където $\xi_1, \dots, \xi_k \in (0;1)$. Можем да въведем примитивно рекурсивно отместване:
+    \begin{equation}
+        h_2(n) = 3an(n+1)\dot{-} 1
+    \end{equation}
+    Така сумата можем да оценим с:
+    \begin{equation}
+        \begin{split}
+            \sum_{k=1}^n \frac{a}{(k+1)h_2(n)e^{k+1}f_e(n)^{k+1}} = \sum_{k=1}^n \frac{1}{(k+1)3n(n+1)e^{k+1}f_e(n)^{k+1}}\\
+            \leq \frac{n}{2.3.n(n+1)e^2f_e(n)^2} = \frac{1}{6(n+1)e^2f_e(n)^2} \\
+            \leq \frac{1}{3(n+1)}
+        \end{split}
+    \end{equation}
+    
+    Безкрайната сума \eqref{eq:infinite-sum-diff} е лесно се преработва с \eqref{eq:sum-Leibniz}. Възможно е да се разгледа и като остатъчен член от реда на Tейлър във вид на Лайбниц (където разглеждаме $n+1$ производна на $\log x$ в някаква фиксирана точка $\xi \in [2; 3]$, но това довежда до ограничение от константа, а не от линейна функция в знаменател):
+    \begin{equation} \label{eq:infinite-sum-diff} \tag{$\star\star\star$}
+        \begin{split}
+            & \left| (-1)^k \sum_{k=n+1}^\infty \frac{(a-e)^{k+1}}{(k+1)e^{k+1}} \right| \overset{\eqref{eq:sum-Leibniz}}{\leq} \frac{(a - e)^{n+2}}{(n+2)e^{n+2}} \\
+            \overset{a - e < \frac{3}{4}}{\leq} & \frac{3^{n+2}}{(n+2)4^{n+2}e^{n+2}} \leq \frac{3^{n+2}}{(n+2)3^{n+2}e^{n+2}} = \frac{1}{(n+2)e^{n+2}} \\
+            \overset{n\in \N:\; e^{n+2} > 3}{\leq} & \frac{1}{3(n+2)} \leq \frac{1}{3(n+1)}
+        \end{split}
+    \end{equation}
+    Нека
+    \begin{equation*}
+        h(n) = \max\limits_{i=1,2} h_i(n) = h_2(n)
+    \end{equation*}
+    Значи от \eqref{eq:e-rev}, \eqref{eq:finite-sum-diff} и \eqref{eq:infinite-sum-diff} можем да изпишем следния вид на грешката.
+    \begin{equation}
+    \begin{split}
+        & |f_{\log a}(h(n)) - \log a| \leq \\
+        \leq & \left| \underbrace{\frac{1}{f_e(h(n))} - \frac{1}{e}}_{\eqref{eq:e-rev}} \right| \\
+        + & \left| \underbrace{\sum_{k=1}^{h(n)} (-1)^{k} \left(\frac{(a-f_e(h(n)))^{k+1}}{(k+1)f_e(h(n))^{k+1}} - \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}\right)}_{\eqref{eq:finite-sum-diff}} \right| \\ 
+        + & \left| \underbrace{\sum_{k=h(n)+1}^\infty (-1)^k \frac{(a-e)^{k+1}}{(k+1)e^{k+1}}}_{\eqref{eq:infinite-sum-diff}} \right| \\
+        \leq & \frac{1}{3(n+1)} + \frac{1}{3(n+1)} + \frac{1}{3(n+1)} = \frac{1}{n+1}
+    \end{split}
+    \end{equation}
+    Значи 
+    \begin{equation}
+        f_{\log a}(n) = 1 + \frac{1}{f_e(h(n))} + \sum_{k=1}^n (-1)^{k} \frac{(a-f_e(h(n)))^{k+1}}{(k+1)f_e(h(n))^{k+1}}
+    \end{equation}
+    наистина е име на $\log a$ и е примитивно рекурсивна
+\end{solution}

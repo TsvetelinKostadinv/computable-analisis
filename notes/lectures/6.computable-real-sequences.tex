@@ -1,0 +1,91 @@
+\section{Изчислими редици от реални числа}
+\begin{definition}
+    Редица $\left\{a_n\right\}_{n=0}^\infty$ от реални числа е изчислима $\bydef$ съществува ф-ия $f: \N^2 \to \Q$, т.ч. $f(n, k)$ е име за $a_n$:
+    \begin{equation*}
+        \forall i, n:\; |f(n, i) - a_n| < \frac{1}{i+1}
+    \end{equation*}
+\end{definition}
+\begin{example}
+    Ако $a: \N \to \Q$ е изчислима, то ако я разгледаме с домейн $\R$ също е изчислима. $f(n, i) = a_n$
+\end{example}
+\begin{example}
+    $a_n = \sqrt{n}$
+    \begin{equation*}
+        \frac{j}{i+1} \leq \sqrt{n} < \frac{j+1}{i+1} \iff R(i, j, n) \text{ е изчислима}
+    \end{equation*}
+    Тогава:
+    \begin{equation*}
+        f(n,i) = \frac{\mu_{\leq n(i+1)} j:\; R(i,j,n)}{i+1}
+    \end{equation*}
+\end{example}
+\begin{example}\label{example:comp-seq-uncomp-members}
+    Нека $\varphi: \N^2 \to \N$ е изчислима, т.ч.
+    \begin{equation*}
+        A = \left\{ n \mid \exists j \varphi(n,j) = 0 \right\}
+    \end{equation*}
+    $A$ не е разрешимо и $\psi(n) = \mu j:\; \varphi(n,j) = 0$. Значи $dom\psi = A$. Нека:
+    \begin{equation*}
+        a_n = \begin{cases}
+            \frac{1}{\psi(n) + 1}   &, n \in A \\
+            0                       & , n \notin A
+        \end{cases}
+    \end{equation*}
+    Разглеждаме $a: \N \to \Q$, не е изчислима. Тогава:
+    \begin{equation*}
+        a_n > 0 \iff n \in A
+    \end{equation*}
+
+    Но разгледана като $a: \N \to \R$ е изчислима като приближаваме 0, защото $\frac{1}{\psi(n) + 1}$ става близо до 0.
+    \begin{equation*}
+        f(n, i) = \begin{cases}
+            \frac{1}{\psi(n) + 1} &, \exists j \leq i:\; \varphi(n,j) = 0 \\
+            \frac{1}{i+2} &, \forall j \leq i:\; \varphi(n,j)\neq 0
+        \end{cases}
+    \end{equation*}
+    Твърдим, че $|f(n,i) - a_n| < \frac{1}{i+1}$
+    \begin{itemize}
+        \item[($n\notin A$)] $f(n,i) = \frac{1}{i+2}$ и $a_n = 0$ по дефиниция. Очевидно е изпълнено.
+        \item[($n\in A$ и $\psi(n) \leq i$)] $f(n,i) = a_n$ по дефиниция. Очевидно е изпълнено.
+        \item[($n\in A$ и $\psi(n) > i$)] $f(n,i) = \frac{1}{i+2}$, а $a_n = \frac{1}{\psi(n) + 1}$ по дефиниция. Тогава:
+        \begin{equation*}
+            |f(n, i) - a_n| = \frac{1}{i+2} - \frac{1}{\psi(n) + 1} < \frac{1}{i+1}
+        \end{equation*}
+    \end{itemize}
+\end{example}
+
+\subsection{Неизчислима редица}
+\begin{example}
+    $a: \N \to \R$. Нека $g$ е рекурсивна и инективна, а $range(g) = A$ е неразрешимо мн-во.
+    \begin{equation*}
+        h(n, i) = \begin{cases}
+            1 &, \exists j \leq i:\; n = g(j) \\
+            0 &, \forall j \leq i:\; n \neq g(j)
+        \end{cases}
+    \end{equation*}
+    Сега:
+    \begin{equation*}
+        a_n = \lim\limits_{i \to \infty} h(n, i) = \begin{cases}
+            1 &, n \in A \\
+            0 &, n \notin A 
+        \end{cases}
+    \end{equation*}
+    Да допуснем, че е изчислима:
+    \begin{equation*}
+        |f(n, i) - a_n| < \frac{1}{i+1}
+    \end{equation*}
+    За грешката имаме:
+    \begin{itemize}
+        \item[$n \in A$] $|f(n, i) - 1| < \frac{1}{i+1}$
+        \item[$n \notin A$] $|f(n, i) - 0| < \frac{1}{i+1}$
+    \end{itemize}
+    Тогава за $i=1$:
+    \begin{itemize}
+        \item[$n \in A$] $|f(n, 1) - 1| < \frac{1}{2}$. Значи $f(n, 1) \in \left(\frac{1}{2}; 1\right)$
+        \item[$n \notin A$] $|f(n, 1) - 0| < \frac{1}{2}$. Значи $f(n, 1) \in \left(-\frac{1}{2}; \frac{1}{2}\right)$
+    \end{itemize}
+    Значи:
+    \begin{equation*}
+        n \in A \iff f(n, 1) \in (\frac{1}{2}; 1)
+    \end{equation*}
+    Но $A$ е неразрешимо. 
+\end{example}

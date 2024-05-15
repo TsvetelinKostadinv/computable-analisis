@@ -1,0 +1,36 @@
+\begin{problem}[$n$-ти корен е изчислим (примитивно рекурсивен)]
+    Докажете, че ако $n \in \N^{\geq 3}$ и $\alpha$ е изчислимо (примитивно рекурсивно) реално число, то $\sqrt[n]{\alpha}$ също е изчислимо (примитивно рекурсивно) реално число.
+    
+    Подразбира се, че $\alpha$ е неотрицателно при четно $n$ и $\alpha$ е произволно при нечетно n.
+\end{problem}
+\begin{solution}
+    Нека съобразим следния факт от алгебрата:
+    \begin{equation}\label{eq:root-prop}
+        \sqrt[n.m]{\alpha} = \sqrt[n]{\sqrt[m]{\alpha}}
+    \end{equation}
+    Заедно със знанието, че всяко число има единствено канонично представяне (с точност до преномериране на множителите):
+    \begin{equation}\label{eq:canonical-repr}
+        n = p_1^{q_1} \dots p_k^{q_k}
+    \end{equation}
+    Използвайки \eqref{eq:root-prop}, \eqref{eq:canonical-repr} и факта, че композицията на функции запазва изчислимостта (примитивната рекурсия), задачата за произволно се свежда до въпроса за $n$ - просто. И понеже $n \geq 3$, тогава $n$ със сигурност е нечетно $\Rightarrow n$ е нечетно, а $\alpha \in \R$ произволно. Тези съображения важат в остатъка от решението. Ако $n$ съдържа множител 2 в каноничното си представяне (със степен различна от 0), то за $\alpha$ важат предположенията от лекциите.
+
+    Нека $\alpha \in \R$ - произволно изчислимо (примитивно рекурсивно) и $f_\alpha: \N \to \Q$ е неговото име - по дефиниция - изчислима (примитивно рекурсивна) със свойството:
+    \begin{equation*}
+        \forall k\in \N:\; \left\lvert f_\alpha(k) - \alpha \right\rvert < \frac{1}{k+1}
+    \end{equation*}
+    Търсим функция $g: \N \to \N$, т.ч.
+    \begin{equation*}
+        \forall k\in \N:\; \left\lvert \frac{g(k)}{k+1} - \sqrt[n]{f_\alpha(k)} \right\rvert < \frac{1}{k+1}
+    \end{equation*}
+    \begin{definition}
+        \begin{equation*}
+            P(k) \bydef \forall \beta \in Q\ \exists i \in \N:\; \left\lvert \frac{i}{k+1} - \beta\right\rvert < \frac{1}{k+1}
+        \end{equation*}
+    \end{definition}
+    \begin{fact}
+    Известно е, че:
+        \begin{equation*}
+            \forall k \in \N:\; P(k)
+        \end{equation*}
+    \end{fact}
+\end{solution}

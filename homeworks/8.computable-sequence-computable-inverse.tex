@@ -1,0 +1,52 @@
+\begin{problem}
+     Докажете, че ако $\{a_n\}_{n\in\N}$ е изчислима редица от реални числа и $\forall n\in\N:\; a_n \neq 0$, то $\{\frac{1}{a_n}\}_{n\in\N}$ също е изчислима редица от реални числа.
+\end{problem}
+\begin{solution} \label{sol:computable-sequence-computable-inverse}
+    Щом $\{a_n\}_{n\in\N}$ е изчислима редица от реални числа, то по дефиниция има $f: \N^2 \to \Q$, т.ч.:
+    \begin{equation}
+        \forall n\in\N,\ i\in\N:\; \left|f(n, i) - a_n\right| < \frac{1}{i+1}
+    \end{equation}
+    Нека $h'(n, i) = \frac{1}{f(n, i)}$. И ще разглеждаме грешката:
+    \begin{equation}
+        \begin{split}
+            \left|h'(n, i) - \frac{1}{a_n}\right| = \frac{\left|a_n - f(n,i)\right|}{|f(n,i)|.|a_n|}
+        \end{split}
+    \end{equation}
+    Понеже $\forall n\in\N:\; |a_n| \neq 0$. Тогава $\exists M_n > 0:\; |a_n| \geq \frac{1}{M_n}$. Значи от известно място нататък, и приближаващата функция също ще е по-голяма от известно число $A_n$ - $\exists A_n > 0,\ \overset{\infty}{\forall} i, :\; |f(n, i)| \geq \frac{1}{A_n}$. Подходящ избор е $A_n = M_n$, но $M_n$ може да не ни е известно.
+
+    Значи:
+    \begin{equation}
+        \forall n\in\N,\ \exists A_n,\ C_n,\ \forall i > C_n:\; |f(n,i)| \geq \frac{1}{A_n}
+    \end{equation}
+    За уточнение относно избора на $A_n \& C_n $ - \remarkref{remark:computable-sequence-computable-inverse}
+    \begin{equation}
+        \forall n\in\N,\ \exists A_n,\ C_n,\ \forall i > C_n:\; \frac{\left|a_n - f(n,i)\right|}{|f(n,i)|.|a_n|} \leq \frac{A_n^2}{i+1}
+    \end{equation}
+
+    Значи приближаващата функция можем да конструираме по следния начин
+    \begin{equation}
+        h(n,i) = h'(n, (C_n + A_n^2)(i+1) \dot{-} 1)
+    \end{equation}
+    Така:
+    \begin{equation}
+        \forall n,\ i\in \N:\; \left|h(n, i) - a_n\right| < \frac{1}{i+1}
+    \end{equation}
+\end{solution}
+\begin{remark}\label{remark:computable-sequence-computable-inverse}
+    Относно избора на $A_n \& C_n$ в \solref{sol:computable-sequence-computable-inverse}. Искаме:
+    \begin{equation}
+        \forall n\in\N,\ \exists A_n,\ C_n,\ \forall i > C_n:\; |f(n,i)| \geq \frac{1}{A_n}
+    \end{equation}
+
+    При фиксирано $n$. Знаем, че $|f(n, i)|$ е име за $|a_n|$. Тогава ще търсим
+    \begin{equation}
+    \begin{split}
+        i_n = \mu\ i:\; ||f(n,i)| - |a_n|| < \frac{1}{i+1} < |a_n| \\
+        \Rightarrow \forall i > i_n:\; |f(n, i)| \in \left( |a_n| - \frac{1}{i+1};\ |a_n| + \frac{1}{i+1} \right) \\
+        C_n = \mu\ c \geq i_n:\; 0 < |a_n| - \frac{1}{c + 1}\\
+        \Rightarrow \forall C_n < i:\; 0 < |a_n| - \frac{1}{C_n + 1} < |f(n, i)| < |a_n| + \frac{1}{C_n + 1} \\
+        A_n = \mu\ A:\; 0 < \frac{1}{A} < |a_n| - \frac{1}{C_n + 1}
+    \end{split}
+    \end{equation}
+    Знаем, че $a_n$ е крайно число - изчисленията за $i_n$, $C_n$ и $A_n$ ще завършат (Може би $i_n$ и $C_n$ всъщност са едно и също число?).
+\end{remark}

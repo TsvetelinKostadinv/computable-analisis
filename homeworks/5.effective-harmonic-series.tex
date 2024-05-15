@@ -1,0 +1,86 @@
+\begin{problem}[Ефективен обобщен хармоничен ред]
+     Докажете, че редът 
+     \begin{equation}
+         \sum\limits_{n\in\N} \frac{1}{(n+1)^\alpha}
+     \end{equation}
+     е ефективно сходящ $\forall \alpha \in \R^{> 1}$.
+\end{problem}
+\begin{solution}
+    Ще разглеждаме $1 + \alpha$ за удобство и ще считаме, че $\alpha \in \R^+$
+
+    Редът $\sum\limits_{n\in\N} \frac{1}{(n+1)^{1 + \alpha}}$ е ефективно сходящ $\bydef$ $\left\{\sum\limits_{m=0}^n \frac{1}{(m+1)^{1 + \alpha}} \right\}_{n\in\N}$ е ефективно сходяща редица.
+
+    \subsection*{$\alpha \geq 2$}
+    Можем да се възползваме от факта, че дробта намалява с увеличаване на знаменателя:
+    \begin{equation}
+        \forall \alpha > 2:\; \sum\limits_{n\in\N} \frac{1}{(n+1)^\alpha} \leq \sum\limits_{n\in\N} \frac{1}{(n+1)^2} = \frac{\pi^2}{6}
+    \end{equation}
+    Значи по ефективния принцип за мажорирането следва, че редовете са ефективно сходящи при $\alpha > 2 \iff$ реда е ефективно сходящ при $\alpha = 2$.
+
+    Знаем, че $\sum\limits_{n\in\N} \frac{1}{(n+1)^2}$ е сходящ в класическия смисъл със стойност $\frac{\pi}{6}$. Трябва да проверим, че е ефективно сходящ. Значи търсим $\delta_2(k)$ - изчислима функция, т.ч.:
+    \begin{equation}
+        \forall n \geq \delta_2(k):\; \left|\sum\limits_{m=0}^n \frac{1}{(m+1)^2} - \frac{\pi}{6}\right| < \frac{1}{k+1}
+    \end{equation}
+    Да разгледаме грешката:
+    \begin{equation}
+        \begin{split}
+            \left|\sum\limits_{m=0}^n \frac{1}{(m+1)^2} - \frac{\pi}{6}\right| = \sum\limits_{m=0}^n \frac{1}{(m+1)^2} - \frac{\pi}{6}\\
+            = \sum\limits_{m=0}^n \frac{1}{(m+1)^2} -  \sum\limits_{m=0}^\infty \frac{1}{(m+1)^2} =  \sum\limits_{m=n+1}^\infty \frac{1}{(m+1)^2} \\
+            < \sum\limits_{m=n+1}^\infty \frac{1}{m(m+1)} = \sum\limits_{m=n+1}^\infty \left( \frac{1}{m} - \frac{1}{m+1} \right) \\
+            \overset{\text{телескопична сума}}{=} \frac{1}{n+1} - \lim\limits_{m\to\infty} \frac{1}{m+1} = \frac{1}{n+1}
+        \end{split}
+    \end{equation}
+    Значи регулатора на сходимост можем да дефинираме така:
+    \begin{equation}
+        \delta_2(k) = k
+    \end{equation}
+
+    \subsection*{$\alpha \in (0;1)$}
+    Сега трябва да проверим за $1 + \alpha$, където $\alpha \in (0;1)$. Необходимо използваме свойство \cite{4751976}:
+    \begin{equation} \label{eq:harmonic-power-property}\tag{$0 \leq \alpha \leq 1$}
+        \begin{split}
+            \frac{1}{(k-1)^\alpha} - \frac{1}{k^\alpha} = \frac{k^\alpha - (k-1)^\alpha}{((k-1)k)^\alpha} \\
+            = \frac{1 - \left(1 - \frac{1}{k}\right)^\alpha}{(k-1)^\alpha}\\
+            \geq \frac{\frac{\alpha}{k}}{(k-1)^\alpha} \\
+            \geq \frac{\alpha}{k^{1+\alpha}}\\
+            \forall k\in\N:\; \frac{1}{k^{1+\alpha}} \leq \frac{1}{\alpha}\left(\frac{1}{(k-1)^\alpha} - \frac{1}{k^\alpha} \right)
+        \end{split}
+    \end{equation}
+    Тогава реда изглежда по следния начин:
+    \begin{equation}
+        \begin{split}
+            \sum\limits_{m=0}^n \frac{1}{(m+1)^{1 + \alpha}} = 1 + \sum\limits_{m=1}^n \frac{1}{(m+1)^{1 + \alpha}} \\
+            \leq 1 + \sum\limits_{m=1}^n \frac{1}{(m+1)^{1 + \alpha}} \\
+            \overset{\eqref{eq:harmonic-power-property}}{\leq} 1 + \frac{1}{\alpha} \sum\limits_{m=1}^n \frac{1}{m^\alpha} - \frac{1}{(m+1)^\alpha} \\
+            \overset{\text{телескопична сума}}{=} 1 + \frac{1}{\alpha}\left( 1 - \frac{1}{(n+1)^{1+\alpha}} \right) \\
+            = 1 + \frac{1}{\alpha} - \frac{1}{\alpha(n+1)^{1 + \alpha}}
+        \end{split}
+    \end{equation}
+    Разглеждайки границата:
+    \begin{equation}
+        \lim\limits_{n\to\infty} 1 + \frac{1}{\alpha} - \frac{1}{\alpha(n+1)^{1 + \alpha}} = 1 + \frac{1}{\alpha} = L
+    \end{equation}
+     За да е ефективно сходяща редицата, трябва да имаме изчислима функция $\delta(k)$, т.ч.
+     \begin{equation}
+        \begin{split}
+            \forall k,\ n \geq \delta(k):\; \left| \sum\limits_{m=0}^n \frac{1}{(m+1)^{1 + \alpha}} - L \right| = \left|\left(1 + \frac{1}{\alpha} - \frac{1}{\alpha(n+1)^{1 + \alpha}}\right) - \left(1 + \frac{1}{\alpha}\right)\right| \\
+            = \left|\frac{1}{\alpha(n+1)^{1+\alpha}}\right| \leq \frac{1}{k+1}
+        \end{split}
+     \end{equation}
+     Да разгледаме последното неравенство:
+     \begin{equation}
+        \begin{split}
+             \left|\frac{1}{\alpha(n+1)^{1+\alpha}}\right| = \frac{1}{\alpha(n+1)^{1+\alpha}} \leq \frac{1}{k+1}\\
+            \iff k+1 \leq \alpha(n+1)^{1+\alpha} \\
+            \iff \frac{k+1}{\alpha} \leq (n+1)^{1+\alpha}
+        \end{split}
+     \end{equation}
+     Израза $\alpha(n+1)^{1+\alpha}$ расте най-бързо при $\alpha=1$, което е точно $(n+1)^2$ (парабола с единствен двоен корен в $n=-1$, значи при $n\in\N$ стойността винаги е $\geq 1$), за целта можем да изберем регулатор на сходимост:
+     \begin{equation}
+         \delta(k) = \frac{(k+1)^3}{\alpha}
+     \end{equation}
+
+     \begin{remark}
+         Регулатора е значително "по-силен"\ от необходимото.
+     \end{remark}
+\end{solution}

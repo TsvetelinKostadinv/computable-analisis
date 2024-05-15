@@ -1,0 +1,141 @@
+\section{Рационални числа}
+Може да се направи директно без много коментари, но е хубаво да се види интуицията.
+
+Нека кодираме $\Q$:
+\begin{equation*}
+    \langle m, n, p \rangle \mapsto \frac{m - n}{p + 1}
+\end{equation*}
+\begin{definition}
+    $f: \N^k \to \Q$ е изчислима(примит. рекурсивна) $\iff$ ако съществуват $f_{1,2,3}: \N^k \to \N$ изчислими(примит. рекурсивни), т.ч.
+    \begin{equation*}
+        \begin{split}
+            f(\textbf{n}) = \frac{f_1(\textbf{n}) - f_2(\textbf{n})}{f_3(\textbf{n}) + 1}
+        \end{split}
+    \end{equation*}
+\end{definition}
+\begin{example}
+    $f: \N^k \to \Q: f(\textbf{n}) = q = const$
+\end{example}
+\begin{example}
+    $f: \N^k \to \N$ - старата изчислимост
+\end{example}
+\begin{problem}
+    Да проверим затвореност относно затвореност относно аритметичните операции.
+    
+    Нека $f,g :\N^k \to Q$ са изчислими. То $f + g, f-g, f.g, \forall n\left(g(\textbf{n}) \neq 0 \rightarrow \frac{f(\textbf{n})}{g(\textbf{n})} \right)$ са изчислими
+\end{problem}
+\begin{solution}
+    Нека
+    \begin{equation*}
+    \begin{split}
+        f = \frac{f_1 - f_2}{f_3 + 1} \\
+        g = \frac{g_1 - g_2}{g_3 + 1}
+    \end{split}
+    \end{equation*}
+    тогава
+    \begin{equation*}
+        \begin{split}
+            (f+g)_1 = f_1(g_3 + 1) + g_1(f_3 + 1)\\
+            (f+g)_2 = f_2(g_3 + 1) + g_2(f_3 + 1)\\
+            (f+g)_3 = f_3.g_3 + f_3 + g_3
+        \end{split}
+    \end{equation*}
+    Останалите операции се получават по аналогичен начин
+\end{solution}
+
+\section{Реални числа}
+\begin{definition}
+    Реалното число $\alpha$ е изчислимо(примитивно рекурсивно) $\iff$ съществува изчислима(примитивно рекурсивна) $f: \N \to \Q$, т.ч.
+    \begin{equation}\label{eq:real-computable-def}
+        \forall n\; |f(n) - \alpha| < \frac{1}{n+1}
+    \end{equation}
+\end{definition}
+\begin{notation}
+    $f$ се нарича \textbf{име} на $\alpha$
+\end{notation}
+\begin{remark}
+    В дясната част на \eqref{eq:real-computable-def} можем да си изберем произволна изчислима (примитивно рекурсивна) ф-ия, която "клони" към 0. \textbf{Но} имаме проблем, че нямаме дефиниция на граница и ще трябва да въведем формализъм за "ефективна граница" на изчислими функции.
+\end{remark}
+\begin{fact}
+    Всяко рационално число е изчислимо.
+\end{fact}
+
+\subsection{Полето на изчислимите числа}
+
+\begin{lemma}\label{lem:sum-computable}
+    Ако $\alpha, \beta$ са изчислими, то $\alpha + \beta$ е изчислимо
+\end{lemma}
+\begin{proof}
+    Имаме $f, g$ - изчислими за $\alpha, \beta$ съответно, които удовлетворяват \eqref{eq:real-computable-def} (техните имена). И нека:
+    \begin{equation*}
+        h'(n) = f(n) + g(n)
+    \end{equation*}
+    \begin{equation*}
+        \begin{split}
+            |h'(n) - \alpha - \beta| \leq |f(n) - \alpha| + |g(n) - \beta| < \frac{2}{n+1}
+        \end{split}
+    \end{equation*}
+    Имаме константа 2, която ни пречи за дефиницията. Значи $h(n) = h'(2n+1)$ ще ни свърши работа.
+\end{proof}
+\begin{lemma}\label{lem:neg-computable}
+    Ако $\alpha$ е изчислимо, то $- \alpha$ е изчислимо
+\end{lemma}
+\begin{proof}
+    Нека $f$ е име за $\alpha$, тогава $-f$ е име за $-\alpha$
+\end{proof}
+\begin{lemma}\label{lem:mul-computable}
+    Ако $\alpha, \beta$ са изчислими, то $\alpha . \beta$ е изчислимо
+\end{lemma}
+\begin{proof}
+    Нека $f, g$ са имена за $\alpha, \beta$ съответно. И нека:
+    \begin{equation*}
+        h(n) = f(n).g(n)
+    \end{equation*}
+    И оценяваме
+    \begin{equation*}
+        |h(n) - \alpha\beta| = |f(n).g(n) - g(n)\alpha + g(n)\alpha - \alpha\beta| \leq |g(n)|.|f(n) - \alpha| + |\alpha|.|g(n) - \beta|
+    \end{equation*}
+    Избираме $A, B\in \N$, т.ч. $|\alpha| < A, |g(n)| < B, \forall n$. За $g$ можем да го изискваме, защото $\left\{g(n)\right\}_{n\in\N}$ е сходяща редица. 
+    
+    И значи
+    \begin{equation*}
+        |h(n) - \alpha\beta| < \frac{A+B}{n+1}
+    \end{equation*}
+    И отместването, което ни върши работа $h(n) = h'((A+B)(n+1) \dot{-} 1)$
+\end{proof}
+\begin{lemma}\label{lem:div-computable}
+    Ако $\alpha$ са изчислими, то $\frac{1}{\alpha}$ е изчислимо
+\end{lemma}
+\begin{proof}
+    Нека $f$ е име за $\alpha$.
+    \begin{equation*}
+        h(n) = \frac{1}{f(n)}
+    \end{equation*}
+    И разглеждаме:
+    \begin{equation*}
+        |h(n) - \frac{1}{\alpha}| = \frac{|f(n) - \alpha|}{|f(n)|.|\alpha|}
+    \end{equation*}
+    Нека фиксираме 
+    \begin{equation*}
+        A, C \in \N^+:\; \forall n > C:\ |f(n)| \geq \frac{1}{A}
+    \end{equation*}
+    И от тук значи $|\alpha| > \frac{1}{A}$. Строго, защото \textbf{първо} избираме $A$ после $C$.
+    \begin{equation*}
+        \frac{|f(n) - \alpha|}{|f(n)|.|\alpha|} < \frac{A^2}{n+1},\; n \geq C
+    \end{equation*}
+    Дефинираме 
+    \begin{equation*}
+        h'(n) = \frac{1}{f\left((C+A^2)(n+1)\right)}
+    \end{equation*}
+    И грешката на $h'$ е
+    \begin{equation*}
+        |h'(n) - \alpha| \leq \frac{A^2}{(C+A^2)(n+1)} \leq \frac{1}{n+1}
+    \end{equation*}
+\end{proof}
+
+\begin{corollary}
+    От \lemref{lem:sum-computable}, \lemref{lem:neg-computable}, \lemref{lem:mul-computable}, \lemref{lem:div-computable} следва, че изчислимите реални числа образуват поле.
+\end{corollary}
+\begin{remark}
+    При доказателство, че грешката между името и реалното число има определена форма ($\frac{1}{n+1}$) може да се случи, че в числител имаме константа или сублинейна функция ($\frac{sublinear}{n+1}$), която така или иначе клони към 0. Такава грешка може да се коригира с (линейно) отместване на аргумента на приближаващата ф-ия. 
+\end{remark}

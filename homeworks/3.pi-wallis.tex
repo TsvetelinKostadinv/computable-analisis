@@ -1,0 +1,180 @@
+\begin{problem}[$\pi$ е примитивно рекурсивно]
+    Докажете, че $\pi$ е примитивно рекурсивно чрез произведението на Wallis\cite{wallis1972arithmetica}
+    \begin{equation}\label{eq:wallis-formula}
+        \frac{\pi}{2} = \prod\limits_{n\in \N^+}\frac{4n^2}{4n^2 - 1}
+    \end{equation}
+\end{problem}
+\begin{hint}
+    Можем да логаритмуваме ($\prod \to \sum$), тогава ще докажем, че сумата е примитивно рекурсивна. Трябва само да се покаже, че $e^x$, където $x$ е примитивно рекурсивно е примитивно рекурсивна функция.
+\end{hint}
+\begin{proposition}[$\exp$ е примитивно рекурсивна функция] \label{prop:exp-prim-rec}
+    Нека $x$ е примитивно рекурсивно число. Тогава $\exp x$ е примитивно рекурсивно число.
+\end{proposition}
+\begin{proof}
+    Нека $f_x$ е името на $x$.
+    \begin{equation*}
+        \forall n\in \N:\; |f_x(n) - x| < \frac{1}{n+1}
+    \end{equation*}
+    Ще използваме развитието на $e^x$ в ред на Тейлър (съществена забележка - редът винаги е сходящ - дори при $x \in \mathbb C$).
+
+    \begin{equation}\label{eq:taylor-e-x}\tag{Тейлър - $\exp x$}
+        e^x = \exp x = \sum\limits_{n\in \N} \frac{x^n}{n!}
+    \end{equation}
+    Сега да отбележим, че степенуването на изчислимо число с показател естествено и факториелът са примитивно рекурсивни функции. Значи сумата от \eqref{eq:taylor-e-x} е ред от примитивно рекурсивни функции.
+
+    Значи естествен кандидат за приближението на $\exp x$ е $f_{\exp x}$ дефинирана чрез ограничената сума:
+    \begin{equation}
+        f_{\exp x}(n) = \sum\limits_{k=0}^{n} \frac{f_x(n)^k}{k!}
+    \end{equation}
+    Да разгледаме грешката:
+    \begin{equation}
+        \begin{split}
+            & |f_{\exp x}(n) - \exp x| = \left|\sum\limits_{k=0}^{n} \frac{f_x(n)^k}{k!} - \sum\limits_{n\in \N} \frac{x^n}{n!}\right| \\
+            = & \left|\sum\limits_{k=0}^{n} \frac{f_x(n)^k - x^k}{k!} + \sum\limits_{k=n+1}^{\infty} \frac{x^k}{k!} \right|\\
+            \overset{\text{неравенство на }\triangle}{\leq} & \left|\sum\limits_{k=0}^{n} \frac{f_x(n)^k - x^k}{k!}\right| + \left| \sum\limits_{k=n+1}^{\infty} \frac{x^k}{k!} \right|
+        \end{split} 
+    \end{equation}
+    можем (известно от лекциите) да направим примитивно рекурсивно отместване $h_i(n)$ на $f_x$, т.ч.
+    \begin{equation}
+        \begin{split}
+            | f_x(h_1(n)) - x | < \frac{1}{n+1} \\
+            | f_x(h_2(n))^2 - x^2 | < \frac{1}{n+1} \\
+            \vdots \\
+            | f_x(h_n(n))^n - x^n | < \frac{1}{n+1}
+        \end{split}
+    \end{equation}
+    Очевидно можем да оставим $h_1 = id$. Интересно наблюдение е, че можем да намерим (процедура известна от лекциите) $h_k(n)$ - полином с $\Q$ коефициенти и $\deg h_k = k-1$ за $k > 1$ (тривиална индукция по $k$). 
+
+    Нещо по-важно - $\forall k \in \{1, \dots, n\}:\; f(h_n(n))^k$ е име за $x^k$.
+    \begin{equation}
+        \begin{split}
+             & |f_{\exp x}(n) - \exp x| \leq \left|\sum\limits_{k=0}^{n} \frac{f_x(h_n(n))^k - x^k}{k!}\right| + \left| \sum\limits_{k=n+1}^{\infty} \frac{x^k}{k!} \right| \\
+             = & \left|\sum\limits_{k=0}^{n}\frac{f_x(h_n(n))^k}{k!} - \frac{x^k}{k!}\right| + \left| \sum\limits_{k=h_n(n)+1}^{\infty} \frac{x^k}{k!} \right|
+        \end{split}
+    \end{equation}
+    Ще въведем примитивно рекурсивно отместване $g$ за аргумента на $h_n$ и за удобство  ще означим $h(n) = g(h_n(n))$, т.ч.
+    \begin{equation*}
+        \left| \frac{f(h(n))^k}{k!} - \frac{x^k}{k!} \right| < \frac{1}{(n+1)^2} < \frac{1}{n^2} < \frac{1}{n+1}
+    \end{equation*}
+    значи $\frac{f(h(n))^k}{k!}$ е име за $\frac{x^k}{k!}$, но с добавено изискване да го приближава "по-бързо".
+
+    Ще използваме най-силното от неравенствата в сумата, за да ограничим крайната сума:
+    \begin{equation}
+        \begin{split}
+             & |f_{\exp x}(n) - \exp x| \leq \left|\sum\limits_{k=0}^{n}\frac{f_x(g(n))^k}{k!} - \frac{x^k}{k!}\right| + \left| \sum\limits_{k=h_n(n)+1}^{\infty} \frac{x^k}{k!} \right| \\
+             \leq & \sum\limits_{k=0}^{n} \left|\frac{f_x(g(n))^k}{k!} - \frac{x^k}{k!}\right| + \left| \sum\limits_{k=h_n(n)+1}^{\infty} \frac{x^k}{k!} \right| < \frac{n}{(n+1)^2} + \left| \sum\limits_{k=h_n(n)+1}^{\infty} \frac{x^k}{k!} \right| \\
+             \leq & \frac{1}{n+1} + \left| \sum\limits_{k=h_n(n)+1}^{\infty} \frac{x^k}{k!} \right|
+        \end{split}
+    \end{equation}
+    
+    Понеже втората сума е остатъчния ред от реда на Тейлър и можем да го представим във вид на Лагранж. Значи има $\xi \in [x; e] \cup [e; x]$ или иначе казано:
+    \begin{equation*}
+        \begin{split}
+            |\xi - x| & \leq |x-e| \\
+            |\xi - e| & \leq |x-e|
+        \end{split}
+    \end{equation*}
+    Припомняме следствие от апроксимацията на Стирлинг \cite{dutka1991early, tweddle2003james}.
+    \begin{equation}\tag{Стирлинг}\label{eq:stirling}
+        \sqrt{2 \pi n} \left(\frac{n}{e}\right)^n \exp\frac{1}{12n + 1} < n! < \sqrt{2 \pi n} \left(\frac{n}{e}\right)^n \exp\frac{1}{12n}
+    \end{equation}
+    
+    Тогава остатъчния ред има вида:
+    \begin{equation}
+        \begin{split}
+            & \sum\limits_{k=n+1}^{\infty} \frac{x^k}{k!} = \frac{(\exp x)^{(n+1)}|_{x=\xi}}{(n+1)!} x^{n+1} = \frac{x^{n+1}\exp \xi}{ (n+1)!} \\
+            \overset{\eqref{eq:stirling}}{\leq} & \frac{x^{n+1}\exp \xi}{ \sqrt{2 \pi (n+1)} \left(\frac{(n+1)}{e}\right)^{(n+1)}\exp\frac{1}{12n + 13} } \\
+            = & \frac{x^{n+1}.\exp(n+1).\exp \xi}{ \sqrt{2 \pi (n+1)}(n+1)^{(n+1)}\exp\frac{1}{12n + 13} } = \frac{exp \xi}{\sqrt{2\pi}} . \frac{x^{n+1}.\exp(n+1)}{\sqrt{n+1}(n+1)^{(n+1)}\exp\frac{1}{12n + 13} } \\
+            \overset{C_1 = \frac{exp \xi}{\sqrt{2\pi}}}{=} & C_1 . \frac{x^{n+1}.\exp(n+1)}{\sqrt{n+1}(n+1)^{(n+1)}\exp\frac{1}{12n + 13} } = C_1.\frac{x^{n+1}.\exp(n+1 - \frac{1}{12n + 13})}{(n+1)^{(n+\frac{1}{2})}} \\
+            = & C_1.\frac{(ex)^{n+1}}{(n+1)^{(n+\frac{1}{2})}} \overset{C_2 = ex}{=} C_1.\frac{C_2^{n+1}}{(n+1)^{(n+\frac{1}{2})}}
+        \end{split}
+    \end{equation}
+    
+    За $n \gg C_1$ дробта става произволно близка до 0. Нека имаме отместване $k_1(n) = C_2^{n+1}$. очевидно е примитивно рекурсивна функция - $e$ и $x$ са примитивно рекурсивни числа, също така степенуването с естествено число.
+
+    \begin{equation*}
+        C_1 . \frac{C_2^{n+1}}{(C_2^{n+1}+1)^{(n+\frac{1}{2})}} = C_1.\frac{1}{(C_2^{n+1}+1)^{(n-\frac{1}{2})}}
+    \end{equation*}
+    Очевидно дробта (с подходящо примитивно рекурсивно $k_2$ отместване на $n$) може да се направи произволно близка до 0 (в числител имаме константа, а в знаменател - израз от вида $c^2n$, което расте много бързо).
+    
+    Значи с подходящи отмествания $f'_{\exp x}$ е име за $\exp x$. Нека $k = k_2 \circ k_1 \circ g$. Тогава:
+    \begin{equation}
+        f'_{\exp x}(n) = \sum\limits_{i=0}^{n} \frac{f_x(k(n))^i}{i!}
+    \end{equation}
+\end{proof}
+\begin{solution}
+    В доказателството използваме следните факти наготово:
+    \begin{fact}
+        Събирането (крайна сума), изваждането, умножението (крайно произведение) и делението (със знаменател различен от 0) са примитивно рекурсивни операции.
+    \end{fact}
+    както и \propref{prop:exp-prim-rec}
+
+    Търсим примитивно рекурсивна ф-ия $f_\pi: \N \to \Q$, т.ч.
+    \begin{equation*}
+        |f_\pi(n) - \pi| < \frac{1}{n+1}
+    \end{equation*}
+
+    Можем да приближаваме $\frac{\pi}{2}$ понеже делението на 2 (изобщо с $\Q$ число) е примитивно рекурсивна операция. Освен това можем да опростим още като приближаваме $\log \frac{\pi}{2}$, тъй като $\exp$ е примитивно рекурсивна операция. Така, че ще търсим $g_\pi: \N \to \Q$, т.ч. $g_\pi(n)$ е име за $\log \frac{\pi}{2}$:
+    \begin{equation}
+        |g_\pi(n) - \log \frac{\pi}{2}| < \frac{1}{n+1}
+    \end{equation}
+    и тогава за подходящо примитивно рекурсивно отместване $k$ (известно от \propref{prop:exp-prim-rec}) на аргумента, можем да дефинираме $f_\pi(n) = (\exp \circ g \circ k) (n)$
+
+    Нека дефинираме:
+    \begin{equation}
+        \begin{split}
+            g(n) = & \log \left(\prod\limits_{k=1}^n \frac{4k^2}{4k^2 - 1} \right) = \sum\limits_{k=1}^n \log \left(\frac{4k^2}{4k^2 - 1} \right) \\
+            = & \sum\limits_{k=1}^n \left( \log(4k^2) - \log(4k^2 - 1)\right) = \sum\limits_{k=1}^n \left( 2 \log(2k) - \log(2k-1) - \log(2k+1)\right)
+        \end{split}
+    \end{equation}
+    Нека разгледаме един член от реда:
+    \begin{equation}
+        \begin{split}
+             & 2 \log(2k) - \log(2k-1) - \log(2k+1) =  (\log(2k) - \log(2k-1)) + (\log(2k) - \log(2k+1)) \\
+             & (\log(2k) - \log(2k-1)) - (\log(2k + 1) - \log(2k))
+        \end{split}
+    \end{equation}
+    Ако означим $\left\{a_k = \log(2k) - \log(2k-1)\right\}_{k \in \N^+}$. Тогава общия член е:
+    \begin{equation}
+        a_k - a_{k+1}
+    \end{equation}
+    Да разгледаме сумата:
+    \begin{equation*}
+        \begin{split}
+            & \sum\limits_{k=1}^n a_k - a_{k+1} \\
+            = & a_1 \underbrace{- a_2 + a_2} \underbrace{- a_3 + a_3} - \underbrace{\dots + a_k} \underbrace{- a_{k+1} + a_{k+1}} - a_{k+2} + \dots \underbrace{ -a_n + a_n} - a_{n+1} \\
+            \overset{\text{"телескопична" сума}}{=} & a_1 - a_{n+1} = \\
+            = & 2 \log(2) - \underbrace{\log(1)}_{=0} - \log(3) - 2\log2.\log(n+1) + \log(2n+1) + \log(2n+3) \\
+            = & \underbrace{2 \log(2) - \log(3)}_{=C \in \R} - 2\log2.\log(n+1) + \log(2n+1) + \log(2n+3) \\
+            = & C - 2\log2.\log(n+1) + \log2.\log(n+\frac{1}{2}) + \log2.\log(n+\frac{3}{2}) \\
+            = & C - \log2\left(2\log(n+1) + \log(n+\frac{1}{2}) + \log(n+\frac{3}{2})\right)
+        \end{split}
+    \end{equation*}
+    Оказва се, че константата $C$ е примитивно рекурсивна (вж. \exerciseref{exercise:log2-3-prim-rec})
+    \begin{equation*}
+        g(n) = C - \log2\left(2\log(n+1) + \log(n+\frac{1}{2}) + \log(n+\frac{3}{2})\right)
+    \end{equation*}
+    Не е сигурно колко това представяне ще ни свърши някаква работа.
+
+    Разглеждаме грешката:
+    \begin{equation}
+        |g_\pi(n) - \log \frac{\pi}{2}| = \left|\sum\limits_{k=n+1}^\infty \left( 2 \log(2k) - \log(2k-1) - \log(2k+1)\right)\right|
+    \end{equation}
+    Това отново е телескопична сума. Позната формула е използвана за пръв път в \\
+    \citetitle{torricellidimensione} \cite{torricellidimensione}. Оказва се, че формулата важи дори и за безкрайна сума.
+    \begin{equation} \tag{греда}
+        \begin{split}
+            & \left|\sum\limits_{k=n+1}^\infty \left( 2 \log(2k) - \log(2k-1) - \log(2k+1)\right)\right|\\
+            = & \left| \left( 2 \log(2n + 2) - \log(2n+1) - \log(2n+3) \right)- \lim\limits_{k \to \infty} \left( 2 \log(2k) - \log(2k-1) - \log(2k+1)\right) \right| \\
+            = & \left| \left( 2 \log(2n + 2) - \log(2n+1) - \log(2n+3) \right) - \lim\limits_{k \to \infty} \left( 2 \log2+2\log k - \log2 - \log(k-\frac{1}{2}) - \log2 - \log(k+\frac{1}{2})\right) \right| \\
+            = & \left| \left( 2 \log(2n + 2) - \log(2n+1) - \log(2n+3) \right) + \lim\limits_{k \to \infty} \left(2\log k  - \log(k-\frac{1}{2}) - \log(k+\frac{1}{2})\right) \right| \\
+            = & \left| \left( 2 \log(2n + 2) - \log(2n+1) - \log(2n+3) \right) + \lim\limits_{k \to \infty} \left(\log \frac{k^2}{k^2 - \frac{1}{4}}\right) \right| \\
+            = & \left| \left( 2 \log(2n + 2) - \log(2n+1) - \log(2n+3) \right) + \lim\limits_{k \to \infty} \left(\log \frac{k^2}{k^2\left(1 - \frac{1}{4}\right)}\right) \right| \\
+            = & \left| \left( 2 \log(2n + 2) - \log(2n+1) - \log(2n+3) \right) + \lim\limits_{k \to \infty} \left(\log \frac{1}{\left(1 - \frac{1}{4k^2}\right)}\right) \right| \\
+            = & \left| \left( 2 \log(2n + 2) - \log(2n+1) - \log(2n+3) \right) + 1 \right| \\
+            \leq & \left| \left( 2 \log(2n + 3) - \log(2n+3) - \log(2n+3) \right) + 1 \right| \\
+            \leq & 1 \\
+        \end{split}
+    \end{equation}
+    
+\end{solution}

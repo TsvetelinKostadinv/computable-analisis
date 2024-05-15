@@ -1,0 +1,495 @@
+\section{Формален апарат}
+\begin{notation}
+    Частична ф-ия $f: \subseteq \N^k \to \N$
+\end{notation}
+Искаме да дефинираме изчислимост за ф-ия $f: \subseteq \N^k \to \N$
+% \begin{definition}
+%     Ф-ия $f: \subseteq \N^k \mapsto \N$ е изчислима $\iff$ съществува машина на Тюринг
+% \end{definition}
+
+\subsection{Примитивно рекурсивни ф-ии}
+\begin{definition}
+    Индуктивна дефиниция
+    \begin{itemize}
+        \item[базови ф-ии] $0(x) = 0, S(x) = x+1, I_k^n(x_1,\dots, x_n) = x_k$
+        \item[операции] 
+            \subitem Суперпозиция(композиция) - $(f, g_1, \dots, g_k) \mapsto h : h(\mathbf{x}) = f(g_1(\textbf{x}), \dots, g_k(\textbf{x})$
+            \subitem Примитивна рекурсия (Ограничен цикъл)
+            \begin{equation}
+            (f, g) \mapsto h
+                \begin{cases}
+                    h(\textbf{x}, 0) = f(\textbf{x})\\
+                    h(\textbf{x}, y+1) = g(\textbf{x}, y, h(\textbf{x}, y)
+                \end{cases}
+            \end{equation}
+            \subitem Минимизация - $f \mapsto h : h(\textbf{x}) = \mu y(f(\textbf{x}, y) = 0)$
+    \end{itemize}
+    Където $\textbf{x}$ е вектор $(x_1, \dots, x_n)$
+
+    $f$ е примитивно рекурсивна $\iff f\in Close($базови ф-ии$ \mid $ суперпозиция и примитивна рекурсия$)$ 
+\end{definition}
+\begin{definition}
+    $f$ е частично рекурсивна(изчислима) $\iff f\in Close($базови ф-ии$ \mid $ суперпозиция, примитивна рекурсия и минимизация$)$ 
+\end{definition}
+\begin{definition}
+    тотална \& изчислима $\iff$ рекурсивна
+\end{definition}
+
+\begin{notation}
+    $h(\textbf{x})\downarrow \iff \forall z < y f(\textbf{x}, y)\downarrow \neq 0 \land f(\textbf{x}, y) = 0$
+\end{notation}
+Не е очевидно дали всяка изчислима функция има такова представяне - чрез суперпозиция, примитивна рекурсия и минимизация.
+\begin{proposition}
+    Има функция, която е рекурсвина, но не е примитивно рекурсивна.
+\end{proposition}
+\begin{proof}
+    Доказва се по "Изчислимост и сложност"
+\end{proof}
+Няколко примера за примитивно рекурсивно ф-ии:
+\begin{example}
+    \begin{equation*}
+        \lambda x y.\ x+y
+    \end{equation*}
+\end{example}
+\begin{example}
+    \begin{equation*}
+        \lambda x y.\ x*y
+    \end{equation*}
+\end{example}
+\begin{example}
+    \begin{equation*}
+        \lambda x y.\ x^y
+    \end{equation*}
+\end{example}
+\begin{example}
+    \begin{equation*}
+        \lambda x.\ x!
+    \end{equation*}
+\end{example}
+\begin{example}
+    Отсечена разлика
+    \begin{equation*}
+        \lambda x y.\ x\dot{-}y = max\{x-y, 0\}
+    \end{equation*}
+\end{example}
+\begin{example}
+    \begin{equation*}
+        \lambda x y.\ min\{x, y\}
+    \end{equation*}
+\end{example}
+\begin{example}
+    \begin{equation*}
+        \lambda x y.\ max\{x, y\}
+    \end{equation*}
+\end{example}
+\begin{example}
+    \begin{equation*}
+        \lambda x y.\ |x - y|
+    \end{equation*}
+\end{example}
+\begin{example}
+    \begin{equation*}
+        \lambda x.\ sg(x) = \begin{cases}
+            0, x = \text{0} \\
+            1, x \neq \text{0}
+        \end{cases}
+    \end{equation*}
+\end{example}
+\begin{example}
+    \begin{equation*}
+           \lambda x.\ \Bar{sg(x)} = 1 - sg(x)
+    \end{equation*}
+\end{example}
+
+Конструкция за случаите
+\begin{equation}
+    f(\textbf{x}) = \begin{cases}
+        g_1(\textbf{x}), P_1(\textbf{x}) \\
+        \vdots \\
+        g_k(\textbf{x}), P_k(\textbf{x})
+    \end{cases}
+\end{equation}
+Изразява се чрез примитивна рекурсия
+
+\begin{definition}
+    $P$ е примитивно рекурсивен(изчислим) предикат $\iff$ $\xi_p: \N^k \mapsto \{0, 1\}$ е примитивно рекурсивна(изчислима) ф-ия, където $\xi_P(\textbf{x}) = 0$, ако $P(\textbf{x})$ и $xi_P(\textbf{x}) = 1$, ако $\neg P(\textbf{x})$ 
+\end{definition}
+
+\subsection{Ограничени операции}
+Ограничена сума:
+\begin{equation}
+    f \mapsto \lambda \textbf{x}y \sum\limits_{z \leq y} f(\textbf{x}, z)
+\end{equation}
+Ограничено произведение, минимум, максимум
+
+Ограничена минимизация
+\begin{equation}
+    f \mapsto \lambda \textbf{x}y \mu z \leq y (f(\textbf{x}, z) = 0
+\end{equation}
+
+Ограничените операции са \textbf{изчислими}
+
+Ограничен квантор за изчислим предикат:
+\begin{equation}
+    P \mapsto \square z \leq y P(\textbf{x}, z) \text{, където } \square \in \{\forall, \exists\}
+\end{equation}
+
+\section{Кодиране}
+Кодиране на $\N^k$. Започваме от $n=2$
+\begin{equation}
+    J: \N^2 \to \N
+    \begin{cases}
+        J(x, y) = 2^x(2y+1) \dot{-} 1 \\
+        J(x, y) = 1 + \dots + x + y + x
+    \end{cases}
+\end{equation}
+И двата варианта вършат работа. И двете са \textbf{примитивно рекурсивни биекции}.
+
+Забелязваме, че $J(x, y) \geq max\{x, y\}$.
+
+Нека $L, R$ са 2 декодиращи ф-ии, т.ч:
+\begin{equation}
+    \begin{split}
+    L(J(x,y)) = x \\
+    R(J(x,y)) = y \\
+    J(L(z), R(z)) = z
+\end{split}
+\end{equation}
+Защо $L, R$ са примитивно рекурсивни?
+\begin{equation}
+    \begin{split}
+        L(z) = \mu_{x \leq z}\; \exists y \leq z (z = J(x,y)) \\
+        R(z) = \mu_{y \leq z}\; \exists x \leq z (z = J(x,y)) \\
+    \end{split}
+\end{equation}
+
+И ще кодираме с индуктивна дефиниция:
+\begin{itemize}
+    \item[база] $J_1(x) = x$
+    \item[стъпка] $J_{k+1}(x_1, \dots, x_k, x_{k+1}) = J(J_k(x_1, \dots, x_k), x_{k+1})$
+\end{itemize}
+Лесно се вижда, че $J_k : \N^k \to \N$ е примитивно рекурсивна биекция
+
+За обратните функции
+\begin{equation*}
+    (J_k(\textbf{x}))_i^k = x_i
+\end{equation*}
+
+\begin{lemma}[Гьодел]
+    Съществува примитивно рекурсивна ф-ия $\gamma: \N^2 \to \N$, т.ч. всяка крайна непразна редица от ест. числа има вида $\gamma(z, 0), \gamma(z, 1), \dots, \gamma(z, t)$ за подходящо $z$
+\end{lemma}
+\begin{proof}
+    Ще гледаме на $\gamma$ като редица $s_0, s_1, \dots, s_t$ (деф. $s_i = \gamma(z, i)$ 
+    \begin{equation*}
+        z = J_{t+2}(0, s_t, s_{t-1}, \dots, s_0)
+    \end{equation*}
+    И дефиницията на $s_i$
+    \begin{equation*}
+        \begin{split}
+            s_0 = R(z) \\
+            s_1 = R(L(z)) \\
+            \vdots \\
+            s_t = R(L^t(z))
+        \end{split}
+    \end{equation*}
+    значи $\gamma(z, i) = R(L^i(z))$ и това е дефиницията. Но $L \& R$ са примитивно рекурсивни $\Rightarrow$ $\gamma$ е примитивно рекурсивна
+\end{proof}
+
+\begin{definition}
+    $\psi : \N^{k} \to \N$ е универсална ф-ия за примитивно рекурсивните ф-ии $\iff \forall f \in PrimRec \exists e \in \N \forall \textbf{x} \in \N^k: f(\textbf{x}) = \psi(e, \textbf{x})$ 
+\end{definition}
+
+\begin{proposition}
+    Съществува рекурсивна ф-ия $\psi: \N^2 \to \N$, която е универсална за класа на примитивно рекурсивните едноместни функции. 
+\end{proposition}
+Зависи от формализма - ако бяхме с машини на Тюринг, има естествено кодиране и $\psi$ само симулира действието на машината. С примитивно рекурсивни ф-ии ще трябва да кодираме синтактичните им дървета.
+
+\begin{proof}
+    \begin{equation*}
+        \begin{split}
+            0 & \mapsto \langle 0, c_0\rangle \\
+            s & \mapsto \langle 0, c_1\rangle \\
+            I_k^n &\mapsto \langle 0, \langle 1, n, k\rangle\rangle \\
+            \underbrace{f}_{e_f}, \underbrace{g_1}_{e_1}, \dots, \underbrace{g_k}_{e_k} \overset{\text{примитивна рекурсия}}{\mapsto} h &\mapsto \langle 1, \langle1, \langle e_f, e_1, \dots, e_k\rangle\rangle\rangle \\
+            \underbrace{f}_{e_f}, \underbrace{g}_{e_g} \overset{\text{композиция}}{\mapsto} h &\mapsto \langle 2, \langle e_f, e_g\rangle\rangle
+        \end{split}
+    \end{equation*}
+    Представлява кодировка на примитивно рекурсивните ф-ии.
+\end{proof}
+\begin{proposition}
+    $\psi$ не е примитивно рекурсивна
+\end{proposition}
+\begin{proof}
+    Интуитивно е подобно на halting-problem.
+
+    Допускаме, че е примитивно рекурсивна, тогава има код. Тогава нека следната ф-ия
+    \begin{equation*}
+        \lambda x.\ \psi(x, x) + 1
+    \end{equation*}
+    ще има код $e$. Тогава
+    \begin{equation*}
+        \psi(e, x) = \psi(x, x) + 1
+    \end{equation*}
+    Но при $x = e$ получаваме абсурд.
+\end{proof}
+
+\begin{theorem}
+    За всяка частично рекурсивна ф-ия $f: \subseteq \N^k \to \N$, съществува примитивно рекурсивна ф-ия $h: \N^{k+2} \to \N$, т.ч. 
+    \begin{equation}
+        f(\textbf{x}) = y \iff \exists z (h(\textbf{x}, y, z) = 0)
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Индукция по дефиницията на $f$.
+    \begin{itemize}
+        \item[база] Ако $f$ е примитивно рекурсивна, то $h(\textbf{x}, y, z) = |f(\textbf{x}) - y|$
+        \item[операции]
+            \subitem[суперпозиция] $f(\textbf{x}) = f_0(f_1(\textbf{x}), \dots, f_k(\textbf{x}))$. При инд. предположение:
+            \begin{equation*}
+                \begin{split}
+                    f_0(\textbf{t}) = y \iff \exists z_0 (h_0(\textbf{t}, y, z_0) = 0\\
+                    f_i(\textbf{x}) = t_i \iff \exists z_i (h_i(\textbf{t}, y, z_i) = 0 \text{ за } i \in \{1, \dots k\}
+                \end{split}
+            \end{equation*}
+            Тогава
+            \begin{equation*}
+            \begin{split}
+                & f(\textbf{x}) = y \\
+                & \iff \exists t_1, \dots t_k (\&_{i=1}^{k} f_i(\textbf{x}) = t_i \& f_0(\textbf{t}) = y) \\
+                & \iff \text{пропуснах реда, естествена трансформация е}\\
+                & \iff \exists t_1 \dots t_k, z_0 \dots z_k (h_1(\textbf{x}, t_1, z_1) + \dots + h_k(\textbf{x}, t_k, z_k) + h_0(\textbf{t}, y, z_0) = 0)\\
+                & z = J_{2k+1}(t_1, \dots, t_k, z_0, z_1, \dots z_k) \\
+                & \iff \exists z (\sum\limits_{i=1}^{k} h_i(\textbf{x}, (z)_i, (z)_k+i+1) + h_0(\textbf{t}, (z)_0, (z)) 
+            \end{split}
+            \end{equation*}
+            \subitem[примитивна рекурсия] 
+            \begin{equation*}
+                \begin{split}
+                    f(\textbf{x}, 0) = f_0(\textbf{x}) \\
+                    f(\textbf{x}, y+1) = f_1(\textbf{x}, y, f(\textbf{x}, y))
+                \end{split}
+            \end{equation*}
+            С индукционно предположение:
+            \begin{equation*}
+                \begin{split}
+                    f_0(\textbf{x}) = y \iff \exists z_0 (h_0(\textbf{x}, y, z_0) = 0) \\
+                    f_1(\textbf{x}, y, t) = t' \iff \exists z_1 (h_1(\textbf{x}, y, t, t', z_1) = 0) \\
+                \end{split}
+            \end{equation*}
+            Тогава
+            \begin{equation*}
+                \begin{split}
+                    & f(\textbf{x}, y) = z \\ 
+                    & \iff \exists z_0, \dots z_y (f_0(\textbf{x}) = z_0 \& \forall i < y z_{i+1} = f_1(\textbf{x}, i, z_i) \& z_y = z) \\
+                    & \iff \exists z_0, \dots z_y (\exists w_0 h_0(\textbf{x}, z_0, w_0) = 0 \& \forall i < y \exists w_{i+1} (f_1(\textbf{x}, i, z_i, z_{i+1}, w_{i+1}) = 0) \& z_y = z) \\
+                    & z \text{ е код на } z_0, \dots z_y, w_0, w_1, \dots, w_y \\
+                    & \iff \exists z ( h_0(\textbf{x}, \gamma(z, 0), \gamma(z, y+1) + \sum\limits_{i<y} h_1(\textbf{x}, i, \gamma(z, i), \gamma(z, i+1), \gamma(z, i+y+1) + |\gamma(z, y) - z| = 0 )
+                \end{split}
+            \end{equation*}
+            \subitem[минимизация]
+            \begin{equation*}
+                f(\textbf{x}) = \mu z (f_0(x, z) = 0)
+            \end{equation*}
+            С инд. предположение:
+            \begin{equation*}
+                f_0(\textbf{x}, z) = t \iff \exists w (h_0(\textbf{x}, z, t) = 0)
+            \end{equation*}
+            \begin{equation*}
+                \begin{split}
+                    & f(x) = y \\
+                    & \iff \exists t_0 \dots t_y ( \forall i \leq y f_0(x, i) = t_i \& \forall i < y t_i \neq 0 \& t_y = 0) \\
+                    & \iff \exists t_0 \dots t_y ( \forall i\leq y \exists w_i (h_0(\textbf{x}, i ,t_i, w_i) = 0) \& \forall i < y t_i \neq 0 \& t_y = 0 ) \\
+                    & z \text{ е код на } t_0 \dots t_y, w_0 \dots w_y\\
+                    & \iff \exists z (\sum\limits_{i \leq y} h_0(\textbf{x}, i, \gamma(z, i), \gamma(z, i+y+1) + \sum\limits_{i < y} \Bar{sg(\gamma(z,i)} + \gamma(z, y) = 0 )
+                \end{split}
+            \end{equation*}
+    \end{itemize}
+\end{proof}
+\begin{theorem}[Нормална форма] \label{thm:normal-form}
+    За вс. частично рек. ф-ия $f$ съществува примитивно рек. $h: \N^{k+1} \to \N$, т.ч.
+    \begin{equation}
+        f(\textbf{x}) = L( \mu z (h(\textbf{x}, z) = 0 )
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Нека $h'$ е т.ч.
+    \begin{equation*}
+        f(\textbf{x}) = y \iff \exists t(h'(\textbf{x}, y, t) = 0)
+    \end{equation*}
+    Нека $z = J(y, t)$ и значи търсената $h$ е
+    \begin{equation*}
+        h(\textbf{x}, z) = h'(\textbf{x}, L(z), R(z))
+    \end{equation*}
+    И от тук следва, че:
+    \begin{equation*}
+        f(\textbf{x}) \downarrow \iff \exists z(h(\textbf{x}, z) = 0)
+    \end{equation*}
+\end{proof}
+
+Как от универсалната ф-ия $\psi$ получаваме ефективна номерация на всяка $k$-местна изчислима ф-ия?
+\begin{equation}
+    \varphi_e^{(k)}(\textbf{x}) = L(\mu t (\psi(e, J_{k+1}(\textbf{x}, t)) = 0) )
+\end{equation}
+\begin{equation*}
+    g(y) = h( (y)_1, \dots, (y)_{k+1})
+\end{equation*}
+и $e$ е код на $g$
+\begin{equation*}
+    \psi(e, y) = g(y)
+\end{equation*}
+
+\newpage
+\section{Разрешими/Полуразрешими множества}
+От 2024-03-06.
+\subsection{Преговор}
+\begin{theorem}
+    Теорема за нормалната форма.
+    \begin{equation*}
+        \varphi_e^{(k)}(\textbf{x}) = L( \mu t( \psi(e, J_{k_1}( \textbf{x}, t )) = 0 ))
+    \end{equation*}
+    \thref{thm:normal-form}
+\end{theorem}
+\begin{notation}
+    \begin{equation*}
+        \Phi(e, x) = \varphi_e^1(x)
+    \end{equation*}
+    е частично рекурсивна.
+\end{notation}
+При $\Phi(e,x)$ не върви диагонализацията, защото просто не е дефинирана при собствения си код.
+\begin{proposition}
+    Ф-ията $\lambda x. \Phi(x, x)$ няма тотално изчислимо продължение
+\end{proposition}
+\begin{proof}
+    Да допуснем, че име - $\Theta$ е изчислимо продължение на $\Phi(x, x)$. Нека $e$ е индекс на $\lambda x. \Theta(x) + 1$.
+
+    Значи $\Phi(e, x) = \Theta(x) + 1 \forall x$
+
+    при $x=e:\; !\Phi(e,e) \Rightarrow \Theta(e) = \Phi(e, e)$ - $\Theta$ продължава $\Phi$
+
+    Тогава $\Phi(e, e) = \Theta(e) + 1$
+\end{proof}
+\begin{corollary}
+    \begin{equation*}
+        K = \left\{x \mid \Phi(x, x) \downarrow \right\}
+    \end{equation*}
+\end{corollary}
+\begin{proof}
+    Ако допуснем, че $K$ е разрешимо.
+    \begin{equation*}
+        \Theta(x) = \begin{cases}
+            \Phi(x, x) & , x \in K \\
+            0 & , x \notin K
+        \end{cases}
+    \end{equation*}
+    Значи $\Theta$ е рекурсивно(тотално и изчислимо) продължение на $\Phi$
+\end{proof}
+
+\subsection{Разрешими/Полуразрешими множества}
+\begin{definition}
+    \begin{equation*}
+        R \subseteq \N^k
+    \end{equation*}
+    е полуразрешимо(рекурсивно номеруемо) $\iff$ ако $R = dom(f)$, където $f: \subseteq \N^k \to \N$ - изчислима
+\end{definition}
+\begin{corollary}
+От доказаните до момента, можем да видим свойства на полуразрешимите мн-ва:
+    \begin{enumerate}
+        \item $R$ е полуразрешимо $\iff$ съществува примитивно рек. ф-ия $h: \N^{k+1} \to \N$, т.ч. $\left(\textbf{x} \in R \iff \exists t( h(\textbf{x}, t ) = 0)\right)$
+        
+        \begin{proof}
+        \begin{itemize}
+            \item[($\Rightarrow$)] $R=dom(f)$ по \thref{thm:normal-form} $f(\textbf{x}) = L(\mu t (h(\textbf{x}, t) = 0))$
+
+            $\textbf{x} \in R \iff f(\textbf{x})\downarrow \iff \exists t (h(\textbf{x}, t) = 0)$
+
+            \item[($\Leftarrow$)] имаме примит. рек. ф-ия $h$, трябва да докажем, че $R$ е домейн на някаква ф-ия, която е изчислима. Нека
+            \begin{equation*}
+                f(\textbf{x}) = \mu t ( h( \textbf{x}, t ) = 0 )
+            \end{equation*}
+        \end{itemize}
+        \end{proof}
+        \item $R$ е полуразрешимо $\iff$ $\exists f: \subseteq \N^k \to \N$, т.ч. $R = range(f)$
+        
+        \begin{proof}
+        \begin{itemize}
+            \item[($\Rightarrow$)] $R = dom(f)$ е полуразрешимо и $f: \subseteq \N \to \N$. Нека $h$ е примитивно рекурсивна, т.ч.
+            \begin{equation*}
+                f(x) = y \iff \exists t ( h(x, y, t) = 0 ) 
+            \end{equation*}
+            И дефинираме
+            \begin{equation*}
+                g(x) = \begin{cases}
+                    x &, f(x) \downarrow \\
+                    \uparrow &, f(x) \uparrow
+                \end{cases}
+            \end{equation*}
+            Интуитивно изравняваме домейна и кодомейна в $g$ като подфункция на идентитета.
+
+            Тогава:
+            \begin{equation*}
+                x \in range(g) \iff x \in dom(f)
+            \end{equation*}
+            \item[($\Leftarrow$)] $x \in range(g), g: \subseteq \N \to \N$ е изчислима
+
+            избираме $h: \N^3 \to N$ е примитивно рек, т.ч.
+            \begin{equation*}
+                g(x) = y \iff \exists z ( h(x, y, z) = 0 )
+            \end{equation*}
+            \begin{equation*}
+                y \in R \iff \exists x g(x) = y \iff \exists x \exists z h(x, y, z) = 0 \iff \exists t ( h((t)_0, y, (t)_1) = 0 )
+            \end{equation*}
+            $R$ е полуразрашимо от горното
+        \end{itemize}
+        \end{proof}
+        \item $R$ е разрешимо $\iff R$ е полуразрешимо
+        
+        \begin{proof}
+            $R = dom(f)$
+            \begin{equation*}
+                f(\textbf{x}) = \begin{cases}
+                    0 &, \textbf{x} \in R \\
+                    \uparrow &, \textbf{x} \notin R
+                \end{cases}
+            \end{equation*}
+        \end{proof}
+        \item $K$ е полуразрешимо и \textbf{не е} разрешимо
+        \item $R_1, R_2$ - полуразрешими $\Rightarrow R_1 \cap R_2 \& R_1 \cup R_2$ са полуразрешими
+        
+        \begin{proof}
+            \begin{itemize}
+                \item[$\cap$] тривиално е
+                \item[$\cup$] избираме $h_1, h_2$, т.ч
+                \begin{equation*}
+                    \textbf{x} \in R_i \iff \exists t ( h_i(\textbf{x}, t) = 0 ),\; i \in \{1, 2\}
+                \end{equation*}
+                \begin{equation*}
+                    \textbf{x} \in R_1 \cup R_2 \iff \exists ( h_1( \textbf{x}, t ).h_2(\textbf{x}, t) = 0 )
+                \end{equation*}
+            \end{itemize}
+        \end{proof}
+    \end{enumerate}
+\end{corollary}
+\begin{theorem}[Пост]\label{thm:Post}
+    $R$ е разрешимо $\iff$ $R \& \Bar{R}$ са полуразрешими
+\end{theorem}
+\begin{proof}
+    \begin{itemize}
+        \item[$\Rightarrow$] $R$ е резрешимо $\Rightarrow$ $R$ е полуразрешимо и $\Bar{R}$ е разрешимо(в частност полуразрешимо)
+        \item[$\Leftarrow$] Знаем, че
+        \begin{equation*}
+            \begin{split}
+                & \textbf{x} \in R \iff \exists t( h(\textbf{x},t) = 0 )\\
+                & \textbf{x} \in \Bar{R} \iff \exists t( h'(\textbf{x},t) = 0 )
+            \end{split}
+        \end{equation*}
+        Тогава нека:
+        \begin{equation*}
+            g(\textbf{x}) = \mu t ( h(\textbf{x},t).h'(\textbf{x}, t) = 0 )
+        \end{equation*}
+        Очевидно $g$ е рекурсивна и твърдим, че:
+        \begin{equation*}
+            \textbf{x} \in R \iff h(\textbf{x}, g(\textbf{x})) = 0
+        \end{equation*}
+        Нека $\textbf{x} \in R$. Допускаме, че $h(\textbf{x}, g(\textbf{x})) \neq 0 \Rightarrow h'(\textbf{x}, g(\textbf{x})) = 0 \Rightarrow x \in \Bar{R}$ Абсурд
+    \end{itemize}
+\end{proof}

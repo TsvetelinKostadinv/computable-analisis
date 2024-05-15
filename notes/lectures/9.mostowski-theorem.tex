@@ -1,0 +1,41 @@
+\section{Теорема на Мостовски}
+\begin{theorem}[Мостовски \cite{mostowski1957computable}]
+    Съществува изчислима редица $\{x_n \in \R\}_{n \in \N}$, т.ч.
+    \begin{itemize}
+        \item има изчислима $\rho_2: \N^2 \to \N$, т.ч. $\lambda k.\; \rho_2(n,k)$ е представяне на $x_n$ в основа 2
+        \item не съществува изчислима $\rho_{10}: \N^2 \to \N$, т.ч. $\lambda k.\; \rho_{10}(n,k)$е представяне на $x_n$ в основа 10
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    Нека $A \& B$ са полуразрешими, рекурсивно неотделими множества ($A \subseteq C$ и $B \subseteq \Bar{C}$, то $C$ не е разрешимо). И $A \cap B = \emptyset$. 
+    
+    Дефинираме:
+    \begin{equation}
+        \rho_2(n,k) = \begin{cases}
+            0 &, \exists i > k:\; a(i) = n \\
+            1 &, \exists i > k:\; b(i) = n \\
+            D_k &, \text{иначе}
+        \end{cases}
+    \end{equation}
+    Където $range(a) = A, range(b) = B, \frac{1}{5} = \langle0.D_1 D_2 \dots D_k \dots \rangle_2$.
+
+    Знаем, че $x_n = \sum\limits_{k\in\N} \rho_2(n,k).2^{-k}$ е изчислима редица.
+
+    Нека разгледаме случаи:
+    \begin{itemize}
+        \item[$n \in A$] $\Rightarrow n = a(i)$ за някое (най-малкото) $i$. Значи $x_n = 0.D_1 D_2 \dots D_i 00 \dots 0 \dots \Rightarrow x_n < \frac{1}{5}$
+        \item[$n \in B$] $\Rightarrow n = b(i)$ за някое (най-малкото) $i$. Значи $x_n = 0.D_1 D_2 \dots D_i 11 \dots 1 \dots \Rightarrow x_n > \frac{1}{5}$
+        \item[$n \notin A\cup B$] $\Rightarrow x_n = \frac{1}{5}$.
+    \end{itemize}
+
+    Допускаме, че $\rho_{10}(n, k)$ съществува - представяне на $x_n$ в основа 10.
+    \begin{itemize}
+        \item[$n \in A$] $\Rightarrow x_n < \frac{1}{5} \Rightarrow \rho_{10}(n,1) < 2$
+        \item[$n \in B$] $\Rightarrow x_n > \frac{1}{5} \Rightarrow \rho_{10}(n,1) \geq 2$
+    \end{itemize}
+    Значи:
+    \begin{equation}
+        C = \left\{n \mid \rho_{10}(n,1) < 2 \right\}    
+    \end{equation}
+    е разрешимо и отделя $A \& B$ - абсурд. Значи няма такава функция $\rho_{10}$.
+\end{proof}

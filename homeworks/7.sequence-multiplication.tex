@@ -1,0 +1,71 @@
+\begin{problem}
+    Докажете, че ако $\{a_n\}_{n\in\N}$ и $\{b_n\}_{n\in\N}$ са изчислими (примитивно рекурсивни) редици от реални числа, то $\{a_n.b_n\}_{n\in\N}$ също е изчислима (примитивно рекурсивна) редица от реални числа
+\end{problem}
+\begin{solution}
+    Щом са изчислими значи има ф-ии $h_a, h_b : \N^2 \to \Q$ - изчислими (примитивно рекурсивни), т.ч.:
+    \begin{equation}
+        \forall x \in \{a,b\},\ n\in\N,\ i\in\N:\; \left| h_x(n, i) - a_n\right| < \frac{1}{i+1}
+    \end{equation}
+    Имаме следния факт наготово:
+    \begin{fact}
+        Нека $f,g: \N \to \Q$ са изчислими (примитивно рекурсивни). Тогава $f.g$ също е изчислима (примитивно рекурсивна)
+    \end{fact}
+
+    Значи за произволно $n\in\N$, $a_n.b_n$ можем да приближаваме с $h_a(n, k).h_b(n, k)$, където $k$ ще зависи от $i$. Искаме:
+    \begin{equation}
+        \left|h_a(n, k).h_b(n, k) - a_n.b_n\right| < \frac{1}{i+1}
+    \end{equation}
+    Оценяваме грешката:
+    \begin{equation}
+        \begin{split}
+            \left|h_a(n, k).h_b(n, k) - a_n.b_n\right| = \left|h_a(n, k).h_b(n, k) - h_b(n,k)a_n + h_b(n,k)a_n - a_n.b_n\right| \\
+            \leq \left|h_b(n, k)(h_a(n,k) - a_n) \right| + \left|a_n(h_b(n,k) - b_n)\right| \\
+            = \left|h_b(n, k)\right|\left|(h_a(n,k) - a_n) \right| + \left|a_n\right|\left|(h_b(n,k) - b_n)\right|
+        \end{split}
+    \end{equation}
+    За \textbf{фиксирано} $n$, избираме $A_n, B_n\in \N$, т.ч. $|a_n| < A_n, |h_b(n, k)| < B_n, \forall k$. И двете числа могат да се изчислят (по примитивно рекурсивен) начин. Подходящ избор за двете са:
+    \begin{equation}
+        \begin{split}
+            A_n = &\; |h_a(n, 0)| + 2 \\
+            B_n = &\; |h_b(n, 0)| + 2 
+            % A_n' = &\; \lceil a_n \rceil = 1 + \lfloor a_n \rfloor\\
+            % B_n' = &\; \lceil b_n \rceil = 1 + \lfloor b_n \rfloor
+        \end{split}
+    \end{equation}
+    % $A_n'$ и $B_n'$ са алтернативни дефиниции, които са по-близо до членовете на редиците.
+
+    Знаем също така, че $\forall k \in \N:\; h_a(n, k) < A_n$, защото редицата $\{h_a(n, k)\}_{k\in\N}$ е сходяща към $a_n$, а "най-отдалеченото" \ число то границата е точно $h_a(n,0)$. Имаме, че:
+    \begin{equation}
+        \begin{split}
+            |h_a(n, 0) - a_n| < 1\\
+            \Rightarrow |a_n| < 1 + |h_a(n, 0)|
+        \end{split}
+    \end{equation}
+    От друга страна:
+    \begin{equation}
+        \begin{split}
+            \forall k\in\N:\; |h_a(n, k) - a_n| < \frac{1}{k+1}\\
+            \Rightarrow \forall k\in\N:\; |h(n,k)| < \frac{1}{k+1} + |a_n| < 1 + |a_n| < 2 + |h_a(n, 0)|\\
+            \Rightarrow \forall k\in\N:\; |h(n,k)| < A_n
+        \end{split}
+    \end{equation}
+    
+    Аналогично за редицата $\{b_n\}$
+
+    Значи
+    \begin{equation}
+        \begin{split}
+             \left|h_a(n, k).h_b(n, k) - a_n.b_n\right| \leq \left|h_b(n, k)\right|\left|(h_a(n,k) - a_n) \right| + \left|a_n\right|\left|(h_b(n,k) - b_n)\right| \\
+             \leq \frac{B_n}{k+1} + \frac{A_n}{k+1} = \frac{A_n + B_n}{k+1}\\
+             \overset{k = (A_n + B_n)(i+1) \dot{-} 1}{=} \frac{1}{i+1}
+        \end{split}
+    \end{equation}
+    Значи функцията за приближение е точно:
+    \begin{equation}\tag{$h_{ab}$}
+        \begin{split}
+            A_n = h_a(n, 0) + 2 \\
+            B_n = h_b(n, 0) + 2 \\
+            h_{ab}(n, i) = h_a(n, (A_n + B_n)(i+1) \dot{-} 1).h_b(n, (A_n + B_n)(i+1) \dot{-} 1)
+        \end{split}
+    \end{equation}
+\end{solution}

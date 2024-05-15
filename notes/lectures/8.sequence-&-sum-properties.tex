@@ -1,0 +1,175 @@
+\section{Връзка между изчислимост на редица/ред и ефективна сходимост}
+Днес, 2024-04-03. 
+
+\begin{proposition}[Гжегорчик]
+    Редицата $\{a_n\}_{n \in \N}$ като $a: \N \to \R$ е изчислима $\iff \exists \underset{\text{изчислими}}{f,g}:\N^2 \to \N$ т.ч.:
+    \begin{equation*}
+        \left| \frac{f(n,i) - g(n, i)}{i+1} - a_n \right| < \frac{1}{i+1}
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    \begin{itemize}
+        \item[$(\Leftarrow)$] ясно
+        \item[$(\Rightarrow)$] По дефиницията за изчислима редица: $|h(n,i) - a_i| < \frac{1}{i+1}$, където $h$ е изчислима.
+
+        $\forall i \forall n$: Търсим $z \in \Z$, т.ч. $|\frac{z}{i+1} - a_n| < \frac{1}{i+1}$. 
+        \begin{equation*}
+            \left|\frac{z}{i+1} - h(n, 2i+1) + h(n, 2i+1) - a_n \right| < \frac{1}{2i+2} + \frac{1}{2i+2} = \frac{1}{i+1}
+        \end{equation*}
+        значи искаме само:
+        \begin{equation}
+            \begin{split}
+                & \left|\frac{z}{i+1} - h(n, 2i+1) \right| \leq \frac{1}{2i+2} \\
+                \iff & \left| z - \underbrace{(i+1) h(n, i+1)}_{=\frac{a-b}{c+1}} \right| \leq \frac{1}{2} \\
+                \Rightarrow & z = \left\lfloor \frac{a \dot{-} b}{c+1} + \frac{1}{2} \right\rfloor - \left\lfloor \frac{b \dot{-} a}{c+1} + \frac{1}{2} \right\rfloor
+            \end{split}
+        \end{equation}
+        Където $a, b, c$ са зависят от $n$ и $i$. Значи изразихме $z$ като зависимо от $n$ и $i$. 
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}[Ефективна граница]
+    Редицата $\{a_n\}_{n \in \N}$ като $a: \N \to \R$ е изчислима и ефективно сходяща. Тогава $l = \lim_{n \to \infty} a_n$ е изчислима (като реално число).
+\end{proposition}
+\begin{proof}
+    Знаем, че има $h$ - за сходимостта и регулатор - $\delta$ 
+    \begin{equation}
+        \begin{split}
+            \left| h(n,i) - a_n \right| < \frac{1}{i+1} \\
+            n > \delta(k) \Rightarrow  \left| a_n - l \right| < \frac{1}{k+1}
+        \end{split}
+    \end{equation}
+    Сега разглеждаме:
+    \begin{equation*}
+        \begin{split}
+            \left| h(n,i) - l \right| \leq \left| h(n,i) - a_n \right| + \left| a_n - l \right| \overset{n=\delta(2i+1) + 1}{<} \frac{1}{2i+2} + \frac{1}{2i+2} < \frac{1}{i+1}
+        \end{split}
+    \end{equation*}
+    И получаваме:
+    \begin{equation*}
+        \left| h(\delta(2i+1)+1,2i+1) - l \right| < \frac{1}{i+1}
+    \end{equation*}
+    Значи $l$ е изчислимо число.
+\end{proof}
+\begin{proposition}[]
+    Нека $\{u_n\}_{n\in\N}$ е изчислима редица $u: \N \to \R$. Тогава $\left\{\sum\limits_{m=0}^n u_m\right\}$ също е изчислима редица $\N \to \R$
+\end{proposition}
+\begin{proof}
+    Нека $\underset{\text{изчислими}}{f,g}:\N^2 \to \N$, тогава:
+    \begin{equation*}
+        \left| \frac{f(m, i) - g(m,i)}{i+1} - u_m \right| < \frac{1}{i+1}
+    \end{equation*}
+    Ще дефинираме:
+    \begin{equation}
+        \begin{split}
+            f^\Sigma (n,i) & = \sum\limits_{m=0}^n f(m, ni + n + i) \\
+            g^\Sigma (n,i) & = \sum\limits_{m=0}^n g(m, ni + n + i)
+        \end{split}
+    \end{equation}
+    Разглеждаме:
+    \begin{equation}
+        \begin{split}
+            & \left| \frac{f^\Sigma(n, i) - g^\Sigma(n,i)}{(n+1)(i+1)} - \sum\limits_{m=0}^n u_m \right| \leq \sum\limits_{m=0}^n \left| \frac{f(m, ni+n+i) - g(m, ni+n+i)}{(n+1)(i+1)} - u_m \right| \\
+            < & \sum\limits_{m=0}^n \frac{1}{(n+1)(i+1)} = \frac{1}{i+1}
+        \end{split}
+    \end{equation}
+    Значи редицата от частичните суми е изчислима.
+\end{proof}
+\begin{corollary}
+    Ако общият член на $\sum\limits_{m\in \N} u_m$ е изчислим и реда е ефективно сходящ, то неговата сума също е изчислима.
+\end{corollary}
+
+\subsection{Константа на Ойлер}
+\begin{fact}
+    $\sum\limits_{n \in \N^+} \frac{1}{n}$ е разходим, но схожда със скорост на $\log n$    
+\end{fact}
+\begin{definition}[Константа на Ойлер-Маскерони $\gamma$]
+    \begin{equation}
+         \gamma \overset{def}{=} \lim\limits_{n\to\infty}\left( \sum\limits_{m=1}^n \frac{1}{m} - \log n \right)
+    \end{equation}
+\end{definition}
+
+Ще разгледаме неговата изчислимост:
+\begin{equation} \tag{$\gamma$}
+    \begin{split}
+        \gamma \overset{def}{=} & \lim\limits_{n\to\infty}\left( \sum\limits_{m=1}^n \frac{1}{m} - \log n \right) = \lim\limits_{n\to\infty} \left( \sum\limits_{m=1}^n \frac{1}{m} - \sum\limits_{m=1}^n \left( \log(m+1) - \log m \right) \right) \\
+        = &  \sum\limits_{m\in\N^+} \left( \frac{1}{m} - \log\left(1+\frac{1}{m}\right) \right) = \sum\limits_{m\in\N^+} \sum\limits_{s = 2}^\infty \frac{(-1)^s}{s.m^s} = \sum\limits_{m\in\N} \sum\limits_{s = 2}^\infty \frac{(-1)^s}{s.(m+1)^s}
+    \end{split}
+\end{equation}
+Интересуваме се:
+\begin{enumerate}
+    \item Очевидно $\frac{(-1)^s}{s(m+1)^s}$ е изчислимо като $\N^2 \to \Q$
+    \item Дефинираме:
+    \begin{equation*}
+        h(m, t) = \sum\limits_{s=2}^{t+1} \frac{(-1)^s}{s(m+1)^s}
+    \end{equation*}
+    \item И за остатъчната сума:
+    \begin{equation*}
+        \left| \sum\limits_{s=t+2}^\infty \underbrace{\frac{(-1)^s}{s(m+1)^s}}_{\text{монотонно намаляващо}} \right| \overset{\text{Лайбниц}}{\leq} \frac{1}{(t+2)(m+1)^{t+2}} < \frac{1}{t+1}
+    \end{equation*}
+\end{enumerate}
+
+Сега да осигурим ефективната сходимост на 
+\begin{equation}
+    \sum\limits_{m=n+1}^\infty \underbrace{\left( \frac{1}{m} - \log \left( 1+ \frac{1}{m} \right)\right)}_{\geq0} = \sum\limits_{m=n+1}^\infty \sum\limits_{s=2}^\infty \frac{(-1)^s}{s(m+1)^s} \leq \sum\limits_{m=n+1}^\infty \frac{1}{2m^2}
+\end{equation}
+Борим се за:
+\begin{equation}
+    \sum\limits_{m=n+1}^\infty \frac{1}{2(m+1)^2} < \frac{1}{k+1}
+\end{equation}
+При дадено $k$ да определим $n$.
+\begin{equation*}
+    \begin{split}
+        & \sum\limits_{m=n+1}^\infty \frac{1}{(m+1)^2} \leq \sum\limits_{m=n+1}^\infty \frac{1}{m(m+1)} \\
+        = & \sum\limits_{m=n+1}^\infty \frac{1}{m} - \frac{1}{m+1} \overset{\text{телескопична сума}}{=} \frac{1}{n+1} - \underbrace{\lim\limits_{r \to \infty} \frac{1}{r}}_{=0} = \frac{1}{n+1}
+    \end{split}
+\end{equation*}
+Значи:
+\begin{equation}
+    \sum\limits_{m=n+1}^\infty \frac{1}{2(m+1)^2} \leq \frac{1}{2(n+1)} < \frac{1}{n+1}
+\end{equation}
+Значи регулатора за сходимост е $\delta(k) = k$
+
+\subsection{Фундаменталност на редица}
+\begin{proposition}[Фундаменталност на редица]
+    Нека $a: \N \to \R$ е изчислима редица и $\exists \delta$ - изчислима, т.ч. 
+    \begin{equation}
+        m > \delta(k),\ n > \delta(k):\; |a_m - a_n| < \frac{1}{k+1}
+    \end{equation}
+    $\{a_n\}$ клони ефективно към някое изчислимо реално число.
+\end{proposition}
+\begin{proof}
+    От ДИС-а знаем, че $a_n$ е сходяща - $\lim\limits_{n \to\infty} a_n = l$. Значи трябва само да докажем ефективността (от там ще следва ??? изчислимостта на границата).
+
+    Разглеждаме:
+    \begin{equation}
+        \begin{split}
+            & |a_n - l| \leq |a_n - a_m| + |a_m - l| \overset{n > \delta(2k+1)}{\underset{m > \delta(2k+1)}{=}} \frac{1}{2k+2} + |a_m - l| \\
+            = & \frac{1}{2k+2} + \lim\limits_{r\to\infty}|a_m - a_r| \overset{r > \delta(2k+1)}{\leq} \frac{1}{2k+2} + \frac{1}{2k+2} = \frac{1}{k+1}
+        \end{split}
+    \end{equation}
+    Значи регулатор е $\lambda k.\;\delta(2k+1)$
+\end{proof}
+
+\subsection{Монотонност}
+\begin{proposition}[Монотонност]\label{prop:computable-monot-seq}
+    Нека $a: \N \to \R$ е изчислима редица, т.ч. $\{a_n\}$ е монотонна и  $\lim\limits_{n\to\infty} a_n = l$ е изчислимо реално число. Тогава $\{a_n\}$ е ефективно сходяща.
+\end{proposition}
+\begin{proof}
+    Разглеждаме $|a_n - l|$ - изчислима редица и монотонно намаляваща (клоняща към 0). Значи можем да разглеждаме изчислима монотонно намаляваща редица $\{b_n = |a_n - l|\}$ клоняща към 0. Нека $h: \N^2 \to \Q$ - изчислима, т.ч.
+    \begin{equation}
+        |h(n,n) - b_n| < \frac{1}{n+1} 
+    \end{equation}
+    Значи $\lim\limits_{n\to\infty}h(n,n) + \frac{1}{n+1} = 0$. Тогава:
+    \begin{equation}
+        \forall k,\ \exists n:\; h(n,n) + \frac{1}{n+1} \leq \frac{1}{k+1}
+    \end{equation}
+    Значи можем да "изчакаме" достатъчно голямо $n$, т.ч. да е достатъчно близо до 0. Ще дефинираме:
+    \begin{equation}
+        \delta(k) = \mu\ n \left( h(n,n) + \frac{1}{n} \leq \frac{1}{k+1} \right)
+    \end{equation}
+    $\delta$ е тотална изчислима функция.
+    \begin{equation}
+        \forall n > \delta(k):\; b_n \overset{b_n \text{монот}\searrow}{\leq} b_{\delta(k)} < h(\delta(k), \delta(k)) + \frac{1}{\delta(k) + 1} \leq \frac{1}{k+1}
+    \end{equation}
+\end{proof}

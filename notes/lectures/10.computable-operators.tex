@@ -1,0 +1,269 @@
+\section{$\mu$-рекурсивен функционали и оператори}
+Днес, 2024-04-10, ще разглеждаме реални функции, които ще реализираме като функционали и оператори.
+\begin{quote}
+    Дали $f(n) = \frac{1}{n}$ е аналогичен на $\varepsilon$ в класическия анализ?
+\end{quote}
+
+\subsection{Преговор}
+Нека $f:\N\to\N$ - изчислима инективна функция, т.ч. $range(f)$ - не е изчислимо множество. Тогава $\sum\limits_{i\in\N} \frac{1}{2^i}$ не е ефективно сходящ, но е граница на монотонна изчислима редица:
+\begin{equation}
+    \lim\limits_{n\to\infty}\sum\limits_{i=0}^n \frac{1}{2^i} = \sum\limits_{i\in\N} \frac{1}{2^i}
+\end{equation}
+Но имахме \propref{prop:computable-monot-seq}.
+
+Нека разгледаме ред на Лайбниц. $a: \N\to\R$ изчислима и клоняща монотонно към 0:
+\begin{equation}
+    \sum\limits_{n\in\N} (-1)^n a_n
+\end{equation}
+$a_n$ е монотонна и сходяща към изчислима граница, значи е ефективно сходяща.
+
+Сумата на реда е изчислима.
+
+\subsection{Относно изчислимост}
+Тип 1 изчислимост и тип 2 изчислимост.
+
+\subsection{$\mu$-рекурсивни функционали/оператори}
+\begin{definition}
+    \begin{equation}\tag{$\mathcal F_k$}
+        \mathcal F_k = \left\{ u \mid u: \subseteq \N^k \to \N \right\}
+    \end{equation}
+    \begin{equation}\tag{$F_{m,k}$}
+        \mathcal F_{m,k} = \left\{ F \mid F: \subseteq \mathcal (F_1)^m \times \N^k \to \N \right\}
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    Дефинираме оператори:
+    \begin{itemize}
+        \item[База] Начални функции: 
+            \subitem $\lambda \textbf{u},\textbf{x}. x_i$
+            \subitem $\lambda \textbf{u}, x. u_i(x)$
+            \subitem $\lambda \textbf{u}, x. 0$
+            \subitem $\lambda \textbf{u}, x. x+1$
+        \item[Стъпка] Операциите:
+            \subitem Суперпозиция $F \in \mathcal F_{m,k}, F_1, \dots, F_k \in \mathcal F_{m,l}$. Тогава $\lambda \textbf{u}, \textbf{x}. F(\textbf{u}, F_1(\textbf{u}, \textbf{x}), \dots, F_k(\textbf{u}, \textbf{x}))$
+            \subitem Примитивна рекурсия $F_0, F_1$. 
+            \begin{equation*}
+                \begin{cases}
+                    F(\textbf{u}, \textbf{x}, 0) = F_0(\textbf{u}, \textbf{x}) \\
+                    F(\textbf{u}, \textbf{x}, y+1) = F_1(\textbf{u}, \textbf{x}, y, F(\textbf{u}, \textbf{x}, y))
+                \end{cases}
+            \end{equation*}
+    \end{itemize}
+    До тук имаме примитивно рекурсивни функционали. 
+    
+    Ако $\textbf{u}$ са тотални, тогава $F(\textbf{u}, \textbf{x})$ също е тотален
+\end{definition}
+
+\begin{definition}
+    $\mu$-рекурсивни функционали
+    \begin{itemize}
+        \item[База] Примитивно рекурсивните функционали са $\mu$-рекурсивни
+        \item[Стъпка] Минимизация $F_0$
+            \subitem $F(\textbf{u}, \textbf{x}) = \mu\ y: F_0(\textbf{u}, x, y) = 0$
+    \end{itemize}
+\end{definition}
+
+\begin{corollary}
+    Нека $f$ - изчислима. Тогава $\lambda \textbf{u}, \textbf{x}. f(\textbf{x})$ е $\mu$-рекурсивен функционал
+\end{corollary}
+\begin{corollary}
+    Нека $F, F_1, \dots F_n$ - $\mu$-рек. Тогава 
+    \begin{equation*}
+        \lambda \textbf{u}, \textbf{y}, \textbf{x}. F(\lambda t. F_1(\textbf{u}, \textbf{y}, t), \dots, \lambda t. F_m(\textbf{u}, \textbf{y}, t), \textbf{x})
+    \end{equation*}
+    е $\mu$-рекурсивен.
+\end{corollary}
+\begin{corollary}
+    Нека $F$- $\mu$-рекурсивен, $u_1, \dots, u_m$ - изчислими.
+    \begin{equation*}
+        \lambda \textbf{y}, \textbf{x}. F(\lambda t. u_1(\textbf{y}, t), \dots, \lambda t. u_m(\textbf{y}, t), \textbf{x}, \textbf{x})
+    \end{equation*}
+    е изчислима
+\end{corollary}
+\begin{corollary}[Монотонност]
+    Ако $\textbf{u} \subseteq \textbf{v}$ - покомпонентно подфункции, $F$ - $\mu$-рекурсивен функционал.
+    \begin{equation*}
+        F(\textbf{u}, \textbf{x}) = y \Rightarrow F(\textbf{v}, \textbf{x}) = y
+    \end{equation*}
+\end{corollary}
+\begin{corollary}[Компактност]
+    \begin{equation}
+        F(\textbf{u}, \textbf{x}) = y \Rightarrow \exists \underbrace{\Theta}_{\text{крайни функции}} \subseteq \textbf{u}:\; F(\Theta, \textbf{x}) = y
+    \end{equation}
+    Всяко изчисление зависи от краен брой стойности на оракулите си.
+\end{corollary}
+\begin{proposition}
+    За произволен $\mu$-рекурсивен функционал $F$, съществува примитивно рекурсивен функционал $G$, т.ч.:
+    \begin{equation}
+        F(\textbf{u}, \textbf{x}) = y \iff \underbrace{\exists z}_{\text{брой стъпки}}:\; G(\textbf{u}, \textbf{x}, y, z) = 0
+    \end{equation}
+\end{proposition}
+
+\subsection{Функционали и оператори}
+\begin{definition}
+    \begin{equation*}
+        \Gamma : \mathcal F_1^m \to \mathcal F_k
+    \end{equation*}
+    наричаме оператор
+\end{definition}
+\begin{corollary}[Съответсвие]
+    \begin{equation*}
+        F(\textbf{u}, \textbf{x}) \longleftrightarrow \Gamma(\textbf{u}) = \lambda \textbf{x}. F(\textbf{u}, \textbf{x})
+    \end{equation*}
+\end{corollary}
+
+\subsection{Транслатор}
+\begin{itemize}
+    \item $\N$ - множество от крайни имена
+    \item $\mathbb T = \left\{f \mid f:\N\to\N\right\}$  - множество от безкрайни имена.
+\end{itemize}
+\begin{definition}
+    Нека $X, Y \in \{\N, \mathbb T\}$. Казваме, че $\gamma: X \to Y$ е изчислим транслатор $\bydef$
+    \begin{itemize}
+        \item[$X=Y=\N$] Съществува изчислима функция $u \in \mathcal F_1$, т.ч. $\gamma \subseteq u$
+        \item[$X=Y=\mathbb T$] Съществува $\mu$-рекурсивен оператор $\Gamma: \mathcal F_1 \to \mathcal F_1$, т.ч. $\gamma \subseteq \Gamma$
+        \item[$X=\mathbb T, Y=\N$] Съществува $\mu$-рекурсивен функционал $F: \mathcal F_{1,0}$, т.ч. $\gamma \subseteq F$
+        \item[$X=\N, Y=\mathbb T$] Съществува изчислима функция $u:\subseteq \N^2 \to \N,\ \forall s \in \dom(\gamma):\; \gamma(s) = \lambda(i). u(s, i)$
+    \end{itemize}
+\end{definition}
+\begin{proposition}
+    Нека $X \in \{\N, \mathbb T\}$. То $id: X \to X$ е изчислим транслатор.
+\end{proposition}
+\begin{proposition}
+    $X_0, X_1, X_2 \in \{\N, \mathbb T\}$. Ако $\gamma_0: \subseteq X_0 \to X_1,\ \gamma_1: X_1 \to X_2$ са изчислими транслатори, то $\gamma: \subseteq X_0 \to X_1\; \gamma(s) = \gamma_1(\gamma_0(s))$ също е изчислим оператор
+\end{proposition}
+\begin{proof}
+    $X_0 = X_1 = X_2$ не е интересен случай. Тогава е просто композиция на изчислими функции или оператори
+    
+    Нека разгледаме $X_0 = \N,\ X_1 = \mathbb T,\ X_2 = \N$. $\gamma_0 \subseteq \lambda i. u(s, i), \gamma_1 \subseteq F$. Тогава $\gamma \subseteq F(\lambda i. u(s, i)$ или иначе казано:
+    \begin{equation}
+        \gamma(s) = F(\lambda i. u(s,i))
+    \end{equation}
+
+    Нека разгледаме $X_0 = \mathbb T\ X_1 = \N,\ X_2 = \mathbb T$. $\gamma_0 \subseteq F,\ \gamma_1 \lambda i. u(t,i)$. Тогава $\gamma \subseteq \lambda i. u(F(s), i)$
+\end{proof}
+
+\begin{notation}
+    $M$ - абстрактно множество $\bydef$ множеството, което искаме да именуваме
+\end{notation}
+\begin{definition}
+     $\nu$ е нотация на $M$ $\bydef$ $\nu: \subseteq \N \to M$ - сюрективно
+\end{definition}
+\begin{definition}
+     $\nu$ е представяне на $M$ $\bydef$ $\nu: \subseteq \mathbb T \to M$ - сюрективно
+\end{definition}
+\begin{notation}
+    елементът $s$ наричаме име на $\nu(s) \in M$
+\end{notation}
+\begin{notation}
+    Именуваща система е нотация или представяне
+\end{notation}
+\begin{example}
+    $\nu_1: \N \to \Q^{\geq 0}$
+    \begin{equation*}
+        \nu_1(s) = \frac{L(s)}{R(s) + 1}
+    \end{equation*}
+    Защото знаем, че
+    \begin{equation*}
+        \N^2 = \left\{\langle L(s), R(s)\rangle\mid s \in \N \right\}
+    \end{equation*}
+\end{example}
+\begin{example}
+    $\nu_2: \subseteq \mathbb T \to \R^{\geq 0}$
+    \begin{equation*}
+        \nu_2(t) = \xi \iff \forall i\in\N:\;  \left|\frac{t(i)}{i+1} - \xi\right| < \frac{1}{i+1}
+    \end{equation*}
+\end{example}
+
+\subsection{Изчислима функция между абстрактни множества}
+\begin{definition}
+    $M_1,\ M_2$ - абстрактни множества
+    \begin{equation}
+        i\in\{1, 2\}:\; \nu_i:\; \ran(\nu_i) = M_i
+    \end{equation}
+    Функция $f: \subseteq M_1 \to M_2$ наричаме $\langle \nu_1, \nu_2\rangle$-изчислимо $\iff$ съществува $\varphi: \subseteq \dom(\nu_1) \to \dom(\nu_2)$, т.ч.:
+    \begin{equation}
+        \forall s\in \dom(\nu_1), \nu_1(s) \in \dom(f):\; f(\nu_1(s)) = \nu_2(\varphi(s))
+    \end{equation}
+\end{definition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+    shorten >=1pt,
+    node distance=3cm,
+    on grid,
+    auto] 
+       \node[state] (M_1) {$M_1$}; 
+       \node[state] (M_2) [right=4cm of M_1]{$M_2$}; 
+       \node[state] (dom_nu_1) [below of=M_1]  {$\dom \nu_1$}; 
+       \node[state] (dom_nu_2) [right=4cm of dom_nu_1] {$\dom \nu_2$};
+        \path[->] 
+        (M_1) edge  node {$f$} (M_2)
+        (dom_nu_1)  edge node {$\nu_1$} (M_1)
+                    edge node {$\varphi$} (dom_nu_2)
+        (dom_nu_2)  edge node {$\nu_2$} (M_2)
+        ;
+    \end{tikzpicture}
+    \caption{$f$ е $\langle \nu_1, \nu_2\rangle$-изчислима, т.с.т.к диаграмата е комутативна}
+    \label{fig:eff-naming-realization}
+\end{figure}
+\begin{notation}
+    Ако $\varphi$ - изчислима като транслатор, нарича се реализация на $f$.
+\end{notation}
+\begin{example}
+    $f: \Q^{\geq 0} \to \R^{\geq 0},\ f(q) = q$ по дадено $q \in \Q^{\geq 0}$ търсим $t: \N \to \N$, което да го представя:
+    \begin{equation}
+        \left|\frac{t(i)}{i+1} - q\right| < \frac{1}{i+1}
+    \end{equation}
+    Знаем, че $q = \frac{L(s)}{R(s) + 1}$. Достатъчно е да направим:
+    \begin{equation}
+        t(i) = \lfloor q.(i+1)\rfloor
+    \end{equation}
+    Дефинираме реализацията:
+    \begin{equation}
+        \varphi(s) = \lambda i. \left\lfloor \frac{L(s).(i+10}{R(s) + 1} \right\rfloor
+    \end{equation}
+    $L, R$ са изчислими, значи $\varphi: \N \to \mathbb T$ е изчислима $\langle \nu_1, \nu_2 \rangle$-реализация на $f$.
+\end{example}
+\begin{example}
+    $f: \R^{\geq 0} \to \R^{\geq 0},\ f(\xi) = \xi + 1$. Дадено е $t$, $\nu_2(t) = \xi$ търсим $t':\; \nu_2(t') = \xi + 1$. 
+    \begin{equation}
+        \begin{split}
+            \left|\frac{t(i)}{i+1} - \xi\right| < \frac{1}{i+1}\\
+            \Rightarrow \left|\frac{t(i) + i + 1}{i+1} - (\xi + 1)\right| < \frac{1}{i+1}
+        \end{split}
+    \end{equation}
+    Значи $\varphi(t) = t'(i) = t(i) + i + 1$
+\end{example}
+\begin{proposition}
+    $M_0, M_1, M_2$ - абстрактни множества. $M_i = \ran(M_i)$. $f_0: \subseteq M_0 \to M_1$ е $\langle\nu_0, \nu_1\rangle$-изчислимо и $f_1: \subseteq M_1 \to M_2$ е $\langle\nu_1, \nu_2\rangle$-изчислимо.
+
+    Тогава $f(x) = f_1(f_0(x))$ е $\langle\nu_0, \nu_2\rangle$-изчислимо.
+\end{proposition}
+\begin{proof}
+    Изглежда трябва да композираме реализациите.
+
+    \begin{equation}
+        \begin{split}
+            f_0(\nu_0(s)) = \nu_1(\varphi_0(s)) \\
+            f_1(\nu_1(s)) = \nu_2(\varphi_1(s)) \\
+            \Rightarrow \forall s \in\dom\nu_0,\ \nu_0(s) \in \dom f:\;  f(\nu_0(s)) = f_1(f_0(\nu_0(s)) = f_1(\nu_1(\varphi_0(s))) = \nu_2(\varphi_1(\varphi_0(s)))
+        \end{split}
+    \end{equation}
+    $\varphi_0,\ \varphi_1$ - изчислими транслатори, значи и композиията им е изчислим транслатор
+\end{proof}
+\begin{definition}
+    $X\in \{\N, \mathbb T\},\ \nu: \subseteq X \to M$ е именуваща система. $m\in M$ е изчислим $\iff \exists s \in \dom \nu, \nu(s) = m$ (числата в $\N$ са изчислими).
+\end{definition}
+\begin{proposition}
+    $f: M_1 \to M_2$ и $\ran\nu_i = M_i,\ \dom \nu_2 = \mathbb T$. Ако $f$ е $\langle \nu_1, nu_2\rangle$-изчислима. Ако $x$ е $\nu_1$-изчислим елемент на $M_1$, то $f(x)$ е $\nu_2$-изчислим елемент на $M_2$ 
+\end{proposition}
+\begin{proof}
+    $f(\nu_1(s)) = \nu_2(\varphi(s))$.
+    \begin{itemize}
+        \item[\Rn{1} сл.] $\nu_1$ - нотация. $\varphi: \subseteq \N \to \mathbb T,\ \varphi \subseteq \lambda i. u(s,i)$ за $u$ - изчислима. $\varphi(s)$ е $\nu_2$ - име на $f(x)$, $\varphi(s)(i) = u(s, i)$
+        \item[\Rn{2} сл.] $\nu_2$ - представяне $\varphi: \subseteq \mathbb T \to \mathbb T,\ \varphi \subseteq \Gamma$. $s$ е изчислимо $\nu_1$ - име на $x$
+    \end{itemize}
+\end{proof}

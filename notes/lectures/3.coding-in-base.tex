@@ -1,0 +1,183 @@
+\section{Представяне в основа $b \geq 2$}
+От 2024-03-20
+\begin{quote}
+    Говорим за изчислимост, но дали наистина разликата $|f(n) - \alpha|$ наистина е ефективно изчислима? По-точно как ефективно изчисляваме разлика между рационално и реално число?
+\end{quote}
+Наистина, ако $\alpha$ е изчислимо, то самата разлика е изчислима, защото $f$ е изчислима по дефиниция.
+
+Днес - граница на изчислима редица може да не е изчислимо число.
+
+\subsection{Пример}
+Нека разглеждаме $x^3 + 3x^2 + p$, където $p$ е параметър.
+
+\subsection{Итерация}
+\begin{notation}
+    Нека $f: \R \to \R$ - изчислима
+    \begin{equation*}
+        \begin{split}
+            g(0, \alpha) &= \alpha \\
+            g(1, \alpha) &= f(\alpha) \\
+            g(n+1, \alpha) &= f(g(n, \alpha))
+        \end{split}
+    \end{equation*}
+\end{notation}
+\begin{problem}
+    Търсим $n$, т.ч $g(n, \alpha) = 0$
+\end{problem}
+\begin{solution}
+    Това беше задача на Стефанов, не си спомням точно замисъла.
+\end{solution}
+
+\subsection{Представяне в основа $b \geq 2$}
+Нека $M \geq 0$ и наричаме цифри $\left\{0, 1, \dots, \underbrace{b-1}_{\Bar{0}}\right\}$
+
+\begin{notation}
+    $\langle M. D_1, D_2, \dots, D_n\rangle_b = M + \sum\limits_{i=1}^{n}D_i.b^i$
+\end{notation}
+\begin{definition}
+    Нека $\xi \in \R^{\geq 0}$, казваме, че $\langle M. D_1, D_2, \dots, D_n, \dots\rangle_b$ представя $\xi$ в основа $b$, ако за вс. $n \in \N$:
+    \begin{equation*}
+        \langle M. D_1, D_2, \dots, D_n\rangle_b \leq \xi \leq \langle M. D_1, D_2, \dots, D_n\rangle_b + b^{-n}
+    \end{equation*}
+\end{definition}
+Първо отделяме цялата част и после търсенето се случва като разделяме интервала на $b$ равни части и избираме най-голямата цифра, която да бъде под търсеното $\xi$.
+
+Ако стане така, че $\xi$ е на границата на такъв интервал, ще получим представяне от вида $M.D_1 D_2 \dots (D_n - 1) \Bar{0} \dots \Bar{0} \dots$.
+
+\begin{proposition}
+    Нека $s: \N \to \N$
+    \begin{equation*}
+        \begin{split}
+            s(0) = M \\
+            s(i) = D_i, i > 0
+        \end{split}
+    \end{equation*}
+    Твърдим/Знаем, че
+    \begin{equation*}
+        \xi = \sum\limits_{i=0}^{\infty} \frac{s(i)}{b^i}
+    \end{equation*}
+    И можем да твърдим, че:
+    \begin{enumerate}
+        \item Всяка ф-ия $s: \N \to \N$ т.ч. $\forall i \geq 1: s(i) \leq b$ представя единствено $\xi \in \R^{\geq 0}$
+        \item Ако $\xi \neq \frac{m}{b^k}$ или $\xi = 0$, то $\xi$ има единствено представяне в основа $b$
+        \item Ако $\xi = \frac{m}{b^k}$ и $k$ е $min$, то $\xi$ има двойствено представяне в основа $b$
+        \begin{equation*}
+            \begin{split}
+                M.D_1 D_2 \dots D_k 00\dots 0\dots\\
+                M.D_1 D_2 \dots (D_k - 1) \Bar{0} \Bar{0} \dots \Bar{0} \dots
+            \end{split}
+        \end{equation*}
+    \end{enumerate}
+\end{proposition}
+\begin{example}
+    В десетично представяне на числата, ф-ията $\xi \mapsto 3\xi$ не е изчислима. Проблема е точно с числа, където $b$ е взаимно просто с числото, с което умножаваме.
+\end{example}
+\begin{proposition}
+    $\xi \R^{\geq 0}$ е изчислимо $\iff$ има изчислимо представяне в основа $b$
+\end{proposition}
+\begin{proof}
+    \begin{itemize}
+        \item[$(\Leftarrow)$] Нека $M.D_1 D_2 \dots D_n \dots$ е изчислимо представяне на $\xi$ в основа $b$, т.е $s$ е изчислима
+        
+        Нека
+        \begin{equation*}
+            f(n) = \sum\limits_{i=0}^{n+1} \frac{s(i)}{b^i}
+        \end{equation*}
+        Тогава 
+        \begin{equation*}
+            |f(n) - \xi| = \sum\limits_{i=n+2}^\infty \frac{s(i)}{b^i} \leq \sum\limits_{i=n+2}^\infty \frac{b-1}{b^i} = \frac{1}{b^n} < \frac{1}{n+1}
+        \end{equation*}
+
+        \item[$(\Rightarrow)$] 
+        \begin{enumerate}
+            \item $\xi = \frac{m}{b^k}$ тогава очевидно $\xi$ има изчислимо представяне
+            \item $\xi \neq \frac{m}{b^k}$. Имаме ф-ия $f: \N \to \Q$ т.ч.
+            \begin{equation*}
+                |f(n) - \xi| < \frac{1}{n+1} 
+            \end{equation*}
+            И разглеждаме:
+            \begin{equation*}
+                \begin{split}
+                    0 < \xi - \sum\limits_{i=0}^{n} \frac{s(i)}{b^i} < \frac{1}{b^n} \\
+                    b^n \xi = b^n \sum\limits_{i=0}^n \frac{s(i)}{b^i} = b.b^{n-1}\left(\sum\limits_{i=0}^{n-1} \frac{s(i)}{b^i} + \frac{s(n)}{b^n}\right) = b.\lfloor b^{n-1}\xi\rfloor + s(n)
+                \end{split}
+            \end{equation*}
+            Значи трябва да покажем, че
+            \begin{equation*}
+                s(n) = \lfloor b^n \xi\rfloor - b.\lfloor b^{n-1}\xi\rfloor
+            \end{equation*}
+            наистина е изчислима функция. За това ни е необходимо $\lfloor b^n\xi\rfloor$ да е изчислимо.
+
+            Имаме следното:
+            \begin{equation*}
+                \begin{split}
+                    f(k) - \frac{1}{k+1} < \xi < f(k) + \frac{1}{k+1}\\
+                    b^k(f(k) - \frac{1}{k+1}) < b^n\xi < b^k(f(k) + \frac{1}{k+1}) \\
+                    \forall n, \exists k:\; m < b^k(f(k) - \frac{1}{k+1}) < b^n\xi < b^k(f(k) + \frac{1}{k+1}) < m+1 \\
+                    m = \left\lfloor b^n \left(f(k) - \frac{1}{k+1}\right)\right\rfloor = \left\lfloor b^n \left(f(k) + \frac{1}{k+1}\right)\right\rfloor\\
+                    g(n) = \mu k \left[ \left\lfloor b^n \left(f(k) + \frac{1}{k+1}\right)\right\rfloor < b^n \left(f(k) - \frac{1}{k+1}\right) \right]\\
+                    \left\lfloor b^n \xi \right\rfloor = \left\lfloor b^n\left(f(g(n)) + \frac{1}{g(n) + 1}\right)\right\rfloor
+                \end{split}
+            \end{equation*}
+            Значи е изчислимо
+        \end{enumerate}
+    \end{itemize}
+\end{proof}
+
+\section{Редици на Шпекер (Specker)}
+Хехе, редици на Шмекер
+
+Нека $A \subseteq \N$ и $x_A \in \R$ е реално число с двоично представяне $\langle D_0.D_1 D_2 \dots D_n \dots \rangle_2$, т.ч.
+\begin{equation*}
+    D_i = \begin{cases}
+        1, i \in A \\
+        0, i \notin A
+    \end{cases}
+\end{equation*}
+\begin{proposition}
+    $x_A$ е изчислимо $\iff$ $A$ е разрешимо
+\end{proposition}
+\begin{proof}
+    Разбиваме на случаи
+    \begin{itemize}
+        \item[$(x_A = \frac{m}{2^k})$] $A$ е крайно или $\N - A$ е крайно. Очевидно $A$ е разрешимо
+        \item[$(x_A \neq \frac{m}{2^k})$] $x_A$ е изчислимо $\iff$ представянето в основа 2 на $x_A$ е изчислимо $\iff$ характеристичната ф-ия на $A$ е изчислима
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    Нека $A \neq \emptyset$ - полу-разрешимо множество и неразрешимо. Тогава $A = range(f)$, където $f$ е инективна и изчислима $f: \N \to \N$
+\end{proposition}
+\begin{proof}
+    \begin{equation*}
+        A = \left\{ x \in \N \mid \exists y:\ h(x, y) = 0 \right\}
+    \end{equation*}
+    където $h$ е примитивно рекурсивна. Фиксираме $a \in A$
+    \begin{equation*}
+        g(n) = \begin{cases}
+            L(n)& , h(L(n), R(n)) = 0 \\
+            a& , h(L(n), R(n)) \neq 0
+        \end{cases}
+    \end{equation*}
+    Нека 
+    \begin{equation*}
+        \begin{split}
+            f(0) = g(0)
+            f(n+1) = g(k)\text{, т.ч. } k = min g(k) \notin \left\{f(0), f(1), \dots, f(n)\right\}
+        \end{split}
+    \end{equation*}
+    Тогава $f$ ще е инективна.
+    \begin{equation*}
+        x_A = \sum\limits_{i=0}^\infty \frac{1}{2^{f(i)}}
+    \end{equation*}
+    $x_A$ не е изчислимо, защото $range(f) = A$ не е разрешимо.
+
+    От друга страна, ако разглеждаме:
+    \begin{equation*}
+        h(n) = \sum\limits_{i=0}^n \frac{1}{2^{f(i)}}
+    \end{equation*}
+    е изчислима и в някакъв смисъл $h(n) \underset{n \to \infty}{\to} x_A$. Така че редица от изчислими числа не задължително клони към изчислимо число.
+\end{proof}
+\begin{remark}
+    Произволните редици не ни дават достатъчно гаранции. Ако разглеждаме строго монотонните редици, нещата стоят по различен начин.
+\end{remark}

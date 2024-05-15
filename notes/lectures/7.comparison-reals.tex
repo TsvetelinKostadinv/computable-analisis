@@ -1,0 +1,34 @@
+\section{Сравнение с 0}
+\begin{theorem}[Неразрешимост на тест за равенство]
+    Не съществува изчислима ф-ия $g: \subseteq \N \to \N$, т.ч. $\forall x \in \R, \forall f:\N \to \Q:\; f$ - име на $x$. Нека $\varphi_e = f$ е номерацията на изчислимите ф-ии. Тогава:
+    \begin{equation*}
+        g(e) = \begin{cases}
+            1 &, x = 0 \\
+            0 &, x \neq 0
+        \end{cases}
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Нека $\{a_n\}$ е редицата от пример \exampleref{example:comp-seq-uncomp-members} за всяко $n$, $\lambda n. f(n, i)$ представя $a_n$ с индекс $s(n)$, където $f(n, i) = \varphi_{s(n)}(i)$, а $s$ е изчислима ($S-m-n$ теорема).
+    \begin{equation*}
+        n \in \Bar{A} \iff a_n = 0 \iff g(s(n)) = 1
+    \end{equation*}
+    Значи $\Bar{A}$ е полу-разрешимо и $A = range(g)$ - полу-разрешимо $\overset{\text{Т-ма Пост}}{\Rightarrow}$ $A$ е разрешимо - абсурд.
+\end{proof}
+
+\begin{theorem}[разрешимост на строги неравенства]
+    Съществува ефективна процедура, която по дадено представяне $f$ на $x \in \R - \{0\}$ разрешава $x > 0$ или $x < 0$
+\end{theorem}
+\begin{proof}
+    \begin{equation*}
+        \lim\limits_{n \to \infty} |f(n)| = |x| > 0
+    \end{equation*}
+    Дефинираме:
+    \begin{equation*}
+        k = \mu n:\; |f(n)| > \frac{1}{n+1}
+    \end{equation*}
+    \begin{itemize}
+        \item[$f(k) > \frac{1}{k+1}$] отговор $x > 0$
+        \item[$f(k) < -\frac{1}{k+1}$] отговор $x < 0$
+    \end{itemize}
+\end{proof}

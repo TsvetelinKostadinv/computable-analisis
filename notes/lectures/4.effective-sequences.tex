@@ -1,0 +1,78 @@
+\section{Ефективна сходимост на редици}
+\begin{definition}
+    $\left\{a_n\right\}_{n=0}^\infty$ клони ефективно към $a$, ако съществува рекурсивна ф-ия $\delta : \N \to \N$ - регулатор на сходимост.
+    \begin{equation*}
+        \forall k, \forall n:\; n > \delta(n) \Rightarrow |a_n - a| < \frac{1}{k+1}
+    \end{equation*}
+\end{definition}
+\begin{remark}
+    Не се интересуваме от изчислимостта на членовете на редицата или крайния елемент
+\end{remark}
+\begin{example}
+    $a_n = a$ - константна редица. $\delta(k)$ - произволна ($> 0$)
+\end{example}
+\begin{example}
+    $a_n = \frac{1}{n+1}$, $\delta(k) = k$
+\end{example}
+\begin{example}
+    $a_n = \sqrt{n+1} - \sqrt{n}$, $\delta(k) = k^2 + 2k$, защото
+    \begin{equation*}
+        \sqrt{n+1} - \sqrt{n} = \frac{1}{\sqrt{n+1} + \sqrt{n}} < \frac{1}{k+1}
+    \end{equation*}
+\end{example}
+\begin{example}
+    $a_n = a_0.q^n, |q| < 1$, проверяваме дали е ефективно сходяща. Нека $h \in Q^{\geq 0}$, т.ч. $|q| < \frac{1}{1+h}$
+    \begin{equation*}
+        |a_n| = |a|.|q|^n \leq \frac{|a|}{(1+h)^n} \leq \frac{|a|}{1+nh} < \frac{1}{k+1}
+    \end{equation*}
+    Преобразуваме последното неравенство.
+    \begin{equation*}
+        \begin{split}
+            \frac{|a|}{1+nh} < \frac{1}{k+1}\\
+            1+nh > |a|(k+1)\\
+            n > \frac{|a|(k+1) - 1}{h}
+        \end{split}
+    \end{equation*}
+    И можем да дефинираме
+    \begin{equation*}
+        \delta(n) = M(k+1), M > \frac{|a|}{h} \in \N
+    \end{equation*}
+\end{example}
+\begin{example}
+    Умножение по константа не променя ефективната сходимост
+\end{example}
+\begin{example}
+    Събиране не променя ефективната сходимост
+\end{example}
+\begin{lemma}[Ефективните полицаи]
+    Нека $\{a_n\}_{n=0}^\infty$, $\{c_n\}_{n=0}^\infty$ - ефективно изчислими и $\{b_n\}_{n=0}^\infty$ е т.ч.
+    \begin{equation*}
+        \forall n:\; a_n \leq b_n \leq c_n
+    \end{equation*}
+    Тогава $\{b_n\}_{n=0}^\infty$ е ефективно изчислима.
+\end{lemma}
+\begin{notation}
+    $\overset{\infty}{\forall}n = \exists n'\ \forall n \geq n'$. Интуитивно "вярно от дадено място нататък". В известен (всеки) смисъл е по-силно от обичайния квантор за всеобщност.
+\end{notation}
+\begin{example}
+    $f: \N \to \N$ - тотално изчислима инекция. $range(f)$ е неразрешимо. $a_n = \frac{1}{f(n) + 1}$.
+
+    Фиксираме $k \in \N$. Тогава $A = \left\{n \mid f(n) < k\right\}$ е крайно.
+
+    \begin{equation*}
+        \forall k \overset{\infty}{\forall}n f(n) > k
+    \end{equation*}
+    Нека $n' = max A + 1$. $f(n) \underset{n \to \infty}{\longrightarrow} \infty$ и $a_n \underset{n \to \infty}{\longrightarrow} 0$
+
+    Значи редицата е сходима. Дали е ефективно сходима?
+
+    Нека $\delta(k)$ е регулаторна функция. 
+    \begin{equation*}
+        n > \delta(k) \Rightarrow \frac{1}{f(n) + 1} < \frac{1}{k+1}
+    \end{equation*}
+    Да допуснем, че $g(n)$ мажорира $\delta(k)$ за някоя рекурсивна $g$. Тогава:
+    \begin{equation*}
+        m \in range(f) \iff \exists n \leq g(k):\; m = f(n)
+    \end{equation*}
+    Но това значи, че $range(f)$ е разрешимо - абсурд. Значи не съществува регулаторна функция, значи не е ефективно сходима границата.
+\end{example}

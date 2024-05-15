@@ -1,0 +1,106 @@
+\section{Ефективна сходимост на редове}
+\begin{example}
+    $f$ - рекурсивна и инективна, $range(f)$ - неразрешим. Разглеждаме $\frac{1}{f(n) + 1}$ - клони към 0, но не ефективно.
+\end{example}
+
+\begin{definition}
+    Редът $\sum\limits_{m=0}^\infty u_m$ е ефективно сходящ $\bydef$ $\left\{\sum\limits_{m=0}^n u_m\right\}_{n=0}^\infty$ е ефективно сходящ.
+\end{definition}
+\begin{example}
+    \begin{equation*}
+        a + aq + aq^2 + \dots \; |q| < 1
+    \end{equation*}
+    $u_m = aq^m$, тогава:
+    \begin{equation*}
+        \left\lvert\sum\limits_{m=n+1}^\infty u_m \right\rvert \leq \sum\limits_{m=n+1}^\infty | u_m | = |a| \sum\limits_{m=n+1}^\infty | q^m | = \frac{|a|.|q|^{n+1}}{1 - |q|} = C. |q|^n
+    \end{equation*}
+\end{example}
+\begin{proposition}
+    Ако редът $\sum\limits_{m=0}^\infty u_m$ е ефективно сходящ, то $u_m$ клони ефективно към 0
+\end{proposition}
+\begin{proof}
+    Разглеждаме:
+    \begin{equation*}
+    \begin{split}
+        |u_n| = \left| \sum\limits_{m=0}^n u_m - \sum\limits_{m=0}^{n-1} u_m \right| \leq \left| \sum\limits_{m=0}^n u_m - \sum\limits_{m=0}^\infty u_m \right| + \left|\sum\limits_{m=0}^{n-1} u_m - \sum\limits_{m=0}^\infty u_m \right| \\
+        < \underbrace{\frac{1}{2k+2}}_{n > \delta(2k+1} + \underbrace{\frac{1}{2k+2}}_{n-1 > \delta(2k+1} = \frac{1}{k+1}
+    \end{split}
+    \end{equation*}
+    Нека $\delta$ е регулатор на сходимост за $\left\{\sum\limits_{m=0}^n\right\}$. Значи $\delta'(k) = \delta(2k+1) + 1$
+\end{proof}
+
+\subsection{Сходими редове, но не ефективно}
+\begin{example}
+    \begin{equation*}
+        a_n = \frac{1}{f(n) + 1}
+    \end{equation*}
+    Ще направим сума, чиято частична сума е точно $a_n$.
+    \begin{equation}
+        u_0 = a_0,\; u_{n+1} = a_{n+1} - a_n
+    \end{equation}
+    очевидно: 
+    \begin{equation*}
+        \sum\limits_{m=0}^{n} u_m = a_n
+    \end{equation*}
+    Редът не е ефективно сходящ, защото редицата не е.
+\end{example}
+\begin{example}
+    Реда на Шпекер:
+    \begin{equation*}
+        \sum_{m=0}^\infty \frac{1}{2^{f(n)}}
+    \end{equation*}
+    не е ефективно сходяща.
+\end{example}
+\begin{proof}
+    Допускаме противното. 
+    
+    $\frac{1}{2^{f(n)}}$ е ефективно сходящо към 0. Абсурд за $range(f)$ - неизчислимо мн-во.
+    \begin{equation*}
+        \frac{1}{2^{f(n)}} < \frac{1}{2^{k+1}} 
+    \end{equation*}
+    при $n > \delta(2^{k+1}-1), f(n) > k+1 \Rightarrow \frac{1}{f(n) + 1} < \frac{1}{k+1}$, значи $\delta(2^{k+1}-1)$ е регулатор на сходимост за $\frac{1}{f(n) + 1}$ - абсурд.
+\end{proof}
+
+\subsection{Ефективен принцип за сравнение}
+\begin{proposition}[Ефективен принцип за сравнение]
+    Нека $|u_m| \leq v_m$ при $m \geq C$. Ако $\sum\limits_{m=0}^\infty v_m$ е ефективно сходящ, то $\sum\limits_{m=0}^\infty u_m$ също е ефективно сходящ.
+\end{proposition}
+\begin{proof}
+    \begin{equation*}
+        \left| \sum\limits_{m=n+1}^\infty u_m \right| \leq \sum\limits_{m=n+1}^\infty |u_m| \leq \sum\limits_{m=n+1}^\infty v_m
+    \end{equation*}
+    Нека $\delta_v$ е регулатор на сходимост за $\sum\limits_{m=0}^\infty v_m$. Тогава $\delta_u(k) = \delta_v(k) + C$ е регулатор на сходимост за $\sum\limits_{m=0}^\infty u_m$
+\end{proof}
+\begin{corollary}
+    Ако $\sum\limits_{m=n+1}^\infty |u_m|$ е еф. сходящ, то $\sum\limits_{m=n+1}^\infty u_m$ също е сходящ.
+\end{corollary}
+
+\subsection{Критерий на Даламбер/Коши}
+\begin{proposition}[Критерий, Даламбер/Коши/Раабе-Дюамел]
+    Даден е редът $\sum\limits_{m=0}^\infty u_m$. Нека $q \in (0; 1)$, т.ч.
+    \begin{itemize}
+        \item[Даламбер] $\frac{u_{m+1}}{u_m} < q\; \forall m \geq C$
+        \item[Коши] $\sqrt[m]{|u_m|} < q\; \forall m \geq C$
+        \item[Раабе-Дюамел] $n\left(\frac{a_n}{a_{n+1}} - 1\right)\ \leq q; \forall m \geq C$
+    \end{itemize}
+    Тогава редът е ефективно сходящ.
+\end{proposition}
+\begin{proof}
+    Разглеждаме критериите поотделно:
+    \begin{itemize}
+        \item[Даламбер] $|u_m| \leq |u_C|.q^{m-C} \; \forall m \geq C$. Това е геометрична прогресия и критерия за сравнение.
+        \item[Коши] $|u_m| \leq q^m\; \forall m \geq C$
+        \item[Раабе-Дюамел] Оставено за упражнение на читателя. Използва обобщения хармоничен ред
+    \end{itemize}
+\end{proof}
+
+\subsection{Критерий на Лайбниц}
+\begin{proposition}[Ефективен Лайбниц]
+    Нека $a_n \rightarrow 0$ монотонно и ефективно. Тогава $\sum\limits_{m=0}^\infty (-1)^m a_m$ е ефективно сходящ.
+\end{proposition}
+\begin{proof}
+    \begin{equation*}
+        \left| \sum\limits_{m=n+1}^\infty (-1)^m a_m\right| \leq a_{n+1} < \frac{1}{k+1}\; n > \delta(k)
+    \end{equation*}
+    при $\delta$ - регулатор на сходимост за $a_n$
+\end{proof}

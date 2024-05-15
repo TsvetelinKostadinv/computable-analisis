@@ -1,0 +1,379 @@
+\section{Сравнение на представяния}
+Днес, 2024-04-17
+
+\subsection{Примери}
+\begin{example}
+    $\nu : \subseteq \mathbb T \to \R^{>0}$
+    \begin{equation*}
+        \nu(t) = \alpha \iff \forall i:\; \left| \frac{t(i)}{i+1} - \alpha \right| < \frac{1}{i+1}
+    \end{equation*}
+    Тогава $\forall q \in \Q^{\geq 0}$ е $\nu$-изчислимо.
+    \begin{itemize}
+        \item[(\Rn{1})] $\lambda i.\; \lfloor q(i+1) \rfloor$ е изчислимо $\nu$-име на $q$
+        \item[(\Rn{2})] $\nu': \N \to 
+        Q^{\geq 0}$, т.ч.  $\nu'(n) = \frac{L(n)}{R(n) + 1}$ и $id: \Q^{\geq 0} \to \R^{\geq 0},\; q \mapsto q$. Тогава $id$ е $\langle\nu,\nu'\rangle$-изчислим.
+    \end{itemize}
+    Ако $q$ е $\nu'$ изчислимо, то $q$ е $\nu$-изчислимо
+\end{example}
+\begin{example}
+    $\alpha \in \Q^{\geq 0}$ е изчислимо $\iff$ $\alpha$ е $\nu$-изчислимо
+\end{example}
+\begin{example}
+    $\nu_\Q: \N \to \Q$
+    \begin{equation*}
+        n \mapsto \frac{(n)_0 - (n)_1}{(n)_2 +1} = \bar{n}
+    \end{equation*}
+    Нека $f: \N \to \Q$ - изчислима (значи е $\langle id_\N, \nu_\Q \rangle$-изчислима), значи има 3 функции $f_1, f_2, f_3$, т.ч.:
+    \begin{equation*}
+        f(n) = \frac{f_1(n) - f_0(n)}{f_3(n) + 1}
+    \end{equation*}
+    Има изчислима реализация $\varphi: \N \to \N,\ \forall n:\; f(id_\N(n)) = \nu_\Q(\varphi(n))$ 
+    \begin{equation*}
+        f(id_\N(n))
+    \end{equation*}
+\end{example}
+\begin{example}
+    $\nu_I : \N \to \left\{(a, b)\mid a, b \in \Q,\ a < b\right\}$
+    \begin{equation*}
+        \nu_I(n) = \begin{cases}
+            \left(\nu_\Q(L(n)), \nu_\Q(R(n)\right) &, \nu_\Q(L(n)) < \nu_\Q(R(n)) \\
+            (0, 1) &, \text{иначе}
+        \end{cases}
+    \end{equation*}
+\end{example}
+\begin{definition}
+    $M$ - абстрактно множество. $\nu_1, \nu_2$ - именуващи системи, т.ч. $\ran\nu_1 = \ran\nu_2 = M$.
+    \begin{equation}
+        \nu_1 \leq \nu_2 \bydef id: M\to M,\ \langle\nu_1,\nu_2\rangle \text{-изчислим}
+    \end{equation}
+\end{definition}
+Това означава, че има изчислима като транслатор $\varphi: \subseteq \dom\nu_1\to\dom\nu_2$, т.ч.:
+\begin{equation}
+    id(\nu_1(s)) = \nu_2(\varphi(s))
+\end{equation}
+За всеки елемент $x\in M$, ако $s$ е $\nu_1$-име на $x$, то $\varphi(s)$ е $\nu_2$-име на $x$
+
+\subsection{Релацията на сравнение}
+\begin{definition}
+    \begin{equation}
+        \nu_1 \equiv \nu_2 \bydef \nu_1 \leq \nu_2\ \&\ \nu_2 \leq \nu_1
+    \end{equation}
+\end{definition}
+\begin{fact}
+    Очевидно е релация на еквивалентност.
+    \begin{itemize}
+        \item[(рефлексивност)] $id: M \to M$ е $\langle\nu,\nu\rangle$-изчислим
+        \item[(симетричност)]
+        \item[(транзитивност)]
+    \end{itemize}
+\end{fact}
+Факторизираме представянията по релацията $\equiv$ и въвеждаме $\leq$ в класовете на еквивалентност.
+
+\subsection{Познатите представяния}
+\begin{itemize}
+    \item $\rho_C:\subseteq \mathbb T \to \R$
+    \begin{equation}
+        \rho_C(t) = \alpha \iff \forall i:\; \left|\nu_\Q(t(i)) - \alpha\right| < \frac{1}{i+1}
+    \end{equation}
+    \item  $\rho:\subseteq \mathbb T \to \R$
+    \begin{equation}
+        \rho(t) = \alpha \iff \left\{\nu_I(t(i)) \mid i\in \N \right\} = \left\{(a, b) \mid a,b\in\Q,\ a < \alpha < b\right\}
+    \end{equation}
+\end{itemize}
+
+\begin{proposition}
+    Да се докаже, че $\rho_C \equiv \rho$
+\end{proposition}
+\begin{proof}
+    В двете посоки:
+    \begin{itemize}
+        \item[($\rho_C \leq \rho$)] Дадено е $\rho_C$-име $t$ на $\alpha \in \R$, търсим $\rho$-име.
+
+        Имаме достъп до редица:
+        \begin{equation}
+            |q_i - \alpha| < \frac{1}{i+1}
+        \end{equation}
+
+        Изброяваме $(a, b)$, ако $\exists i:\; a < q_i-\frac{1}{i+1}$ и $\exists j:\; a < q_j - \frac{1}{j+1}$
+
+        Дефинираме
+        \begin{equation}
+            F(t, \underbrace{s}_{s=\langle k,i,j\rangle}) = \begin{cases}
+                1 &, \nu_\Q(L(k)) < \nu_\Q(t(i)) - \frac{1}{i+1} \& \nu_\Q(t(j)) + \frac{1}{i+1} < \nu_\Q(R(k)) \\
+                0 &, \text{иначе}
+            \end{cases}
+        \end{equation}
+        Трябва да се докаже, че добавяне/изваждане на 1 е $\langle\nu_\Q, \nu_\Q\rangle$-изчислими функции - $\varphi_{+1}, \varphi_{-1}$:
+        \begin{equation}
+            \nu_\Q(\varphi_{\pm 1}(t(0)) = \nu_\Q(t(0) \pm 1
+        \end{equation}
+        Сега можем да дефинираме реализацията
+        \begin{itemize}
+            \item[\Rn{1} вариант] 
+        \begin{equation}
+            G(t)(s) = \begin{cases}
+                (s)_0 &, F(t, s) = 1 \\
+                \pi(\varphi_{-1}(t(0)), \varphi_{+1}(t(0))) &, \text{иначе}
+            \end{cases}
+        \end{equation}
+        \item[\Rn{2} вариант] 
+        \begin{equation}
+            G(t)(s) = \begin{cases}
+                (s)_0 &, F(t, s) = 1 \\
+                \mu s:\; F(0, s) = 1 &, F(t, s) = 0
+            \end{cases}
+        \end{equation}
+        \end{itemize}
+        \item[($\rho \leq \rho_C$)] даден е списък от всички $(a, b) \ni \alpha$
+
+        По дадено $i\in\N$, търсим $(a, b) \ni \alpha$ и $b-a < \frac{1}{i+1}$, $q_i = b$
+        \begin{equation}
+            F(t, i) = \mu s:\; \nu_\Q(R(t(s))) \nu_\Q(L(t(s))) < \frac{1}{i+1}
+        \end{equation}
+        \begin{equation}
+            G(t)(s) = R(t(F(t,i)))
+        \end{equation}
+        със свойството $\rho(t) = \rho(G(t))$
+    \end{itemize}
+\end{proof}
+
+Сега ще разглеждаме:
+\begin{definition}
+    $\rho_<: \subseteq \mathbb T \to \R$ и $\rho_>: \subseteq \mathbb T \to \R$
+    \begin{equation}
+        \rho_\square(t) = \alpha \iff \left\{ \nu_\Q(t(i)) \mid i \in \N \right\} =  \left\{ q \in \Q \mid q \square \alpha \right\},\ \square \in \{<,>\}
+    \end{equation}
+    $\alpha$ е изчислимо отляво/отдясно, ако е $\rho_</\rho_>$-изчислимо
+\end{definition}
+\begin{proposition}
+    $\delta \leq \rho_<$ и $\delta \leq \rho_>$ $\iff$ $\delta \leq \rho$. $\ran \delta = \R$
+
+    $\rho$ е точна долна граница на $\rho_<$ и $\rho_>$
+\end{proposition}
+\begin{proof}
+    \begin{equation}
+        \begin{split}
+            \rho \leq \rho_<:\; G_<(t)(i) = L(t(i))\\
+            \rho \leq \rho_>:\; G_>(t)(i) = R(t(i))
+        \end{split}
+    \end{equation}
+    Значи е долна граница.
+
+    $\delta \leq \rho_\square,\ \square \in \{<,>\}$ с $\varphi_\square$ - $\langle \delta,\rho_\square\rangle$-изчислима реализация.
+
+    При дадено $s$: $\delta(s) = x\in\R$. $\varphi_\square$ е $\rho_\square$ име на $x$
+    \begin{equation}
+        \varphi(s)(i) = \pi(\varphi_<(s)(L(i)), \varphi_>(s)(R(i)))
+    \end{equation}
+    Тогава $\varphi$ е $\langle\delta,\rho\rangle$-изчислима реализация на $id: \R \to \R$
+\end{proof}
+\begin{proposition}
+    $x$ е изчислимо $\iff$ $x$ е изчислимо отляво и отдясно
+\end{proposition}
+\begin{proposition}
+    $\rho_<$ и $\rho_>$ не са сравними
+\end{proposition}
+\begin{proof}
+    Нека за определеност разглеждаме $\rho_< \leq \rho_>$.
+
+    Интуитивно - няма как от краен брой долни граници да заключим, че някое число е горна граница.
+
+    Допускаме противното - $\rho_< \leq \rho_>$. Има изчислим оператор $\rho_< = \rho_>(G(t))$. Разглеждаме $\alpha=0$. Нека $t$ е $\rho_<$-име на 0. Тогава $G(t)$ е $\rho_>$-име на 0.
+    \begin{equation}
+        G(t)(0) = n,\ \nu_\Q(n) = q' > 0
+    \end{equation}
+    От компактността - съществува крайна $\theta_0 \subseteq t$, т.ч. 
+    \begin{equation}
+        G(\theta_0)(0) = n
+    \end{equation}
+    Да изберем $\theta_0 \subseteq t'$, т.ч. $t'$ е $\rho_<$-име на $q'$. $\forall s \in \dom\theta_0:\; \nu_\Q(\theta_0) < 0 < q'$
+
+    От деф. за реализация $G(t')$ е $\rho_>$ име за $q'$ - $G(t')(0) = n = G(\theta_0)(0)$. $\nu_\Q(n) > q'$ - абсурд 
+\end{proof}
+
+\subsection{Представяне в основа}
+$\rho_b: \subseteq \mathbb T \to \R^{\geq 0}$ за $b \geq 2$. 
+\begin{equation}
+    \rho_b(t) = \alpha \bydef \alpha \sum\limits_{i=0}^\infty \frac{t(i)}{b^i}
+\end{equation}
+Имаме следната теорема:
+\begin{theorem}
+    \begin{equation}
+        \rho_a \leq \rho_b \iff \forall k \in \N,\ k\text{ - просто}:\; k | b \rightarrow k | a 
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    \begin{itemize}
+        \item[($\Leftarrow$)] Нека съществува прост делител на $b$, който не дели $a$. Нека е $p$.
+        
+        Допускаме, че $\rho_a \leq \rho_b$ - съществува изчислима реализация $\varphi$, т.ч.:
+        \begin{equation}
+            \forall s \in \dom\rho_a:\; \rho_a(s) = \rho_b(\varphi(s))
+        \end{equation}
+    
+        Нека $\alpha = \frac{1}{p}$, значи има единствено $\rho_a$ представяне $s_0$, което не завършва на 0 или $\bar{0}$ - точно защото $p \nmid a$ значи няма двойнствено представяне (проблема със степени на основата).
+    
+        В основа $b$, нека $c = \frac{b}{p} \geq 1$. $\alpha$ има представяне $\langle 0.c00\dots0\dots\rangle_b$ или $\langle 0. (c-1)\bar{0} \bar{0} \dots \bar{0} \dots\rangle_b$
+    
+        Нека $\varphi(s_0)$ е някое от двете представяния на $\alpha = \frac{1}{p}$ в основа $b$
+        \begin{itemize}
+            \item[(1 сл.)] $\varphi(s_0) = \langle0.c0\dots0\dots\rangle_b$
+    
+            Значи $\varphi(s_0)(1) = c$. Избираме $\theta_0 \subseteq s_0$ - крайно, т.ч. $\varphi(\theta_0)(1) = c$.
+    
+            Избираме $s'$:
+            \begin{equation}
+                \begin{split}
+                    \forall i \leq \max(\dom\theta_0):\;& s'(i) = s(i)\\
+                    \forall i > \max(\dom\theta_0):\;& s'(i) = 0
+                \end{split}
+            \end{equation}
+            s' е $\rho_a$-име на $\beta < \frac{1}{p}$. $\varphi(s')$ е $\rho_b$ име на $\beta$, $\varphi(s')(1)  =\varphi(\theta_0)(1) = c$, защото $\theta_0 \subseteq s'$. Тогава първата цифра на $\beta$ е $c$ в основа $b$, значи $\beta \geq \frac{c}{b} = \frac{1}{p}$ - абсурд.
+            
+            \item[(2 сл.)] $\varphi(s_0) = \langle0.(c-1)\Bar{0}\dots\Bar{0}\dots\rangle_b$
+    
+            Значи $\varphi(s_0)(1) = c - 1$. Избираме $\theta_0 \subseteq s_0$ - крайно, т.ч. $\varphi(\theta_0)(1) = c - 1$.
+    
+            Избираме $s'$:
+            \begin{equation}
+                \begin{split}
+                    \forall i \leq \max(\dom\theta_0):\;& s'(i) = s(i)\\
+                    \forall i > \max(\dom\theta_0):\;& s'(i) = \Bar{0}
+                \end{split}
+            \end{equation}
+            s' е $\rho_a$-име на $\beta > \frac{1}{p}$. $\varphi(s')$ е $\rho_b$ име на $\beta$, $\varphi(s')(1)  =\varphi(\theta_0)(1) = c - 1$, защото $\theta_0 \subseteq s'$. Тогава първата цифра на $\beta$ е $c - 1$ в основа $b$, значи $\beta \leq \frac{c}{b} = \frac{1}{p}$ - абсурд.
+            
+            \item[($\Rightarrow$)] Нека всеки прост делител на $b$ е прост делител на $a$. Нека $\alpha \in \R^{\geq 0}$. 
+            
+            Да предположим, че сме получили функция $c: \N \to \N$, т.ч. $\forall k\in\N:\; c(k) \leq b^k \alpha < c(k) + 1$ или $\forall k\in\N:\; c(k) < b^k \alpha \leq c(k) + 1$.
+
+            \begin{equation}
+                \begin{split}
+                    b.c(k) \leq b^{k+1} \alpha < b.(c(k) + 1) \\
+                    c(k+1) \leq b^{k+1} \alpha < c(k+1) + 1 \\
+                    \Rightarrow b.c(k) \leq c(k+1) \\
+                    \Rightarrow c(k+1) \leq b.(c(k) + 1) - 1 = b.c(k) + b - 1
+                \end{split}
+            \end{equation}
+            В другия случай - аналогично.
+
+            \begin{equation}
+                D_{k+1} = c(k+1) - b.c(k) \in [0; b-1]
+            \end{equation}
+            да се уверим, че това наистина са цифрите на $\alpha$ в основа $b$.
+            \begin{equation}
+                \begin{split}
+                    c(k).b^{-k} = \langle M.D_1 \dots D_k\rangle_b \\
+                    c(k+1).b^{-(k+1)} = (b.c(k) + D_{k+1}).b^{-k+1} \\
+                    = b^{-k}.c(k) + D_{k+1}.b^{-(k+1)} = \langle M.D_1 \dots D_{k+1}\rangle_b
+                \end{split}
+            \end{equation}
+            Значи:
+            \begin{equation}
+                \langle M.D_1 \dots D_k\rangle_b \leq \alpha \leq \langle M.D_1 \dots D_k \rangle_b + b^{-k}
+            \end{equation}
+            Така $\langle M.D_1 \dots D_k \dots \rangle_b$ е представяне на $\alpha$ в основа $b$.
+
+            Има $\mu$-рекурсивен оператор:
+            \begin{equation}
+                \rho_b(\Gamma(c)) = \alpha
+            \end{equation}
+            където:
+            \begin{equation}
+                \Gamma(t)(k+1) = t(k+1) - b.t(k)
+            \end{equation}
+
+            Съществуват примитивно рекурсивни функции $u, v$, т.ч. $\forall k \in \N:\; a^{u(k)} = v(k).b^{k}$
+            \begin{equation}
+                \begin{split}
+                    u(k) = \mu x:\; a^x \mid b^k \\
+                    v(k) = \lfloor \frac{a^{u(k)}}{b^k}\rfloor
+                \end{split}
+            \end{equation}
+            Нека $s$ е $\rho_a$-име на $\alpha$ и $\alpha = \langle N.E_1 \dots E_n \dots\rangle_a$. Дефинираме
+            \begin{equation}
+                \begin{split}
+                    (\alpha)_a^x = \langle N E_1 \dots E_x \rangle_a\\
+                    c(k) = \mu t:\; t.v(k) \leq (\alpha)_a^{u(k)} < (t+1).v(k)
+                \end{split}
+            \end{equation}
+            Тогава:
+            \begin{equation}
+                (\alpha)_a^x = \sum\limits_{i=0}^x a^{x-i} s(i)
+            \end{equation}
+            Имаме следното нещо:
+            \begin{equation}
+                c(k).v(k) \leq (\alpha)_a^{u(k)} < (c(k) + 1).v(k)
+            \end{equation}
+            Разглеждаме:
+            \begin{equation}
+                \begin{split}
+                    a^{u(k)}.\alpha = a^{u(k)} . \sum\limits_{i\in\N} a^{-i}.s(i) = (\alpha)_a^{u(k)} + a^{u(k)} . \sum\limits_{j > u(k)} a^{-j}.s(j)\\
+                    \overset{i=j-u(k)}{=} (\alpha)_a^{u(k)} + \underbrace{\sum\limits_{i \in \N^+} a^{-i}.s(i + u(k))}_{\varepsilon} \\
+                    0 \leq \varepsilon \leq 1 \\
+                    \Rightarrow c(k).v(k) \leq \underbrace{a^{u(k)}}_{v(k).b^k} . \alpha \leq (c(k) + 1).v(k) \\
+                    \Rightarrow c(k) \leq b^k \alpha \leq c(k) + 1
+                \end{split}
+            \end{equation}
+            Кога е възможно $c(k) = b^k.\alpha$ за някое $k$. За това $k$, $\varepsilon = 0$. Получаваме, че представянето на $\alpha$ в основа $a$ завършва на $0^{\omega}$.
+
+            Кога е възможно $c(k) + 1 = b^k.\alpha$ за някое $k$. За това $k$, $\varepsilon = 1$. Получаваме, че представянето на $\alpha$ в основа $a$ завършва на $\Bar{0}^{\omega}$.
+
+            Значи можем да заключим, че няма как да има 2 $k$-та, за които имаме двете неравества. Значи
+            \begin{equation}
+                \begin{split}
+                    \forall k \in \N:\; c(k) \leq b^k.\alpha < c(k) + 1
+                    \text{или} \\
+                    \forall k \in \N:\; c(k) < b^k.\alpha \leq c(k) + 1
+                \end{split}
+            \end{equation}
+
+            Значи $c = \Delta(s)$ за $\mu$-рекурсивен оператор $\Delta$ и $\alpha = \rho_a(s) = \rho_b(\Gamma(\Delta(s)))$, където:
+            \begin{equation}
+                \Delta(s)(k) = \mu t:\; t.v(k) \leq \sum\limits_{i \leq u(k)} a^{u(k) - i} . s(i) < (t+1).v(k)
+            \end{equation}
+        \end{itemize}
+    \end{itemize}
+\end{proof}
+\begin{corollary}
+    Имаме отношението на факториелите 
+    \begin{equation}
+        \dots \leq \rho_{n!} \leq \dots \leq \rho_{4!} \leq \rho_{3!} \leq \rho_{2!}
+    \end{equation}
+    Дори още по-силно - можем да разглеждаме само произведения на простите числа.
+\end{corollary}
+\begin{corollary}
+    $\rho\mid_{\R\backslash \Q} \leq \rho_b\mid_{\R\backslash \Q}$
+\end{corollary}
+\begin{proof}
+    Нека $t$ е $\rho$-име на $\alpha \in \R \backslash \Q$
+
+    Търсим $c$, т.ч. $c(k) < b^k\alpha < c(k) + 1$ 
+
+    Нека $\nu_I(t(i)) = (q_i, r_i) \ni \alpha$:
+    \begin{equation}
+        \forall k,\ \exists i:\; c(k) < b^k.\underbrace{\nu_\Q(L(t(i)))}_{=q_i} < b^k\alpha < b^k.\underbrace{\nu_\Q(R(t(i)))}_{=r_i} < c(k) + 1
+    \end{equation}
+    Подходящо $i$ е такова, че:
+    \begin{equation}
+        \left\lfloor b^k \nu_\Q(R(t(i))) \right\rfloor < b^k.\nu_\Q(L(t(i)))
+    \end{equation}
+\end{proof}
+\begin{corollary}
+    $\rho_b \leq \rho\ \&\ \rho \nleq \rho_b$, т.е. $\rho_b < \rho$
+\end{corollary}
+\begin{proof}
+    търсим $\Gamma:\; \rho_b(s) = \rho_c(\Gamma(s))$. 
+    
+    Нека $\alpha = \langle M.D_1 D_2 \dots \rangle_b$ и:
+    \begin{equation}
+        f(n) = \sum\limits_{i \leq n+1} s(i).b^{-i},\; f = \Gamma(s)
+    \end{equation}
+
+    тогава оценката:
+    \begin{equation}
+        |f(n) - \alpha| = \sum\limits_{i \geq n+2} s(i).b^{-i} \leq \sum\limits_{i \geq n+2} (b-1).b^{-i} = \frac{1}{b^{n+1}} < \frac{1}{n+1}
+    \end{equation}
+    
+    Да допуснем, че $\rho \leq \rho_b$. Избираме просто $p \nmid b$. От първата част $\rho_p \leq \rho \leq \rho_b$ - абсурд. Значи допускането не е вярно.
+\end{proof}
