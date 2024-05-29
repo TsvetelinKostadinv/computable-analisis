@@ -1,0 +1,264 @@
+\section{Изчислимост и непрекъснатост}
+\begin{theorem}
+    Всяка изчислима реална функция $\theta : D \to \R,\ D \subseteq \R^N$ е непрекъсната в $D$.  
+\end{theorem}
+\begin{proof}
+    Интуитивно: разполагаме името на аргумента на някаква безкрайна лента. Имаме $F, G, H$ - изчислима реализация. Нека за първите $k$ клетки от изхода сме използвали $m$ клетки от входа. При предположението, че $F, G, H$ не могат да се "връщат" , за да пишат в предишни клетки. Тогава ако променим входната лента след тези $k$ клетки, без да променяме тези $m$ клетки от изхода.
+
+    \begin{itemize}
+        \item[($N=1$)] Фискираме $\varepsilon > 0$, избираме $a \in \N$, т.ч. $\frac{2}{a+1} \leq \varepsilon$. Нека $\xi \in D$ и фиксираме произволно име на $\xi$ - $\langle f, g, h\rangle$. Фиксираме реализация на $\theta$ - $\langle F, G, H \rangle$. И имаме, че:
+        \begin{equation}
+            \langle F(f,g,h), G(f,g,h), H(f,g,h) \rangle \text{ е име на } \theta(\xi)
+        \end{equation}
+        И нека:
+        \begin{equation}
+            \begin{split}
+                F(f,g,h) = p \\
+                G(f,g,h) = q \\
+                H(f,g,h) = r
+            \end{split}
+        \end{equation}
+        И важи, че:
+        \begin{equation}
+            \abs{\frac{p+q}{r+1} - \theta(\xi)} < \frac{1}{a+1}
+        \end{equation}
+        От компактността на изчислението, можем да изберем крайни функции $\theta_f \subseteq f,\ \theta_g \subseteq g,\ \theta_h \subseteq h$, т.ч.:
+        \begin{equation}
+            \begin{split}
+                F(\theta_f, \theta_g, \theta_h) = p \\
+                G(\theta_f, \theta_g, \theta_h) = q \\
+                H(\theta_f, \theta_g, \theta_h) = r
+            \end{split}
+        \end{equation}
+        $\langle f, g, h\rangle$ е име на $\xi$:
+        \begin{equation}
+            \forall t \in \N:\; \abs{\frac{f(t) - g(t)}{h(t) + 1} - \xi} < \frac{1}{t+1}
+        \end{equation}
+        Нека $E = \dom(\theta_f) \cup \dom(\theta_g) \cup \dom(\theta_g)$. Отбелязваме, че $E$ е крайно.
+
+        Можем да изберем $\delta > 0$, т.ч.
+        \begin{equation}\label{eq:delta-choice}
+            \forall t \in E:\; \abs{\frac{f(t) - g(t)}{h(t) + 1} - \xi} + \delta \leq \frac{1}{t+1}
+        \end{equation}
+        $\delta$ зависи от $f, g, h$.
+
+        Нека $\xi' \in D,\ |\xi - \xi'| < \delta$.
+        \begin{equation}
+            \forall t \in E:\; \abs{\frac{f(t) - g(t)}{h(t) + 1} - \xi'} \leq \abs{\frac{f(t) - g(t)}{h(t) + 1} - \xi} + \abs{\xi - \xi'} \overset{\eqref{eq:delta-choice}}{<} \frac{1}{t+1}
+        \end{equation}
+        Избираме $\langle f', g', h' \rangle$ име на $\xi'$, т.ч. в/у $E$ съвпадат с $\langle f, g, h \rangle$: $\forall t \in E:\; f'(t) = f(t) = \theta_f(t), g'(t) = g(t) = \theta_g(t), h'(t) = h(t) = \theta_h(t)$.
+
+        Разглеждаме:
+        \begin{equation}
+            \langle F(f', g', h'), G(f', g', h'), H(f', g', h') \rangle \text{ е име на } \theta(\xi')
+        \end{equation}
+        Но имаме, че:
+        \begin{equation}
+            \begin{split}
+                F(f',g',h') = p \\
+                G(f',g',h') = q \\
+                H(f',g',h') = r
+            \end{split}
+        \end{equation}
+        И имаме, че:
+        \begin{equation}
+            \abs{\frac{p-q}{r+1} - \theta(\xi')} < \frac{1}{a+1}
+        \end{equation}
+        Тогава:
+        \begin{equation}
+            \abs{\theta(\xi) - \theta(\xi')} \leq \abs{\theta(\xi) - \frac{p+q}{r+1}} + \abs{\frac{p-q}{r+1} - \theta(\xi')} < \frac{1}{a+1} + \frac{1}{a+1} \leq \varepsilon
+        \end{equation}
+    \end{itemize}
+\end{proof}
+
+\section{Ефективна равномерна непрекъснатост}
+\begin{lemma}[Частична разрешимост]
+    За всеки $\mu$-рекурсивен функционал $F(f, \overrightarrow{x})$, където $F \subseteq \mathcal F_1 \times \N^k \to \N$, съществува $u_F : \subseteq \N^{k+1} \to \N$, т.ч.:
+    \begin{equation}
+        \begin{split}
+        \forall f: \N \to \N, \overrightarrow{x} \in \N^k: \\
+        c = \langle f(0), f(1), \dots, f(len(c)) \rangle \\
+        u_F(c, \overrightarrow{x}) = \begin{cases}
+            r+1 &, F(f, x) \downarrow = r \& \text{ в това изчисление се изолзват $f(i)$ за } i \leq len(c)\\
+            0 &, F(f, \overrightarrow{x}) \text{ използва } f(i),\ i > len(c) \\
+            \uparrow &, F(f, \overrightarrow{x})\uparrow 
+        \end{cases}
+        \end{split}
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    Индукция по $F$
+    \begin{itemize}
+        \item[(База 1)] Нека $F$ не зависи от $f$:
+        \begin{equation}
+            F(f, \overrightarrow{x}) = p(\overrightarrow{x})
+        \end{equation}
+        За $p$ - тотална и изчислима. Тогава:
+        \begin{equation}
+            u_F(c, \overrightarrow{x}) = p(\overrightarrow{x}) + 1
+        \end{equation}
+        \item[(База 2)] 
+        \begin{equation}
+            F(f, x) = f(x)
+        \end{equation}
+        Тогава:
+        \begin{equation}
+            u_F(x) = \begin{cases}
+                (c)_x + 1 &, x \leq len(c) \\
+                0 &, x > len(c)
+            \end{cases}
+        \end{equation}
+        \item[(Стъпка)] Суперпозиция
+        \begin{equation}
+            F(f, \overrightarrow{x}) = F_0(f, F_1(f, \overrightarrow{x}), F_2(f, \overrightarrow{x}), \dots, F_m(f, \overrightarrow{x}))
+        \end{equation}
+        Конструираме:
+        \begin{equation}
+            \begin{split}
+                u_F(c, \overrightarrow{x}) = v(c, u_{F_1}(c, \overrightarrow{x}), \dots, u_{F_m}(c, \overrightarrow{x})) \\
+                u_{F_0}, \dots u_{F_m} \text{ от индукционната хипотеза} \\
+                v(c, s_1, \dots, s_m) = \begin{cases}
+                    u_{F_0}(c, s_1 \dot - 1, \dots, s_m \dot - 1) &, s_1\dots s_m \neq 0 \\
+                    0 &, s_1 \dots s_m = 0
+                \end{cases}
+            \end{split}
+        \end{equation}
+        \item[(Стъпка)] Примитивна рекурсия
+        \begin{equation}
+            \begin{split}
+                F(f, \overrightarrow{x}, 0) = F_0(f, \overrightarrow{x}) \\
+                F(f, \overrightarrow{x}, t+1) = F_1(f, \overrightarrow{x}, t, F(f, \overrightarrow{x}, t))
+            \end{split}
+        \end{equation}
+        Конструираме:
+        \begin{equation}
+            \begin{split}
+                u_F(c, \overrightarrow{x}, 0) = u_{F_0}(c, \overrightarrow{x}) \\
+                u_F(c, \overrightarrow{x}, t+1) = \begin{cases}
+                    u_{F_1}(c, \overrightarrow{x}, t, u_F(c, \overrightarrow{x}, t) \dot - 1) &, u_F(c, \overrightarrow{x}, t)\neq 0 \\
+                    0 &, u_F(c, \overrightarrow{x}, t) = 0 
+                \end{cases}
+            \end{split}
+        \end{equation}
+        \item[Стъпка] Минимизация
+        \begin{equation}
+            F(f, \overrightarrow{x}) = \mu\ t:\; F_0(f, \overrightarrow{x}, t) = 0
+        \end{equation}
+        Нека:
+        \begin{equation}
+            \begin{split}
+                v(c, \overrightarrow{x}) = \mu\ t:\; u_{F_0}(c, \overrightarrow{x}, t) \leq 1 \\
+                u_F(c, \overrightarrow{x}) = \begin{cases}
+                    0 &, u_{F_0}(c, \overrightarrow{x}, v(c, \overrightarrow{x})) = 0 \\
+                    v(c, \overrightarrow{x}) + 1 &, \text{иначе}
+                \end{cases}
+            \end{split}
+        \end{equation}
+    \end{itemize}
+\end{proof}
+\begin{corollary}
+    Ако $F(f, \overrightarrow{x})$ е дефинирано за всяка тотална $f$ и $x \in \N^k$, то $u_F$ е тотална.
+\end{corollary}
+
+\begin{lemma}[равномерност]
+    Нека $\Gamma : \mathcal F_1 \to \mathcal F_1$ е $\mu$-рекурсивен оператор, т.ч. $\Gamma(f)$ е тотална за всяка тотална $f$.
+
+    За всяка изчислима $g: \N \to \N$, съществува $\tilde g : \N \to \N$, което $\forall f$ - тотална, която се мажорира от $g,\ \forall a \in \N:\; \Gamma(f)(a) = \Gamma(f \upharpoonright \set{0, 1, \dots, \tilde g(a)})(a)$
+\end{lemma}
+\begin{proof}
+    \begin{itemize}
+        \item[($\exists$)] Ще доказваме:
+        \begin{equation}
+            \exists m\ \forall \underbrace{\varphi : \set{0, 1, \dots, m} \to \N}_\text{което се мажорира от $g$}: a \in \dom(\Gamma(\varphi))
+        \end{equation}
+        Допускаме противното:
+        \begin{equation}
+            \forall m\ \exists \underbrace{\varphi : \set{0, 1, \dots, m} \to \N}_\text{което се мажорира от $g$}: a \notin \dom(\Gamma(\varphi))
+        \end{equation}
+        Построяваме дърво $T$ от всички такива ф-ии $\varphi$. Ще дефинираме:
+        \begin{equation}
+            \psi \text{ е дете на } \varphi \iff \varphi \subset \psi \&  \exists a \in \N:\; \dom \psi = \dom\varphi \cup \set{a}
+        \end{equation}
+        Коренът е $\emptyset$. От допускането $T$ е безкрайно дърво. Защо всеки връх има крайна разклоненост?
+
+        Съществено е, че ф-иите се мажорират от $g$.
+        \begin{equation}
+            \forall \varphi \in T,\ i \in \dom\varphi:\; \varphi(i) \in \set{0, 1, \dots g(i)}
+        \end{equation}
+
+        Лемата на Кьониг важи. значи има безкраен път $f: \N \to \N$, т.ч. $f \upharpoonright \set{0, 1, \dots m} \in T,\; \forall m$. Значи $\Gamma(f)(a)$ е дефинирано.
+
+        От компактността следва, че $a \in \dom \Gamma(f \upharpoonright \set{0, 1, \dots m} )$ за някое $m$ - абсурд. Противоречи с построението на $f \upharpoonright \set{0, 1, \dots m} \in T$
+        \item[(Ефективност)] Дефинираме:
+        \begin{equation}
+            \begin{split}
+                \Gamma(f)(x) = F(f, x)\\
+                \tilde g(a) = \mu m \left[ \forall c:\; len(c) = m \& \forall i \leq m:\; (c)_i \leq g(i) \rightarrow u_F(c, a) \neq 0 \right]
+            \end{split}
+        \end{equation}
+        Минимизацията е винаги успешна от предишната точка. Нека $c \leq \langle g(0), g(1), \dots, g(m) \rangle$. За произволно $m$ имаме краен брой кодове на списъци.
+    \end{itemize}
+\end{proof}
+
+\begin{lemma}[ретракция]
+    Съществуват $\mu$-рекурсивни оператори $T_1, T_2, T_3$ със следните свойства:
+    \begin{enumerate}
+        \item Ако $f$ представя $\xi \in I$ в смисъла на Гжегорчик
+        \begin{equation}
+            \abs{\frac{f(k)}{k+1} -\xi} < \frac{1}{k+1}
+        \end{equation}
+        То $\langle T_1(f), T_2(f), T_3(f)\rangle$ е име на същото $\xi$
+        \item За всяка тотална $f$ съществува $\xi \in I$, т.ч. $\langle T_1(f), T_2(f), T_3(f)\rangle$ е име на $\xi$
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Строим редица $I_k$ - редица от затворени интервали с рационални краища(може и $\emptyset$):
+    \begin{equation}
+        \begin{split}
+            I_0 = [0; 1] \\
+            I_{k+1} = I_k \cap \left[ \frac{f(k)- 1}{k+1}; \frac{f(k) + 1}{k+1} \right]
+        \end{split}
+    \end{equation}
+    Ясно е, че $I_0 \supseteq I_1 \supset I_2 \supset \dots \supset I_k \supset \dots$ и също така $\abs{I_k} \leq \frac{2}{k+1}$
+
+    Намаляваща редица от компактни множества има непразно сечение (топологично съображение).
+
+    Ще си помогнем с:
+    \begin{equation}
+        \begin{split}
+            F(f, 0) = 1\\
+            F(f, k+1) = \begin{cases}
+                \max I_{k+1} &, I_{k+1} \neq \emptyset \\
+                F(f, k) &, I_{k+1} = \emptyset
+            \end{cases}
+        \end{split}
+    \end{equation}
+    
+    Ще покажем, че за произволна тотална $f$ ще съществува $\xi \in I$:
+    \begin{equation}
+        \abs{F(f, k+1) - \xi} \leq \frac{2}{k+1}
+    \end{equation}
+    \begin{itemize}
+        \item[(1. случай)] $\bigcap_k I_k \neq \emptyset$. Нека $\xi \in \bigcap_k I_k$. Значи $F(f, k+1)$ е десният край на $I_{k+1}$ и $\xi \in I_{k+1}$, значи $\abs{F(f, k+1) - \xi} \leq \frac{2}{k+1}$
+        \item[(2. случай)] $\bigcap_k I_k = \emptyset$. Тъй като интервалите са затворени, има $k \in \N$, т.ч. $I_{k+1} = \emptyset$. Нека най-малкото такова $k$ е $k_0$. Значи:
+        \begin{equation}
+            F(f, k_0) = F(f, k_0 + 1) = F(f, k_0 + 2) = \dots
+        \end{equation}
+        Ще дефинираме $\xi = F(f, k_0)$. $\xi \in I_{k_0}$, значи $\xi \in I_0 = [0; 1]$. 
+
+        Да видим грешката:
+        \begin{equation}
+            \begin{split}
+                k \geq k_0 \Rightarrow \abs{F(f, k+1) - \xi} = 0 \leq \frac{2}{k+1} \\
+                k \leq k_0 \Rightarrow F(f, k+1) \in I_k,\ \xi \in I_k \xRightarrow{\abs{I_k} \leq \frac{2}{k+1}} \abs{F(f, k+1) - \xi} \leq \frac{2}{k+1}
+            \end{split}
+        \end{equation}
+    \end{itemize}
+
+    Ако $f$ представя $\xi$ в смисъла на Гжегорчик, то сме в случай 1 и резултата е същото $\xi$
+
+    Заключаваме, че операторите $T_1, T_2, T_3$:
+    \begin{equation}
+        \frac{T_1(f)(k) - T_2(f)(k)}{T_3(f)(k) + 1} = F(f, 2k+3)
+    \end{equation}
+\end{proof}
