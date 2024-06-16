@@ -15,7 +15,7 @@
     Където $\forall i \in \N:\; t_0(i) = L(t(i))\ \&\ t_1(i) = R(t(i))$
 \end{definition}
 \begin{problem}
-    Да се докажат релациите
+Да се докажат релациите
 \begin{itemize}
     \item $\rho_\leq \leq \rho_<$
     \item $\rho_\geq \leq \rho_>$
@@ -25,13 +25,99 @@
     \item $\rho_\geq \not\leq \rho_\leq$
 \end{itemize}
 \end{problem}
+\begin{solution}Доказваме всяка точка поотделно:
+    \begin{itemize}
+        \item[($\rho_\leq \leq \rho_<$)] Значи има изчислима като транслатор $\varphi$, т.ч.:
+            \begin{equation}
+                \rho_\leq(s) = \rho_<(\varphi(s))
+            \end{equation}
+            Нека $\rho_\leq(s) = \alpha$. Значи $\set{\nu_\Q(s(i)) \mid i \in \N} = \set{q \in \Q\mid q \leq \alpha}$.
+
+            Ако $\alpha \in \Q$, нека $i_0 = \mu\ i:\; \nu_\Q(s(i)) \neq \alpha$, то дефинираме:
+            \begin{equation}
+                \varphi(s)(i) = \begin{cases}
+                    s(i)   & , \nu_\Q(s(i)) \neq \alpha \\
+                    s(i_0) & , \nu_\Q(s(i)) = \alpha
+                \end{cases}
+            \end{equation}
+            Така обхождаме всички рационални числа строго по-малки от $\alpha$. Значи $\varphi(s)$ е $\rho_<$ име на $\alpha$.
+
+            От друга страна, ако $\alpha \in \R - \Q$, то е вярно, че $\forall q \in \Q: q \leq \alpha \iff q < \alpha$. Значи $\set{q \mid q < \alpha} = \set{q \mid q \leq \alpha}$. Можем да положим $\varphi = id$.
+        \item[($\rho_\geq \leq \rho_>$)] Аналогично - при рационално $\alpha$ можем да "изключим"  елемента от редицата, който има равенство и при ирационално число - да положим транслатора да е идентитета
+        \item[($\rho_< \not\leq \rho_\leq$)] Да допуснем, че съществува изчислима като транслатор $\varphi$, т.ч.:
+            \begin{equation}
+                \rho_<(s) = \rho_\leq(\varphi(s))
+            \end{equation}
+            Нека $\alpha=0$ и имаме $s$ - $\rho_<$-изчислимо име на $\alpha$ и $\varphi(s)$ е $\rho_\leq$-изчислимо име на $\alpha$. От компактността на изчислението, съществува крайна функция $\theta_0$, т.ч.:
+            \begin{equation}
+                \varphi(s) = \varphi(\theta_0)
+            \end{equation}
+            Значи $\varphi(\theta_0)$ е $\rho_\leq$-изчислимо име на $\alpha$.
+
+            Понеже $s$ е $\rho_<$-изчислимо име на $\alpha$, тогава:
+            \begin{equation}
+                \forall i \in \N:\; \nu_\Q(s(i)) < 0
+            \end{equation}
+            И
+            \begin{equation}
+                \forall i \in \N:\; \nu_\Q(\varphi(\theta_0(i))) \leq 0
+            \end{equation}
+            Избираме $t$, т.ч. $\theta_0 \subset t$, т.ч. е $\rho_<$ име на някакво $q > 0$. Значи $\varphi(t)$ е $\rho_\leq$-име на $q$
+            \begin{equation}
+                0 = \rho_\leq(\varphi(s)) = \rho_\leq(\varphi(\theta_0)) = \rho_\leq(\varphi(t)) = q
+            \end{equation}
+            Но $q \neq 0$ - абсурд. Значи допускането не е вярно - не съществува такава изчислима като транслатор ф-ия.
+
+        \item[($\rho_> \not\leq \rho_\geq$)] Доказателството е аналогично на горното като заместваме релациите $< \to >$ и $\leq \to \geq$. И избора на $q$ се прави $q < 0$.
+        \item[($\rho_\leq \not\leq \rho_\geq$)] Интуитивно - няма как от краен брой долни граници да изберем горна граница. Да допуснем обратното - има изчислима като транслатор:
+            \begin{equation}
+                \rho_\leq(s) = \rho_\geq(\varphi(s))
+            \end{equation}
+            Нека $s$ е $\rho_\leq$-име на $\alpha=0$. Тогава $\varphi(s)$ e $\rho_\geq$-име на 0.
+
+            От компактността има крайна ф-ия $\theta_0 \subset s$, т.ч. $\varphi(\theta_0)$ е $\rho_\geq$-име на 0.
+
+            Нека $t$ е т.ч. $\theta_0 \subset t$ и $t$ е $\rho_\leq$-име на $q > 0$, значи $\varphi(t)$ е $\rho_\geq$-име на $q$
+            \begin{equation}
+                0 = \rho_\geq(\varphi(s)) = \rho_\geq(\varphi(\theta_0)) = \rho_\geq(\varphi(t)) = = q
+            \end{equation}
+            Но $q \neq 0$ - абсурд. Значи допускането не е вярно. Няма как да съществува изчислима като транслатор $\varphi$
+
+        \item[($\rho_\geq \not\leq \rho_\leq$)] Аналогично на горното доказателство, но избора на $q$ e $q < 0$.
+    \end{itemize}
+\end{solution}
 \begin{problem}
-    $\rho_{cf} \equiv \rho_{\leq\geq}$
+$\rho_{cf} \equiv \rho_{\leq\geq}$
 \end{problem}
 \begin{proof}
     Доказваме двете релации
     \begin{itemize}
-        \item[($\rho_{cf} \leq \rho_{\leq\geq}$)]
-        \item[($\rho_{\leq\geq} \leq \rho_{cf}$)]
+        \item[($\rho_{cf} \leq \rho_{\leq\geq}$)] Значи търсим изчислима като транслатор $\varphi$, т.ч.:
+            \begin{equation}
+                \rho_{cf}(s) = \rho_{\leq\geq}(\varphi(s))
+            \end{equation}
+            Нека $s$ е $\rho_{cf}$ име на някакво $\alpha$.
+
+            И за всяко $i$ дефинираме:
+            \begin{equation}
+                \begin{split}
+                    s_i'(j) = \begin{cases}
+                        s(j)          & , j \leq i                       \\
+                        s(j) \dot - 1 & , j = i+1\ \&\ j \equiv 0 \mod 2 \\
+                        s(j) + 1      & , j = i+1\ \&\ j \equiv 1 \mod 2
+                    \end{cases} \\
+                    s_i''(j) = \begin{cases}
+                        s(j)          & , j \leq i                       \\
+                        s(j) + 1      & , j = i+1\ \&\ j \equiv 0 \mod 2 \\
+                        s(j) \dot - 1 & , j = i+1\ \&\ j \equiv 1 \mod 2
+                    \end{cases}
+                \end{split}
+            \end{equation}
+            Очевидно $s_i'$ е крайна редица. По свойствата на верижните дроби - $\rho_{cf}(s_i') \leq \rho_{cf}(s)$ и $\rho_{cf}(s_i') \geq \rho_{cf}(s)$. Значи:
+            \begin{equation}
+                \rho_{cf}(s) \in \left[\rho_{cf}(s_i'); \rho_{cf}(s_i'') \right]
+            \end{equation}
+            Понеже $s_i'$ и $s_i''$ са крайни, то $\rho_{cf}(s_i')$ и $\rho_{cf}(s_i'')$ са рационални числа. Нека $t'(i)$ е $\nu_\Q$ име на $\rho_{cf}(s_i')$, а $t''(i)$ е $\nu_\Q$ име на $\rho_{cf}(s_i'')$. Получихме 2 редици $t'$ и $t''$, които пораждат по-големи/по-малки числа. Нека $t(i) = \pi(t'(i), t''(i))$.
+        \item[($\rho_{\leq\geq} \leq \rho_{cf}$)] Нека $s$ е $\rho_{\leq\geq}$-име на $\alpha$. От дефиницията следва, че редицата $L(s)$ е $\rho_\leq$-име на $\alpha$ и $R(s)$ е $\rho_\geq$-име на $\alpha$.
     \end{itemize}
 \end{proof}
