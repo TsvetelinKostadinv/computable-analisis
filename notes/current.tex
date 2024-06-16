@@ -1,0 +1,278 @@
+\section{}
+Днес, 2024-06-05.
+
+\begin{definition}[Ефективна равномерна непрекъснатост]
+    $\theta : [\alpha; \beta] \to \R$ е ефективно равномерно непрекъсната $\bydef$ съществува изчислима $r : \N \to \N$, т.ч.
+    \begin{equation}
+        \forall \xi, \xi' \in [\alpha; \beta]:\; \abs{\xi - \xi'} < \frac{1}{r(t) + 1} \Rightarrow \abs{\theta(\xi) - \theta(\xi')} < \frac{1}{r(t) + 1}
+    \end{equation}
+\end{definition}
+
+\begin{theorem}
+    Всяка изчислима ф-ия $\theta : [\alpha; \beta] \to \R$, където $\alpha, \beta$ са изчислими, е ефективно равномерно непрекъсната.
+\end{theorem}
+\begin{proof}
+    Нека за определеност $[\alpha, \beta] = [0; 1]$. Дефинираме:
+    \begin{equation}
+        \tilde \theta(x) = \theta(\alpha + (\beta - \alpha)x)
+    \end{equation}
+    и виждаме, че $\tilde \theta : [0; 1] \to \R$ и $\theta$ е ефект. равн. непрек. $\iff$ $\tilde \theta$ е ефект. равн. непрек.
+
+    Ще доказваме за $\theta : [0; 1] \to \R$.
+
+    Нека $\langle \Gamma_1, \Gamma_2, \Gamma_3 \rangle$ - реализация на $\theta : [0; 1] \to \R$. От \lemref{lem:retraction} - избираме $\langle T_1, T_2, T_3 \rangle$
+    \begin{itemize}
+        \item Ако $f$ представя $\xi \in [0; 1]$ в смис. на Гжегорчик, то $\langle T_1(f), T_2(f), T_3(f) \rangle$ е също име на същото $\xi$.
+        \item $\forall f: \N \to \N,\ \exists \xi \in [0; 1]:\; \langle T_1(f), T_2(f), T_3(f) \rangle$ е име на $\xi$.
+    \end{itemize}
+    Дефинираме $i \in \set{1, 2, 3}:\; \Delta_i(f) = \Gamma_i(T_1(f), T_2(f), T_3(f))$.
+
+    Защо $\langle \Delta_1, \Delta_2, \Delta_3 \rangle$ е реализация на $\theta$ - защото $T_i$ запазва имената на числата в $[0; 1]$
+
+    По-важно - $\forall f: \N \to \N:\; \Delta_i(f)$ е тотална. Значи можем да поискаме $\theta$ да има тотална реализация.
+
+    Прилагаме \lemref{lem:uniformity} към $\langle \Delta_1, \Delta_2, \Delta_3 \rangle$ и нека $g = \lambda x. x+1$. При произволна $f \leq S$ и $n \in \N$ имаме, че:
+    \begin{equation}
+        \Delta_i(f)(n) = \Delta_i(f \upharpoonright \set{1, 2, \dots, \tilde g_i(n)})(n)
+    \end{equation}
+    Нека положим $\tilde g(n) = \max_{1 \leq i \leq 3} (\tilde g_i(n))$. Значи:
+    \begin{equation}
+        \Delta_i(f)(n) = \Delta_i(f \upharpoonright \set{1, 2, \dots, \tilde g(n)})(n)
+    \end{equation}
+    Дефинираме:
+    \begin{equation}
+        r(n) = \tilde g(2n + 1)
+    \end{equation}
+    Да проверим, че наистина удовлетворява условието. Нека $\xi, \xi' \in [0; 1], $ за някакво $n \in \N:\; abs{\xi - \xi'} < \frac{1}{r(n) + 1}$.
+
+    За $i \in \set{0, 1, \dots, r(n)}$
+    \begin{equation}
+        \abs{(i+1)\xi - (i+1)\xi'} = (i+1) \abs{\xi - \xi'} < \frac{i+1}{r(n) + 1} \leq 1
+    \end{equation}
+    Можем да изберем $k_i \in \N$, т.ч.:
+    \begin{equation}
+        \abs{(i+1)\xi - k_i} < 1 \;\;\; \abs{(i+1)\xi' - k_i} < 1
+    \end{equation}
+    Избираме имена в смис. на Гжегорчик $f, f'$ съответно на $\xi, \xi'$, т.ч.:
+    \begin{equation}
+        \forall i\in\set{0, 1, \dots r(n)}:\; f(i) = f'(i)
+    \end{equation}
+    Защо $f, f' < S$?
+    \begin{equation}
+        \begin{split}
+            \abs{\frac{f(i)}{i+1} - \xi} < \frac{1}{i+1} \\
+            f(i) < (i + 1)\xi + 1                        \\
+            f(i) \leq (i+1) = g
+        \end{split}
+    \end{equation}
+    Аналогично за $f'$.
+    \begin{equation}\label{eq:delta_same}
+        \begin{split}
+            \Delta(f)(2n+1) = \Delta_i\left(f \upharpoonright \set{0, 1, \dots \underbrace{\tilde g(2n+1)}_{=r(n)}}\right) \\
+            \Delta(f')(2n+1) = \Delta_i\left(f' \upharpoonright \set{0, 1, \dots \underbrace{\tilde g(2n+1)}_{=r(n)}}\right)
+        \end{split}
+    \end{equation}
+    По това, че $\langle \Delta_1, \Delta_2, \Delta_3\rangle$ - реализация, значи:
+    \begin{equation}
+        \begin{split}
+            \abs{\frac{\Delta_1(f)(2n+1) - \Delta_2(f)(2n+1)}{\Delta_3(f)(2n+1) + 1} - \theta(\xi)} < \frac{1}{2n+1} \\
+            \abs{\frac{\Delta_1(f')(2n+1) - \Delta_2(f')(2n+1)}{\Delta_3(f)(2n+1) + 1} - \theta(\xi)} < \frac{1}{2n+1} \\
+            \xRightarrow{\eqref{eq:delta_same}} \abs{\theta(\xi) - \theta(\xi')} < \frac{1}{n+1}
+        \end{split}
+    \end{equation}
+\end{proof}
+
+\section{Изчислимост в $C[0;1]$}
+\begin{definition}
+    \begin{equation}
+        C[0;1] = \set{\theta: [0; 1] \to \R \mid \theta \text{ е непрекъсната}}
+    \end{equation}
+\end{definition}
+
+Нека $\mathbb X: \subseteq \mathbb T \to C[0; 1]$ е име на $\theta \in C[0;1]$ ($\mathbb X(f) = \theta$).
+
+\begin{definition}
+    Ще дефинираме метрика в пространството $C[0;1]$:
+    \begin{equation}
+        d(\theta, \theta') = \max_{\xi \in [0; 1]}\abs{\theta(\xi) - \theta'(\xi)}
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    Ефективно кодиране на полиномите $\Q[x]$ - $P_0, P_1, \dots P_k \dots$
+    \begin{equation}
+        \alpha_d: \N \to \N:\; deg P_k \leq \alpha_d(k)
+    \end{equation}
+    също така:
+    \begin{equation}
+        \alpha_c : \N \times \N \to \Q:\; \alpha_c(k, j) \text{ е коеф пред $x^j$ на $P_k$}
+    \end{equation}
+\end{definition}
+
+\begin{definition}
+    \begin{equation}
+        \mathbb X(f) = \theta \bydef \forall n \in \N:\; d(P_{f(n)}, \theta) < \frac{1}{n+1}
+    \end{equation}
+\end{definition}
+
+\begin{theorem}
+    Всеки $\mathbb X$ - изчислим елемент на $C[0; 1]$ е изчислима реална ф-ия.
+\end{theorem}
+\begin{proof}
+    Нека $\theta \in C[0; 1]$ и $f$ е $\mathbb X$-изчислимо име на $\theta$.
+    \begin{equation}
+        d(P_{f(n)}, \theta) < \frac{1}{n+1}
+    \end{equation}
+    което значи:
+    \begin{equation}
+        \forall x\ in [0; 1]:\; \abs{P_{f(n)}(x) - \theta(x)} < \frac{1}{n+1}
+    \end{equation}
+    Имаме скрито приближение в $P_{f(n)}(x)$.
+    \begin{equation}
+        \forall m\in \N:\; \abs{\sum_{i < \alpha_d(f(m))} \alpha_c(f(m), i)x^i - \theta(x)} < \frac{1}{m+1}
+    \end{equation}
+    Нека $\langle f_1, f_2, f_3 \rangle$ е име $x$.
+    \begin{equation}
+        \begin{split}
+            \abs{\sum_{i < \alpha_d(f(m))} \alpha_c(f(m), i)\left(\frac{f_1(n) - f_2(n)}{f_3(n) + 1}\right)^i - \theta(x)}\\
+            \leq \sum_{i < \alpha_d(f(m))} \abs{\alpha_c(f(m), i)} \abs{\left(\frac{f_1(n) - f_2(n)}{f_3(n) + 1}\right)^i - x^i} + \underbrace{\abs{\sum_{i < \alpha_d(f(m))} \alpha_c(f(m), i)x^i - \theta(x)}}_{< \frac{1}{m+1}}
+        \end{split}
+    \end{equation}
+    Ще използваме:
+    \begin{equation}
+        \abs{y^i - x^i} = |y - x| \abs{\sum_{j<i-1} y^i x^{i-1-j}}
+    \end{equation}
+    При $y = \frac{f_1(n) - f_2(n)}{f_3(n)}$, и имаме, че $|y| < x+1 \leq 2$
+    \begin{equation}
+        |y^i - x^i| < \frac{1}{n+1}(2^i - 1)
+    \end{equation}
+    Значи $\abs{\left(\frac{f_1(n) - f_2(n)}{f_3(n) + 1}\right)^i - x^i} < \frac{1}{n+1}(2^i - 1)$. Можем да продължим като заместим $f(n) = f(2n+1)$:
+    \begin{equation}
+        \begin{split}
+            \abs{\sum_{i < \alpha_d(f(2m+1))} \alpha_c(f(2m+1), i)\left(\frac{f_1(n) - f_2(n)}{f_3(n) + 1}\right)^i - \theta(x)}\\
+            \leq \sum_{i < \alpha_d(f(m))} \abs{\alpha_c(f(2m+1), i)} \frac{1}{n+1}(2^i - 1) + \frac{1}{m+1}
+        \end{split}
+    \end{equation}
+    Ще положим:
+    \begin{equation}
+        n = \nu(m) = \left\lfloor (2m+2) \sum_{i \leq \alpha_d(f(2m+1))} \abs{\alpha_c(f(2m+1), i)(2^i -1)} \right\rfloor
+    \end{equation}
+    \begin{equation}
+        \frac{\Gamma_1(f_1, f_2, f_3)(m) - \Gamma_2(f_1, f_2, f_3)(m)}{\Gamma_3(f_1, f_2, f_3)(m) + 1} = \sum_{i < \alpha_d(f(m))} \alpha_c(f(2m+1), i) \left(\frac{f_1(\nu(m)) - f_2(\nu(m))}{f_3(\nu(m)) +1}\right)^i
+    \end{equation}
+    $\langle \Gamma_1, \Gamma_2, \Gamma_3\rangle$ е реализация от $\mu$-рек. оператори на $\theta$.
+
+    Нещо повече, ако $f$ е име на $\theta$, $f_1, f_2, f_3$ - име на $x$, то: \\
+    $\langle \Gamma_1'(f, f_1, f_2, f_3), \Gamma_2'(f, f_1, f_2, f_3), \Gamma_3'(f, f_1, f_2, f_3) \rangle$ е име на $\theta(x)$ - реализация на оператора $Apply(\theta, x)$.
+\end{proof}
+
+\subsection{Полиноми на Бернщайн}
+\begin{definition}
+    $n$-тия полином на Бернщайн за ф-ия $\theta$ се бележи с $B_n$
+    \begin{equation}
+        B_n(\theta)(x) = \sum_{k=0}^n \theta\left(\frac{k}{n}\right) B_{n,k}(x)
+    \end{equation}
+    където имаме полином на Бернщайн $B_{n,k}$
+    \begin{equation}
+        B_{n,k}(x) = \binom{n}{k} x^k (1-x)^{n-k}
+    \end{equation}
+\end{definition}
+
+$B_{n,k}$ прилича много на биномно разпределение - ф-лата за $P(X=k)$, където $X$ е разпределена биномно. И знаем, че:
+\begin{equation}
+    \sum_{k=0}^n B_{n,k}(x) = 1
+\end{equation}
+А следното интерпретираме като мат. очакване:
+\begin{equation}
+    \sum_{k=0}^n k . B_{n,k}(x) = n.x
+\end{equation}
+И дисперсията се появява под формата на:
+\begin{equation}
+    \sum_{k=0}^n (k - nx)^2 B_{n,k}(x) = n.x.(1-x)
+\end{equation}
+
+Ще докажем, че всъщност можем да приближаваме $\theta$ с такива ф-ии.
+\begin{lemma}\label{th:computable-bernstein-approx}
+    Нека $\theta: [0; 1] \to \R$, $\forall x\ in [0; 1]:\; \abs{\theta(x)} \leq M$ и $\varepsilon, \delta > 0$, т.ч.:
+    \begin{equation}
+        \forall x, x':\; \abs{x  - x'} < \delta \rightarrow \abs{\theta(x) - \theta(x')} < \varepsilon
+    \end{equation}
+    твърдим, че:
+    \begin{equation}
+        \forall x \in [0; 1]:\; \abs{B_n(\theta)(x) - \theta(x)} < \varepsilon + \frac{M}{2\delta^2n}
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    \begin{equation}
+        \abs{B_n(\theta)(x) - \theta(x)} = \abs{\sum_{k=0}^n \theta\left(\frac{k}{n}\right) B_{n,k}(x) - \theta(x)} = \abs{\sum_{k=0}^n \left(\theta\left(\frac{k}{n}\right) - \theta(x)\right) B_{n,k}(x)}
+    \end{equation}
+    \begin{itemize}
+        \item[(1. сл.)] 
+        \begin{equation}
+            \abs{\frac{k}{n} - x} < \delta \Rightarrow \abs{B_n(\theta)(x) - \theta(x)} \leq  \sum_{k=0}^n \abs{\theta\left(\frac{k}{n}\right)}.B_{n,k} < \sum_{k=0}^n \varepsilon. B_{n,k}(x) = \varepsilon
+        \end{equation}
+        \item[(2. сл.)]
+        \begin{equation}
+            \begin{split}
+            \abs{\frac{k}{n} - x} \geq \delta \Rightarrow \abs{\frac{k-nx}{n\delta}} \geq 1 \\
+            \xRightarrow{\substack{\text{нещо като неравенството}\\\text{на Чебишов (от вероятностите)}}} \sum_{k=0}^n \abs{\theta\left(\frac{k}{n}\right) - \theta(x)}.B_{n,k} \leq 2M.\sum_{k=0}^n \frac{1}{n^2\delta^2} (k-nx)^2 B_{n,k}(x) \\
+            = \frac{2M}{n^2\delta^2}nx(1-x) \leq \frac{2M}{n^2\delta^2}
+            \end{split}
+        \end{equation}
+    \end{itemize}
+    За да обединим случаите може да вземем сумата.
+\end{proof}
+\begin{theorem}
+    Всяка изчислима ф-ия $\theta \in C[0; 1]$ е $\mathbb X$-изчислима.
+\end{theorem}
+\begin{proof}
+    Нека $r$ е свидетел за ефективната равномерна непрекъснатост.
+    \begin{equation}
+        \forall x, x' \in [0;1]:\; \abs{x - x'} < \frac{1}{r(n) + 1} \rightarrow \abs{\theta(x) - \theta(x')} < \frac{1}{n+1}
+    \end{equation}
+    за $r$ - изчислима ф-ия
+
+    Да изберем $M \in \N - {0}$, т.ч. $\abs{\theta(x)} \leq M$. От \thref{th:computable-bernstein-approx} имаме, че:
+    \begin{equation}
+        \abs{B_m(\theta)(x) - \theta(x)} \leq \frac{1}{n+1} + \frac{M(r(n) + 1)^2}{2m}
+    \end{equation}
+    Нека $i$ е такова, че:
+    \begin{equation}
+        d(B_{\nu(i)}(\theta), \theta) \leq \frac{1}{2i+2}
+    \end{equation}
+    Избираме $n = 4i + 3$ и $m = \nu(i) = (2i+2)M(r(n) +1)^2$.
+
+    Значи за всяко $i \in \N$.
+
+    Тъй като $\theta$ - изчислима, значи има изчислими $g_1, g_2, g_3 : \N^3 \to \N$, т.ч.:
+    \begin{equation}
+        \abs{\frac{g_1(k, n, m) - g_2(k, n, m)}{g_3(k,n,m) + 1} - \theta\left(\frac{k}{n}\right)} < \frac{1}{m+1}
+    \end{equation}
+    В полиномите на Бернщайн за $\theta$ ще заместим тези приближения.
+
+    \begin{equation}
+        \sum_{k=0}^{\nu(i)} \frac{g_1(k, \nu(i), 2i+1) - g_2(k, \nu(i), 2i+1)}{g_3(k, \nu(i), 2i+1) + 1} . B_{\nu(i), k}(x)
+    \end{equation}
+    Ще твърдим, че този полином има някакъв код $f(i)$, където $f$ е изчислима. Този полином съвпада с $P_{f(i)}$ от дефиницията.
+
+    За грешката:
+    \begin{equation}
+        \begin{split}
+            \abs{P_{f(i)} - B_{n}(\theta)(x)} \leq \sum_{k=0}^{\nu(i)} \abs{\frac{g_1(k, \nu(i), 2i+1) - g_2(k, \nu(i), 2i+1)}{g_3(k, \nu(i), 2i+1) + 1} - \theta\left(\frac{k}{n}\right)}.B_{\nu(i),k}(x) \\
+            < \sum_{k=0}^{\nu(i)} \frac{1}{2i+2}B_{\nu(i), k} = \frac{1}{2i+2}
+        \end{split}
+    \end{equation}
+    За разстоянието:
+    \begin{equation}
+        d(P_{f(i)}, \theta) = d(P_{f(i)}, B_{\nu(i)}(\theta)) + d(B_{\nu(i)}(\theta), \theta) < \frac{1}{2i+2} + \frac{1}{2i+2} < \frac{1}{i+1}
+    \end{equation}
+\end{proof}
+
+\section{Интегриране}
+Интегрирането $\text{Int}: C[0;1] \to C[0;1]$ е $\langle\mathbb X, \mathbb X\rangle$-изчислим оператор.
+\begin{equation}
+    \text{Int}(\theta)(x) = \int_0^x\theta(t)dt
+\end{equation}
+
+\section{Диференциране}
+Диференцирането $\text{Diff}: \subseteq C[0; 1] \to C[0;1]$ не е $\langle\mathbb X, \mathbb X\rangle$-изчислим оператор.

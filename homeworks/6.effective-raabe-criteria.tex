@@ -1,11 +1,51 @@
+\begin{definition}
+    $\left\{a_n\right\}_{n=0}^\infty$ клони ефективно към $a$, ако съществува рекурсивна ф-ия $\delta : \N \to \N$ - регулатор на сходимост.
+    \begin{equation*}
+        \forall k, \forall n:\; n > \delta(k) \Rightarrow |a_n - a| < \frac{1}{k+1}
+    \end{equation*}
+\end{definition}
+
+\begin{definition}
+    Редът $\sum\limits_{m=0}^\infty u_m$ е ефективно сходящ $\bydef$ $\left\{\sum\limits_{m=0}^n u_m\right\}_{n=0}^\infty$ е ефективно сходящ.
+\end{definition}
+
 \begin{problem}[Ефективен критерий на Раабе-Дюамел]
     Нека 
     \begin{equation}
         \sum\limits_{n\in\N} u_n
     \end{equation}
-    е ред с положителни членове - $\forall n\in\N:\; u_n > 0$. И е изпълнено свойството $\forall n\in\N:\; R(n)$
+    е ред с положителни членове - $\forall n\in\N:\; u_n > 0$. И е изпълнено свойството:
     \begin{equation}\label{eq:raabe-property}
         \lim\limits_{n\to\infty} n\left( \frac{u_n}{u_{n+1}} - 1 \right) = \alpha > 1
     \end{equation}
     Докажете, че този ред е ефективно сходящ.
 \end{problem}
+\begin{solution}
+    За произволно реално число $\varepsilon > 0$, от \eqref{eq:raabe-property} можем да заключим, че има $n_0$, т.ч. за $n > n_0$ е вярно:
+    \begin{equation}
+        \abs{n\left(\frac{u_n}{n_{n+1}} - 1\right) - \alpha} < \varepsilon
+    \end{equation}
+
+    Нека $\varepsilon$ е такова, че $\alpha - \varepsilon > 1$.
+    Значи при $n > n_0$ имаме, за съответния член на редицата:
+    \begin{equation}
+        \begin{split}
+            n\left(\frac{u_n}{n_{n+1}} - 1\right) > \alpha - \varepsilon > 1 \\
+            \Rightarrow \frac{u_n}{n_{n+1}} > 1 + \frac{\alpha - \varepsilon}{n}
+        \end{split}
+    \end{equation}
+    От тук можем да заключим, че редицата $\{u_n\}_{n \in \N}$ е монотонно намаляваща.
+    
+    \textbf{за ефективната сходимост}
+
+    $\sum_{n \in \N} u_n$ е ефективно сходящ \\
+    $\bydef\; \left\{\sum\limits_{m=0}^n u_m\right\}_{n=0}^\infty$ е ефективно сходяща редица \\
+    $\bydef\; \exists \delta: \N \to \N$ - рекурсивна ф-ия (регулатор на сходимост), т.ч.:
+    \begin{equation}
+        \forall k,\ n:\; n > \delta(k) \Rightarrow \abs{\sum\limits_{m=0}^n u_m - \sum_{m \in \N} u_m} < \frac{1}{k+1}
+    \end{equation}
+    Търсим $\delta$, такава че по дадено $k$ да намерим най-малкото $n$, за което:
+    \begin{equation}
+        \sum_{m=n+1}^\infty u_m < \frac{1}{k+1}
+    \end{equation} 
+\end{solution}

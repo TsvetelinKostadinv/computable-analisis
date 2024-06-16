@@ -120,7 +120,7 @@ $a_n$ е монотонна и сходяща към изчислима гран
     \item $\N$ - множество от крайни имена
     \item $\mathbb T = \left\{f \mid f:\N\to\N\right\}$  - множество от безкрайни имена.
 \end{itemize}
-\begin{definition}
+\begin{definition}[изчислим транслатор]
     Нека $X, Y \in \{\N, \mathbb T\}$. Казваме, че $\gamma: X \to Y$ е изчислим транслатор $\bydef$
     \begin{itemize}
         \item[$X=Y=\N$] Съществува изчислима функция $u \in \mathcal F_1$, т.ч. $\gamma \subseteq u$
@@ -184,7 +184,7 @@ $a_n$ е монотонна и сходяща към изчислима гран
     \begin{equation}
         i\in\{1, 2\}:\; \nu_i:\; \ran(\nu_i) = M_i
     \end{equation}
-    Функция $f: \subseteq M_1 \to M_2$ наричаме $\langle \nu_1, \nu_2\rangle$-изчислимо $\iff$ съществува $\varphi: \subseteq \dom(\nu_1) \to \dom(\nu_2)$, т.ч.:
+    Функция $f: \subseteq M_1 \to M_2$ наричаме $\langle \nu_1, \nu_2\rangle$-изчислимa $\iff$ съществува $\varphi: \subseteq \dom(\nu_1) \to \dom(\nu_2)$, т.ч.:
     \begin{equation}
         \forall s\in \dom(\nu_1), \nu_1(s) \in \dom(f):\; f(\nu_1(s)) = \nu_2(\varphi(s))
     \end{equation}

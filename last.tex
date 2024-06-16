@@ -2,230 +2,25 @@
 % $\mathcal M^2 \subseteq \underbrace{\mathcal L^2}_{\text{Skolem}} \subseteq \mathcal E^2$
 
 \ifnotes
-    \section{Графика на представянията}
-    \begin{itemize}
-        \item Представяне на Коши
-        \begin{equation}
-             \rho_C(t) = \alpha \iff \forall i:\; \left|\nu_\Q(t(i)) - \alpha\right| < \frac{1}{i+1}
-        \end{equation}
-        \item Чрез интервали:
-        \begin{equation}
-            \rho(t) = \alpha \iff \left\{\nu_I(t(i)) \mid i\in \N \right\} = \left\{(a, b) \mid a,b\in\Q,\ a < \alpha < b\right\}
-        \end{equation}
-        \item Представяне чрез по-малки/по-големи
-         \begin{equation}
-            \rho_\square(t) = \alpha \iff \left\{ \nu_\Q(t(i)) \mid i \in \N \right\} =  \left\{ q \in \Q \mid q \square \alpha \right\},\ \square \in \{<,\ >,\ \geq,\ \leq\}
-        \end{equation}
-        \item Представяне в основа $b \geq 2$
-        \begin{equation}
-            \rho_b(t) = \alpha \iff \alpha = \sum\limits_{i\in\N} \frac{t(i)}{b^i} 
-        \end{equation}
-        \item Представяне чрез верижни дроби
-        \begin{equation}
-            \rho_{cf}(t) = \alpha \iff \text{представяне с верижни дроби}
-        \end{equation}
-        \item Представяне във факториелна бройна система
-        \begin{equation}
-            \rho_!(t) = \alpha \iff \alpha = \sum\limits_{i\in\N} \frac{t(i)}{i!} 
-        \end{equation}
-    \end{itemize}
+      \input{notes/representations/representations}
 
-    По конвенция пропускаме стрелките по транзитивност.
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}[
-        shorten >=1pt,
-        node distance=2cm,
-        on grid,
-        auto] 
-           \node[state] (rho) {$\rho \equiv \rho_C$}; 
-           \node[state] (rho_<) [above left of = rho]{$\rho_<$}; 
-           \node[state] (rho_>) [above right of = rho]{$\rho_>$}; 
-           \node[state] (rho_b) [below of=rho]  {$\rho_b$}; 
-           \node[state] (rho_cf) [below of = rho_b] {$\rho_{cf}$};
-           \node[state] (rho_geq) [above right of = rho_cf] {$\rho_\geq$};
-           \node[state] (rho_leq) [above left of = rho_cf] {$\rho_\leq$};
-           \node[state] (rho_!) [color = red, right = 4cm of rho_b] {$\rho_!$};
-            \path[->] 
-            (rho) edge  node {} (rho_<)
-                  edge  node {} (rho_>)
-            (rho_b)   edge node {} (rho)
-            (rho_cf)  edge node {} (rho_b)
-                      edge node {} (rho_geq)
-                      edge node {} (rho_leq)
-            (rho_leq) edge node {} (rho_<)
-            (rho_geq) edge node {} (rho_>)
-            (rho_!) edge node {} (rho)
-            ;
-        \end{tikzpicture}
-        \caption{Релацията "сравнение на представяне" }
-        % \label{fig:enter-label}
-    \end{figure}
-    
-    \subsection{Твърдения}
-    Къде стои $\rho_!$?
-    \begin{proposition}
-        \begin{equation}
-            \rho_! \leq \rho\ \&\ \rho \nleq \rho_!
-        \end{equation}
-    \end{proposition}
-    \begin{proof}
-    Ще докажем двете части поотделно
-        \begin{itemize}
-            \item[$\rho_! \leq \rho$] По дефиниция $\rho_! \leq \rho \bydef id: \R \to \R,\ \langle\rho_!,\rho\rangle \text{-изчислим} \bydef$ има изчислима като транслатор $\varphi: \subseteq \dom\rho_!\to\dom\rho$, т.ч.:
-        \begin{equation}
-            \forall s \in \mathbb T:\; id(\rho_!(s)) = \rho(\varphi(s))
-        \end{equation}
-        \begin{figure}[H]
-            \centering
-            \begin{tikzpicture}[
-            shorten >=1pt,
-            node distance=3cm,
-            on grid,
-            auto] 
-               \node[state] (M_1) {$\R$}; 
-               \node[state] (M_2) [right=4cm of M_1]{$\R$}; 
-               \node[state] (dom_nu_1) [below of=M_1]  {$\dom \rho_!$}; 
-               \node[state] (dom_nu_2) [right=4cm of dom_nu_1] {$\dom\rho$};
-                \path[->] 
-                (M_1) edge  node {$id$} (M_2)
-                (dom_nu_1)  edge node {$\rho_!$} (M_1)
-                            edge node {$\varphi$} (dom_nu_2)
-                (dom_nu_2)  edge node {$\rho$} (M_2)
-                ;
-            \end{tikzpicture}
-            \caption{Необходимо е диаграмата да е комутативна}
-            % \label{fig:}
-        \end{figure}
-        Значи търсим такъв изчислим оператор $\varphi$, че:
-        \begin{equation}
-                \forall s \in \dom\rho_!:\; \rho_!(s) = \rho(\varphi(s))
-        \end{equation}
-        Нека имаме $s \in \mathbb T$, $\rho_!$-изчислимо име за $\alpha \in \R$. Значи:
-        \begin{equation}
-            \rho_!(s) = \sum\limits_{i\in\N} \frac{s(i)}{i!} = \alpha
-        \end{equation}
-        И знаем (от дефиницията на факториелна бройна система), че $s \in \dom\rho_!\iff \forall i\in\N,\ i > 1:\; 0 \leq s(i) < i$ за $s(0)$ и $s(1)$ нямаме ограничения.
-    
-        Значи за произволно $k \in \N$ имаме, че:
-        \begin{equation}
-            \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} \leq \alpha \leq \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{1}{k+1}
-        \end{equation}
-        за да ги направим неравенствата строги, можем да намалим малко лявата и увеличим малко дясната страна:
-        \begin{equation}
-            \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} - \frac{1}{k+1} < \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} \leq \alpha \leq \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{1}{k+1} < \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{2}{k+1}
-        \end{equation}
-        Значи:
-        \begin{equation}
-            \varphi(s)(k) = \pi\left(\underbrace{\sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} - \frac{1}{k+1}}_{\in \Q}, \underbrace{\sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{2}{k+1}}_{\in\Q}\right)
-        \end{equation}
-        Така ще получим:
-        \begin{equation}
-            \rho(\varphi(s))(k) = \left(\sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} - \frac{1}{k+1}, \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{2}{k+1}\right) \ni \alpha
-        \end{equation}
-        и се оказва, че $\varphi(s)$ е $\rho$-име на $\alpha$.
-    
-        Значи $\rho_! \leq \rho$.
-    
-        \item[$\rho \nleq \rho_!$] Допускаме противното - има изчислим оператор $\varphi'$, т.ч.:
-        \begin{equation}
-            \rho(s) = \rho_!(\varphi'(s))
-        \end{equation}
-        тогава нека разглеждаме $\alpha = 0$ с $t: \mathbb T \to \mathbb T$ - $\rho$-изчислимо име, а $\varphi'(t)$ е $\rho_!$-изчислимо име на $\alpha$.
-    
-        \begin{equation}
-            \forall k:\; \varphi'(t)(k) = 0
-        \end{equation}
+      \section{Уточнения}
+      \subsection{Уточнение за термина равномерност}
+      Чисто на интуитивно ниво
 
-        Интуитивно $\varphi'(t)$ са цифрите във факториелна бройна система
-    
-        От компактността, съществува крайно $\theta_0 \subset t$, т.ч.
-        \begin{equation}
-            \forall k \in \dom\varphi'(\theta_0):\; \varphi'(\theta_0)(k) = 0
-        \end{equation}
-        и $\theta_0$ е $\rho$-име на 0, а $\varphi'(\theta_0)$ е $\rho_!$-име на 0.
-        
-        Нека $k$ е най-малкото $\geq 2$, т.ч. $\varphi'(\theta_0)(k)$ не е дефинирано.
-        
-        Да изберем $\theta_0 \subseteq t'$, т.ч. $t'$ е $\rho$-име на $\frac{1}{k!}$.
-
-        От дефиницията за реализация $\varphi'(t')$ е $\rho_!$ име за $0$, но
-        \begin{equation}
-            0 = \rho_!(\varphi'(\theta_0)) = \rho_!(\varphi(t')) = \frac{1}{k!} 
-        \end{equation}
-        Абсурд $\Rightarrow \rho \nleq \rho_!$
-        \end{itemize}
-        Значи наистина $\rho_! < \rho$.
-    \end{proof}
-    
-    \begin{proposition}
-        \begin{equation}
-            \forall b \in \N, b\geq 2:\; \rho_! \leq \rho_b\ \&\ \rho_b \nleq \rho_!
-        \end{equation}
-    \end{proposition}
-    \begin{proof}
-        По дефиниция $\rho_! \leq \rho_b \bydef id: \mathbb T \to \mathbb T,\ \langle\rho_!,\rho_b\rangle \text{-изчислим} \bydef$ има изчислима като транслатор $\varphi: \subseteq \dom\rho_!\to\dom\rho_b$, т.ч.:
-        \begin{equation}
-            \forall s \in \mathbb T:\; id(\rho_!(s)) = \rho_b(\varphi(s))
-        \end{equation}
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}[
-        shorten >=1pt,
-        node distance=3cm,
-        on grid,
-        auto] 
-           \node[state] (M_1) {$\R$}; 
-           \node[state] (M_2) [right=4cm of M_1]{$\R$}; 
-           \node[state] (dom_nu_1) [below of=M_1]  {$\dom \rho_!$}; 
-           \node[state] (dom_nu_2) [right=4cm of dom_nu_1] {$\dom\rho_b$};
-            \path[->] 
-            (M_1) edge  node {$id$} (M_2)
-            (dom_nu_1)  edge node {$\rho_!$} (M_1)
-                        edge node {$\varphi$} (dom_nu_2)
-            (dom_nu_2)  edge node {$\rho_b$} (M_2)
-            ;
-        \end{tikzpicture}
-        \caption{Необходимо е диаграмата да е комутативна}
-        % \label{fig:}
-    \end{figure}
-    Значи търсим такъв изчислим оператор $\varphi$, че:
-    \begin{equation}
-            \forall s \in \dom\rho_!:\; \rho_!(s) = \rho_b(\varphi(s))
-    \end{equation}
-    Нека имаме $s \in \mathbb T$, $\rho_!$-изчислимо име за $\alpha \in \R$. Значи:
-    \begin{equation}
-        \rho_!(s) = \sum\limits_{i\in\N} \frac{s(i)}{i!} = \alpha
-    \end{equation}
-    И знаем (от дефиницията на факториелна бройна система), че $s \in \dom\rho_!\iff \forall i\in\N,\ i > 1:\; 0 \leq s(i) < i$ за $s(0)$ и $s(1)$ нямаме ограничения.
-
-    \textbf{недовършено}
-    % Необходимо е да генерираме $\alpha = \langle M . D_1 D_2 \dots D_N \dots \rangle_b$
-    % \begin{equation}
-    %     \forall i\in \N:\; \varphi(s)(i) = \begin{cases}
-    %         s(0) + s(1) &, i = 0 \\
-    %         {}
-    %     \end{cases}
-    % \end{equation}
-    \end{proof}
-
-    \section{Уточнения}
-    % какво влагаме в "равномерност"
-    \subsection{Уточнение за термина равномерност}
-    Чисто на интуитивно ниво
-    
-    Една функция $f: \N^2 \to \N$ е равномерна по първия си аргумент, ако не се разбива на случаи по него, а зависи ефективно от него.
-    \section{От библиографията}
-    \begin{enumerate}
-        \item Записките на Скордев
+      Една функция $f: \N^2 \to \N$ е равномерна по първия си аргумент, ако не се разбива на случаи по него, а зависи ефективно от него.
+\fi
+\section{От библиографията}
+\begin{enumerate}
+      \item Записките на Скордев
             \subitem \href{https://store.fmi.uni-sofia.bg/fmi/logic/skordev/ln/cia/}{от ФМИ}
-        \item За Критерия на Раабе-Дюамел 
+      \item За Критерия на Раабе-Дюамел
             \subitem \href{https://mariyavouniversitymaths.files.wordpress.com/2018/01/d0b8d0b7d181d0bbd0b5d0b4d0b2d0b0d0bdd0b5-d0b7d0b0-d181d185d0bed0b4d0b8d0bcd0bed181d182-d0bdd0b0-d180d0b5d0b4d0bed0b2d0b5-d181-d0bad18021.pdf}{Записки}
-        \item Continued fractions
+      \item Continued fractions
             \subitem \citetitle{gosper2003continued}\cite{gosper2003continued} - \href{https://perl.plover.com/classes/cftalk/INFO/}{Алгоритъм за събиране и умножение}
             \subitem \citetitle{gosper1977continued}\cite{gosper1977continued}
-    \end{enumerate}
-    \nocite{*}
-\fi
+            \subitem \citetitle{ko1986continued}\cite{ko1986continued} - \href{https://pdf.sciencedirectassets.com/271538/1-s2.0-S0304397500X05154/1-s2.0-0304397586901544/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDYaCXVzLWVhc3QtMSJIMEYCIQDnZ1BG84lWiYnPpw32BfoZymIqFR2CMhX8fuTAP5ycsgIhAIWbfOf0UkOFmhknCnTBu3zudZs07G4cNOp36lGhP5dKKrsFCL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQBRoMMDU5MDAzNTQ2ODY1IgzzLkUhppCOjlIoC6kqjwUjdWdydxBUkh8OudXPhHmtcsg4rCLB1s8Z8uYL81TmHUYXuPYQJWtaZ%2FBzkMmU4ZKkdF5SQZjNovUYacc9j2rx%2BvlgbgUcdZNTGrXxbfraceF1y6Dv8zi2SwNN7V9mMfRYtBPTxGnSwTKpcgeBfQd5ZsxYUPHHCiKlpkBKpZkhiBBY%2Ftyu6H9acCH0435UMU5NcWWwyKj%2F6bEP30L5nYYgyVRG0wz%2BivC4Ak6%2FxIEjmFGrUVR9i5MfLjL0RRGLxfSLH5ecuH60fn0r3p4vlZsaShoAg%2Bj%2B3IfxWiMp72SP3w6Ox7Wf6kgUoL%2Bj8lmB6OsgN5oBa%2B26g2oPtHFY2k10qmVQAxzmlnEMOpO%2FSXN4T58G39IKbd9QKVonZnRq6XQxr411UE8Y3PrVMfVZqT0L%2FqZwPRr2WemA8zA61oKK2F%2B%2Bqy2nFlcCVGkxkzN6SRb6iekwXAxqo83nGourlivkNk9oHXApydNEJ6HiLAxINf6ZFr34%2F3%2BWErVXipropV1mjmaUA0M6ly8zzw%2F4q%2FbeB4EejBMPzYoM95DbVVFxhQ69ZYzsajMgCpjI3Lc3zGrvFZM0uD3KLz94GakZKrhslcxa0CZTFAt8D5Mu58ysGLTWCpEmyX6VKnEhsc9dLWkjpcYDAZPYGwLs1R4HhPKE1r8vTo%2FO4Y4lrjbXcewRQHY5YYefYCeVoij5ijDM1zsIRAE22WYgZieaDR1s71mFz%2FOZP4b1lAjx34vcHm5xDeZOqPEIVUXKwjemp1xOvlDN4lW6DvdwavdUmWhm2j9QHgbCtYcZxWMcP6F14nOCRQR2%2Bv4lWMNWdAF5YilPzDy9JlkTrzzyMmsldujClgi7ZeeHicDmCEusRD%2FqAwR%2FMI7YgbMGOrABMhi15q9YyykxI6C5k6Q5EGvJpy0M0TBR017ArL8gpTmnAiA5ULXVl90B9XtqZcaGU07bmTh8zbNqIt5oN3GcYv0DAa09qtefaVTcYznZYJeBj3mhq3tgIIzN%2FJdCvw18vusISdTYBR9XFU863JMjMB8o%2F593QswJBKlvronJViiEP0teUQ4D2UeXqCK7w3Z3jtGDrLccWeorI5d7X5SOzEVLdv5F6lv%2BxCftnclmUNo%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240605T150915Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTY5KNCYMQT%2F20240605%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=b901cea7d0f6ae41e6f3ae3385d1347ac74b87ce9413e7d05e9e6f6c8e4a7bd5&hash=289fe555acbd4a61d63f9a4f336c8320ca4ce2458d71d8326cdba177a405ca70&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=0304397586901544&tid=spdf-1f16e1e4-b021-4cc1-9a6e-2b6f8af6cd80&sid=010b1c125d3d694dfb98344814179934ce53gxrqb&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=06005e5904565e5a5c&rr=88f1152abe42f8b5&cc=bg}{Интересни размисли за това кои са изчислими реални функции в зависимост от представянето}
+\end{enumerate}
+\nocite{*}
 
 \printbibliography

@@ -1,0 +1,72 @@
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            shorten >=1pt,
+            node distance=2cm,
+            on grid,
+            auto]
+        \node (orig) [] {};
+        \node[state] (rho_C) [right=of orig] {$\rho_C$};
+        \node[state] (rho_asd) [left=of orig] {$\rho$};
+        \node[state] (rho_<) [above left of = orig, xshift=-5cm]{$\rho_<$};
+        \node[state] (rho_>) [above right of = orig, xshift=5cm]{$\rho_>$};
+
+        % bases
+        \node[state] (rho_2) [below left of=rho_asd, xshift=-1.5cm] {$\rho_2$};
+        \node[state] (rho_3) [right of=rho_2] {$\rho_3$};
+        \node[state] (rho_5) [right of=rho_3] {$\rho_5$};
+        \node        (rho_dots) [right of=rho_5] {\dots};
+        \node[state] (rho_p) [right of=rho_dots] {$\rho_p$};
+        \node        (rho_dots2) [right of=rho_p] {\dots};
+        \node[state] (rho_6) [below right of=rho_2] {$\rho_6$};
+        \node[state] (rho_15) [below right of=rho_3] {$\rho_{15}$};
+        \node        (rho_dots3) [right of=rho_15] {\dots};
+        \node[state] (rho_30) [below right of=rho_6] {$\rho_{30}$};
+        \node        (rho_dots4) [right of=rho_30] {\dots};
+        \node        (rho_dots5) [below right of=rho_30] {$\ddots$};
+
+        \node (bases_box) [
+            dashed,
+            draw=black,
+            fit = (rho_2) (rho_3)
+            (rho_dots) (rho_5)
+            (rho_p) (rho_dots2)
+            (rho_6) (rho_15)
+            (rho_30) (rho_dots5)
+        ] {Представяне \\ в основа};
+
+        \node[state] (rho_cf) [below = 8cm of orig] {$\rho_{cf}$};
+        \node[state] (rho_geq) [above right of = rho_cf, xshift=5cm] {$\rho_\geq$};
+        \node[state] (rho_leq) [above left of = rho_cf, xshift=-5cm] {$\rho_\leq$};
+        \node[state] (rho_!) [color = red, right = 4cm of rho_cf] {$\rho_!$};
+
+        \path[<->]
+        (rho_asd) edge node {} (rho_C)
+        ;
+        \path[->]
+        (rho_2) edge node {} (rho_asd)
+        (rho_3) edge node {} (rho_asd)
+        (rho_5) edge node {} (rho_asd)
+        (rho_p) edge node {} (rho_asd)
+        (rho_6) edge node {} (rho_2)
+        edge node {} (rho_3)
+        (rho_15) edge node {} (rho_3)
+        edge node {} (rho_5)
+        (rho_30) edge node {} (rho_6)
+        edge node {} (rho_15)
+        ;
+
+        \path[->]
+        (rho_asd) edge  node {} (rho_<)
+        (rho_C) edge  node {} (rho_>)
+        (rho_cf) edge node {} (bases_box)
+        edge node {} (rho_geq)
+        edge node {} (rho_leq)
+        (rho_leq) edge node {} (rho_<)
+        (rho_geq) edge node {} (rho_>)
+        (rho_!) edge node {} (rho_asd)
+        ;
+    \end{tikzpicture}
+    \caption{Релацията "сравнение на представяне" }
+    % \label{fig:enter-label}
+\end{figure}

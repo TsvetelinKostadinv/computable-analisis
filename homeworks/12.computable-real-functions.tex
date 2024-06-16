@@ -1,0 +1,175 @@
+% \begin{proposition}
+%     $n,m \mapsto \sqrt{\frac{n+1}{m+1}}$ е изчислима функция.
+% \end{proposition}
+% \begin{proof}
+%     Постъпково:
+%     \begin{itemize}
+%         \item[(1. стъпка)] Разглеждаме $n \mapsto \sqrt{1 + \frac{1}{n}} : \N^+ \to \R$.
+%               \begin{equation}
+%                   \sqrt{1+x} = 1 + \frac{1}{2}x - \frac{1}{8}x^2 + \frac{1}{16}x^3 - \frac{5}{128}x^4 + \dots = \sum_{n \in \N} (-1)^n \frac{(2n)!}{(1-2n).(n!)^2.4^n}x^n
+%               \end{equation}
+%               за $x \in [-1; 1]$
+
+%               Тогава:
+%               \begin{equation}
+%                   \begin{split}
+%                       \sqrt{1 + \frac{1}{n}} = \sum_{s \in \N^+} (-1)^s \frac{(2s)!}{(1-2s).(s!)^2.4^s.n^s} \\
+%                       = \sum_{s=1}^{t+1} \frac{(-1)^s (2s)!}{(1-2s).(s!)^2.4^s.n^s} + \sum_{s = t+2}^\infty \frac{(-1)^s (2s)!}{(1-2s).(s!)^2.4^s.n^s}
+%                   \end{split}
+%               \end{equation}
+%               За грешката имаме?:
+%               \begin{equation}
+%                   \left|\sum_{s = t+2}^\infty \underbrace{ \frac{(-1)^s(2s)!}{(1-2s).(s!)^2.4^s.n^s}}_{\text{монотонно намаляваща}} \right| \overset{\text{Лайбниц}}{\leq} \frac{(2t+4)!}{(2t +3)((t+2)!)^2.4^{t+2}.n^{t+2}} < \frac{1}{t+1}
+%               \end{equation}
+
+%         \item[(2. стъпка)] Разглеждаме $n \mapsto \sqrt{n+1} : \N \to \R$.
+%               \begin{equation}
+%                   \sqrt{n+1} = \sum_{m=1}^n \sqrt{m+1} - \sqrt{m} = \underbrace{\sum_{m=0}^n \sqrt{m} . \left( 1 + \frac{1}{\sqrt{m+1}}\right)}_{\text{изчислима сума}}
+%               \end{equation}
+%               Значи $n \mapsto \log\left(n+1\right)$ е изчислима функция.
+
+%         \item[(3. стъпка)] Разглеждаме $m, n \mapsto \sqrt{\frac{m+1}{n+1}} = \frac{\sqrt{m+1}}{\sqrt{n+1}} : \Q \to \R$ - също е изчислима. Има $a, b, c$:
+%               \begin{equation}
+%                   \left|\frac{a(m,n,t) - b(m,n,t)}{c(m,n,t) + 1} - \sqrt{\frac{m+1}{n+1}}\right| < \frac{1}{t+1}
+%               \end{equation}
+%     \end{itemize}
+% \end{proof}
+
+\begin{problem}
+Докажете, че реалната функция $\xi \to \sqrt{\xi}$ е изчислима в $(0, +\infty)$ с метода на трисекцията.
+\end{problem}
+\begin{solution}
+    Интуитивно - $\sqrt{x}$ е монотонно растяща непрекъсната функция, значи е изчислима.
+
+    Ще докажем за $\xi \in (0; 1]$, за $\xi' > 1$ можем да направим трансформацията $x \to \frac{1}{x}$, която е биекция м/у $(0;1]$ и $[1; \infty)$.
+
+    Нека за $\xi$ имаме име $\langle f, g, h \rangle$.
+
+    Ще дефинираме индуктивно редици $\{u_k\}_{k \in \N}$ и $\{v_k\}_{k \in \N}$ от рационални числа, т.ч.:
+    \begin{equation}
+        \begin{split}
+            0 < u_k \leq u_{k+1} < v_{k+1} \leq v_k \\
+            v_{k+1} - u_{k+1} \leq \frac{2}{3}(v_k - u_k)
+        \end{split}
+    \end{equation}
+    и допълнително:
+    \begin{equation}
+        u_k^2 < \xi < v_k^2
+    \end{equation}
+    Което ще ни гарантира:
+    \begin{equation}
+        u_k < \sqrt{\xi} < v_k
+    \end{equation}
+    \begin{itemize}
+        \item[(База)] Дефинираме $u_0, v_0$. Искаме:
+              \begin{equation}
+                  \begin{split}
+                      0 < u_0 < v_0 \\
+                      u_0 < \xi < v_0
+                  \end{split}
+              \end{equation}
+              Ще ни свършат работа:
+              \begin{equation}
+                  \begin{split}
+                      v_0 = |f(0) - g(0)| + 1 \geq 1 \\
+                      u_0 = \frac{1}{v_0}
+                  \end{split}
+              \end{equation}
+              Очевидно $0 < u_0 < v_0$ и за произволно $\xi \in (0; 1] \subseteq [u_0^2;v_0^2]$ имаме $u_0^2 < \xi < v_0^2$
+        \item[(Стъпка)] Нека са дефинирани $u_k\ \&\ v_k$ и изпълняват неравествата. Разделяме $[u_k;v_k]$ на 3 части с еднаква дължина:
+              \begin{equation}
+                  \begin{split}
+                      \tilde{u_k} = \frac{2u_k + v_k}{3} \\
+                      \tilde{v_k} = \frac{u_k + 2v_k}{3} \\
+                      \log \tilde{u_k} < \log \tilde{v_k}
+                  \end{split}
+              \end{equation}
+              \begin{equation}
+                  \begin{split}
+                      e(p) = \abs{\frac{f(p) - g(p)}{h(p) + 1} - \xi}              \\
+                      a(p) = \frac{f(p) - g(p)}{h(p) + 1}                          \\
+                      p(k) = \mu\ p:\; \left( e(p) < \frac{2}{3}(v_k - u_k)\right) \\
+                      q(k) = \mu\ q:\; ( a(q) \in asd                              \\q
+                      asd                                                          \\
+                      )
+                  \end{split}
+              \end{equation}
+    \end{itemize}
+\end{solution}
+
+\begin{problem}
+Докажете, че $arctg : [-1, 1] \to \R$ е изчислима реална функция, като използвате нейното развитие в ред на Тейлър.
+\end{problem}
+\begin{solution}
+    Ще използваме развитието:
+    \begin{equation}\label{eq:arctg-taylor}
+        \arctg(x) = \sum_{k\in\N} \frac{(-1)^k x^{2k+1}}{2k+1}
+    \end{equation}
+    Реда е сходим (в класически смисъл) за $|x| \leq 1$.
+
+    Ще търсим $\mu$-рекурсивни оператори $\langle F, G, H \rangle$, т.ч. по дадено име на $x \in [-1, 1]$ - $\langle f, g, h\rangle$ произвеждат име на $\arctg(x)$ - $\langle F(f, g, h), G(f, g, h), H(f, g, h)\rangle$.
+
+    \begin{itemize}
+        \item[($\arctg\frac{n - m}{p+1}$)] Нека $n,m,p \in \N$ и са такива, че $q = \frac{n - m}{p+1} \in [-1; 1]$. Ще докажем, че $\arctg\frac{n - m}{p+1} : \N^3 \to \R$ е изчислима функция
+
+              Разглеждаме абсолютното частното на $s+1$ и $s$-тия член на \eqref{eq:arctg-taylor} при $x = q$:
+              \begin{equation}
+                  \abs{\frac{\frac{(-1)^{s+1} q^{2s+3}}{2s+3}}{\frac{(-1)^s q^{2s+1}}{2s+1}}} = \abs{- q^2 \frac{2s+1}{2s + 3}} = q^2 \frac{2s+1}{2s + 3}
+              \end{equation}
+
+              Ще търсим $s_0(q) = \mu\ s:\; q^2 \frac{2s+1}{2s+3} \leq 1$ (минимизацията винаги завършва, защото $|q| \leq 1$ и дробта също $<1$) и ще имаме:
+              \begin{equation}
+                  \forall s \geq s_0(q):\; \frac{(-1)^{s+1} q^{2s+3}}{2s+3} \leq \frac{(-1)^s q^{2s+1}}{2s+1}
+              \end{equation}
+
+              \begin{equation}
+                  \abs{\arctg q - \sum_{s=0}^{s_0(q) + t} \frac{(-1)^s q^{2s+1}}{2s+1}} = \abs{\sum_{s_0(q) + t + 1}^{\infty} \frac{(-1)^s q^{2s+1}}{2s+1}}
+              \end{equation}
+              Да уточним защо $\left\{\frac{q^{2s+1}}{2s+1}\right\}_{s = s_0(q) + t + 1}^\infty$ е монотонно намаляваща редица - $|q| \leq 1$, а знаменателят е линейна функция.
+              \begin{equation}
+                  \abs{\sum_{s_0(q) + t + 1}^{\infty} \frac{(-1)^s q^{2s+1}}{2s+1}} \overset{\text{Лайбниц}}{\leq} \frac{q^{2s_0(q) + 2t + 2}}{2s_0(q) + 2t + 3} \overset{\delta(t) = ?}{<} \frac{1}{i+1}
+              \end{equation}
+              Искаме грешката да е по-малка от $\frac{1}{i+1}$ за всяко $i$, където $t$ се определя от $n,m,p,i$.
+              \begin{equation}
+                  t \geq \underbrace{i + 1 \dot - s_0(q) \dot - 3}_{=\delta(n,m,p,i)}
+              \end{equation}
+              \begin{equation}
+                  \frac{ q^{2s_0(q) + 2t + 2}}{2s_0(q) + 2t + 3} \leq \frac{q^{2i - 2}}{2i + 5} \leq \frac{1}{2i+5} < \frac{1}{i+1}
+              \end{equation}
+              Значи за $q \in [-1; 1]$ $\arctg q$ е изчислима функция.
+        \item[($\arctg\xi$)] Нека $\xi \in [-1; 1]$ е реално число. И $a, b, c : \N^4 \to \N$ са тотални, изчислими и т.ч.:
+              \begin{equation}
+                  \forall i \in \N:\; \abs{\arctg\frac{n - m}{p+1} - \frac{a(n,m,p,i) - b(n,m,p,i)}{c(n,m,p,i) + 1}} < \frac{1}{i+1}
+              \end{equation}
+              Нека $\xi \in [-1; 1]$, $\langle f, g, h \rangle$ - негово име и дефинираме:
+              \begin{equation}
+                  \begin{split}
+                      F(f, g, h)(t) = a(f(2t+1), g(2t+1), h(2t+1), 2t+1) \\
+                      G(f, g, h)(t) = b(f(2t+1), g(2t+1), h(2t+1), 2t+1) \\
+                      H(f, g, h)(t) = c(f(2t+1), g(2t+1), h(2t+1), 2t+1)
+                  \end{split}
+              \end{equation}
+              В предишният случай полагаме $q = \frac{f(2t+1) - g(2t+1)}{h(2t+1) + 1}$.
+              \begin{equation}
+                  \begin{split}
+                      \abs{\arctg\xi - \frac{F(f,g,h)(t) - G(f,g,h)(t)}{H(f,g,h)(t) + 1}}                                   \\
+                      \leq \abs{\arctg\xi - \arctg q } + \abs{\arctg q - \frac{F(f,g,h)(t) - G(f,g,h)(t)}{H(f,g,h)(t) + 1}} \\
+                      \overset{\substack{\text{Т-ма за кр. нар.}                                                            \\ \exists \nu \in [-1; 1]}}{=} \abs{\frac{1}{\nu^2 + 1}(\xi - q)} + \abs{\arctg q - \frac{F(f,g,h)(t) - G(f,g,h)(t)}{H(f,g,h)(t) + 1}} \\
+                      \overset{def\ a, b, c}{<} \abs{\frac{1}{\nu^2 + 1}(\xi - q)} + \frac{1}{2t+2}                         \\
+                      \overset{\forall \nu:\; \frac{1}{\nu^2 + 1} \leq 1}{\leq} |\xi - q| + \frac{1}{2t+2}                  \\
+                      \overset{def\ q \Rightarrow |\xi - q| < \frac{1}{2t+2}}{<} \frac{1}{2t + 2} + \frac{1}{2t+2} = \frac{1}{t+1}
+                  \end{split}
+              \end{equation}
+              Значи $\langle F(f, g, h), G(f, g, h), H(f, g, h)\rangle$ е име на $\arctan \xi$
+    \end{itemize}
+\end{solution}
+
+\begin{problem}
+Дайте пример за реална функция $\theta : [0, 1] \to  \R$, такава че $\theta(0) = 0$, ограничението на $\theta$ до $(0, 1]$ е изчислимо, $\theta$ е непрекъсната в 0, но не е ефективно непрекъсната в 0.
+\end{problem}
+\begin{solution}
+    Ако допуснем, че е ефектнивно непрекъсната в 0 - съществува $r : \N \to \N$ - изчислима:
+    \begin{equation}
+        \forall \xi \in [0; 1],\ t \in \N:\; \xi < \frac{1}{r(t) + 1} \Rightarrow \abs{\theta(\xi)} < \frac{1}{t+1}
+    \end{equation}
+\end{solution}

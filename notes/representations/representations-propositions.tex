@@ -1,0 +1,175 @@
+\subsection{Твърдения}
+Къде стои $\rho_!$?
+\begin{proposition}
+    \begin{equation}
+        \rho_! \leq \rho\ \&\ \rho \nleq \rho_!
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Ще докажем двете части поотделно
+    \begin{itemize}
+        \item[($\rho_! \leq \rho$)] По дефиниция $\rho_! \leq \rho \bydef id: \R \to \R,\ \langle\rho_!,\rho\rangle \text{-изчислим} \bydef$ има изчислима като транслатор $\varphi: \subseteq \dom\rho_!\to\dom\rho$, т.ч.:
+              \begin{equation}
+                  \forall s \in \mathbb T:\; id(\rho_!(s)) = \rho(\varphi(s))
+              \end{equation}
+              \begin{figure}[H]
+                  \centering
+                  \begin{tikzpicture}[
+                          shorten >=1pt,
+                          node distance=3cm,
+                          on grid,
+                          auto]
+                      \node[state] (M_1) {$\R$};
+                      \node[state] (M_2) [right=4cm of M_1]{$\R$};
+                      \node[state] (dom_nu_1) [below of=M_1]  {$\dom \rho_!$};
+                      \node[state] (dom_nu_2) [right=4cm of dom_nu_1] {$\dom\rho$};
+                      \path[->]
+                      (M_1) edge  node {$id$} (M_2)
+                      (dom_nu_1)  edge node {$\rho_!$} (M_1)
+                      edge node {$\varphi$} (dom_nu_2)
+                      (dom_nu_2)  edge node {$\rho$} (M_2)
+                      ;
+                  \end{tikzpicture}
+                  \caption{Необходимо е диаграмата да е комутативна}
+                  % \label{fig:}
+              \end{figure}
+              Значи търсим такъв изчислим оператор $\varphi$, че:
+              \begin{equation}
+                  \forall s \in \dom\rho_!:\; \rho_!(s) = \rho(\varphi(s))
+              \end{equation}
+              Нека имаме $s \in \mathbb T$, $\rho_!$-изчислимо име за $\alpha \in \R$. Значи:
+              \begin{equation}
+                  \rho_!(s) = \sum\limits_{i\in\N} \frac{s(i)}{i!} = \alpha
+              \end{equation}
+              И знаем (от дефиницията на факториелна бройна система), че $s \in \dom\rho_!\iff \forall i\in\N,\ i > 1:\; 0 \leq s(i) < i$ за $s(0)$ и $s(1)$ нямаме ограничения.
+
+              Значи за произволно $k \in \N$ имаме, че:
+              \begin{equation}
+                  \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} \leq \alpha \leq \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{1}{k+1}
+              \end{equation}
+              за да ги направим неравенствата строги, можем да намалим малко лявата и увеличим малко дясната страна:
+              \begin{equation}
+                  \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} - \frac{1}{k+1} < \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} \leq \alpha \leq \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{1}{k+1} < \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{2}{k+1}
+              \end{equation}
+              Значи:
+              \begin{equation}
+                  \varphi(s)(k) = \pi\left(\underbrace{\sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} - \frac{1}{k+1}}_{\in \Q}, \underbrace{\sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{2}{k+1}}_{\in\Q}\right)
+              \end{equation}
+              Така ще получим:
+              \begin{equation}
+                  \rho(\varphi(s))(k) = \left(\sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} - \frac{1}{k+1}, \sum\limits_{i=0}^{k+1} \frac{s(i)}{i!} + \frac{2}{k+1}\right) \ni \alpha
+              \end{equation}
+              и се оказва, че $\varphi(s)$ е $\rho$-име на $\alpha$.
+
+              Значи $\rho_! \leq \rho$.
+
+        \item[($\rho \nleq \rho_!$)] Допускаме противното - има изчислим оператор $\varphi'$, т.ч.:
+              \begin{equation}
+                  \rho(s) = \rho_!(\varphi'(s))
+              \end{equation}
+              тогава нека разглеждаме $\alpha = 0$ с $t: \mathbb T \to \mathbb T$ - $\rho$-изчислимо име, а $\varphi'(t)$ е $\rho_!$-изчислимо име на $\alpha$.
+
+              \begin{equation}
+                  \forall k:\; \varphi'(t)(k) = 0
+              \end{equation}
+
+              Интуитивно $\varphi'(t)$ са цифрите във факториелна бройна система
+
+              От компактността, съществува крайно $\theta_0 \subset t$, т.ч.
+              \begin{equation}
+                  \forall k \in \dom\varphi'(\theta_0):\; \varphi'(\theta_0)(k) = 0
+              \end{equation}
+              и $\theta_0$ е $\rho$-име на 0, а $\varphi'(\theta_0)$ е $\rho_!$-име на 0.
+
+              Нека $k$ е най-малкото $\geq 2$, т.ч. $\varphi'(\theta_0)(k)$ не е дефинирано.
+
+              Да изберем $\theta_0 \subseteq t'$, т.ч. $t'$ е $\rho$-име на $\frac{1}{k!}$.
+
+              От дефиницията за реализация $\varphi'(t')$ е $\rho_!$ име за $0$, но
+              \begin{equation}
+                  0 = \rho_!(\varphi'(\theta_0)) = \rho_!(\varphi(t')) = \frac{1}{k!}
+              \end{equation}
+              Абсурд $\Rightarrow \rho \nleq \rho_!$
+    \end{itemize}
+    Значи наистина $\rho_! < \rho$.
+\end{proof}
+
+\begin{proposition}
+    \begin{equation}
+        \forall b \in \N, b\geq 2:\; \rho_! \leq \rho_b\ \&\ \rho_b \nleq \rho_!
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    По дефиниция $\rho_! \leq \rho_b \bydef id: \mathbb T \to \mathbb T,\ \langle\rho_!,\rho_b\rangle \text{-изчислим} \bydef$ има изчислима като транслатор $\varphi: \subseteq \dom\rho_!\to\dom\rho_b$, т.ч.:
+    \begin{equation}
+        \forall s \in \mathbb T:\; id(\rho_!(s)) = \rho_b(\varphi(s))
+    \end{equation}
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[
+                shorten >=1pt,
+                node distance=3cm,
+                on grid,
+                auto]
+            \node[state] (M_1) {$\R$};
+            \node[state] (M_2) [right=4cm of M_1]{$\R$};
+            \node[state] (dom_nu_1) [below of=M_1]  {$\dom \rho_!$};
+            \node[state] (dom_nu_2) [right=4cm of dom_nu_1] {$\dom\rho_b$};
+            \path[->]
+            (M_1) edge  node {$id$} (M_2)
+            (dom_nu_1)  edge node {$\rho_!$} (M_1)
+            edge node {$\varphi$} (dom_nu_2)
+            (dom_nu_2)  edge node {$\rho_b$} (M_2)
+            ;
+        \end{tikzpicture}
+        \caption{Необходимо е диаграмата да е комутативна}
+        % \label{fig:}
+    \end{figure}
+    Значи търсим такъв изчислим оператор $\varphi$, че:
+    \begin{equation}
+        \forall s \in \dom\rho_!:\; \rho_!(s) = \rho_b(\varphi(s))
+    \end{equation}
+    Нека имаме $s \in \mathbb T$, $\rho_!$-изчислимо име за $\alpha \in \R$. Значи:
+    \begin{equation}
+        \rho_!(s) = \sum\limits_{i\in\N} \frac{s(i)}{i!} = \alpha
+    \end{equation}
+    И знаем (от дефиницията на факториелна бройна система), че $s \in \dom\rho_!\iff \forall i\in\N,\ i > 1:\; 0 \leq s(i) < i$ за $s(0)$ и $s(1)$ нямаме ограничения. Имаме и свойството:
+    \begin{equation}
+        \forall n\in\N:\; \abs{\sum\limits_{i=0}^n \frac{s(i)}{i!} - \alpha} < \frac{1}{n+1}
+    \end{equation}
+
+    Знаем, че $\sum\limits_{i=0}^n \frac{s(i)}{i!}$ е рационално число, значи има представяне в основа $b$
+
+    Значи трябва:
+    \begin{equation}
+        \rho_{b}(\varphi(s)) = \sum_{i\in\N} \frac{\varphi(s)(i)}{b^i} = \alpha
+    \end{equation}
+
+    При $b = 10$
+    \begin{equation}
+        \rho_{10}(\varphi(s)) = \sum_{i\in\N} \frac{\varphi(s)(i)}{10^i} = \alpha
+    \end{equation}
+    Със свойството:
+    \begin{equation}
+        \forall n\in\N:\; \abs{\sum_{i=0}^n \frac{\varphi(s)(i)}{10^i} - \alpha} < \frac{1}{n+1}
+    \end{equation}
+    \begin{equation}
+        \forall i\in \N:\; \varphi(s)(i) = \begin{cases}
+            s(0) + s(1) & , i = 0 \\
+            {}          & , i = 1
+        \end{cases}
+    \end{equation}
+
+    % \begin{itemize}
+    %     \item[($\alpha$ има крайно представяне)]  
+    % \end{itemize}
+
+    \textbf{недовършено}
+    % Необходимо е да генерираме $\alpha = \langle M . D_1 D_2 \dots D_N \dots \rangle_b$
+    % \begin{equation}
+    %     \forall i\in \N:\; \varphi(s)(i) = \begin{cases}
+    %         s(0) + s(1) &, i = 0 \\
+    %         {}
+    %     \end{cases}
+    % \end{equation}
+\end{proof}

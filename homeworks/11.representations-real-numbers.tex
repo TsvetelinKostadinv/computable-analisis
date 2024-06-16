@@ -1,0 +1,37 @@
+\begin{definition}
+    \begin{equation}
+        \rho_\square(t) = \alpha \iff \left\{ \nu_\Q(t(i)) \mid i \in \N \right\} =  \left\{ q \in \Q \mid q \square \alpha \right\},\ \square \in \{<,\ >,\ \geq,\ \leq\}
+    \end{equation}
+\end{definition}
+\begin{definition}
+    \begin{equation}
+        \rho_{cf}(t) = \alpha \bydef \alpha = t(0) + \frac{1}{t(1) + \frac{1}{t(2) + \frac{1}{\ddots}}}
+    \end{equation}
+\end{definition}
+\begin{definition}
+    \begin{equation}
+        \rho_{\leq\geq}(t) = \alpha \bydef \rho_\leq(t_0) = \alpha\ \&\ \rho_\geq(t_1) = \alpha
+    \end{equation}
+    Където $\forall i \in \N:\; t_0(i) = L(t(i))\ \&\ t_1(i) = R(t(i))$
+\end{definition}
+\begin{problem}
+    Да се докажат релациите
+\begin{itemize}
+    \item $\rho_\leq \leq \rho_<$
+    \item $\rho_\geq \leq \rho_>$
+    \item $\rho_< \not\leq \rho_\leq$
+    \item $\rho_> \not\leq \rho_\geq$
+    \item $\rho_\leq \not\leq \rho_\geq$
+    \item $\rho_\geq \not\leq \rho_\leq$
+\end{itemize}
+\end{problem}
+\begin{problem}
+    $\rho_{cf} \equiv \rho_{\leq\geq}$
+\end{problem}
+\begin{proof}
+    Доказваме двете релации
+    \begin{itemize}
+        \item[($\rho_{cf} \leq \rho_{\leq\geq}$)]
+        \item[($\rho_{\leq\geq} \leq \rho_{cf}$)]
+    \end{itemize}
+\end{proof}

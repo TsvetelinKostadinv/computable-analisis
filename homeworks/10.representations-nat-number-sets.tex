@@ -1,0 +1,239 @@
+\begin{definition}
+    Нека $M$ - абстрактно множество и $\nu_1, \nu_2, \nu_3$
+    \begin{equation}
+        i\in\{1, 2, 3\}:\; \nu_i:\; \ran(\nu_i) = M
+    \end{equation}
+
+    Една функция $f : M^2 \to M$ е $\langle \nu_1, \nu_2, \nu_3 \rangle$-изчислим $\bydef$ Съществува изчислима като транслатор $i\in\set{1, 2}:\; \varphi : \subseteq \dom(\nu_1) \times \dom(\nu_2) \to dom(\nu_3)$, т.ч:
+    \begin{equation}
+        \begin{split}
+            \forall s \in \dom(\nu_1), t \in \dom(\nu_2):\; \langle \nu_1(s), \nu_2(t) \rangle\in \dom(f) \\
+            \Rightarrow f(\nu_1(s), \nu_2(t)) = \nu_3(\varphi(s, t))
+        \end{split}
+    \end{equation}
+\end{definition}
+\begin{notation}
+    $\langle \varphi \rangle$ наричаме реализация на $f$.
+\end{notation}
+
+\begin{definition}
+    Въвеждаме двете представяния $En : \mathbb T \to \mathcal P(\N)$ и $Cf : \mathbb T \to \mathcal P(\N)$ с равенствата:
+    \begin{equation}
+        \begin{split}
+            En(f) = \set{f(x) - 1 \mid f(x) > 0} \\
+            Cf(f) = \set{x \mid f(x) = 0}        \\
+        \end{split}
+    \end{equation}
+\end{definition}
+
+\begin{problem}
+Покажете, че сечението $(\cap)$ и обединението $(\cup)$ на множества в $\mathcal P(\N)$ са $\langle En, En, En\rangle$- и $\langle Cf, Cf, Cf\rangle$-изчислими.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+            shorten >=1pt,
+            node distance=3cm,
+            on grid,
+            auto]
+        \node[state] (M) {$M$};
+        \node[state] (M^2) [below left = of M] {$M^2$};
+        \node[state] (T^2) [below right= of M^2] {$\mathbb T^2$};
+        \node[state] (dom_nu_3) [above right = of T^2] {$\dom\nu_3$};
+
+        \path[->]
+        (M^2)   edge node {$f$} (M)
+        (T^2)   edge node {$(\pi_1 \circ \nu_1)\times(\pi_2 \circ \nu_2)$} (M^2)
+        (T^2)   edge node [below, xshift = 1.5cm, yshift=-0.25cm] {$\varphi$} (dom_nu_3)
+        (dom_nu_3) edge node {$\nu_3$} (M)
+        ;
+    \end{tikzpicture}
+    \caption{$f$ е $\langle \nu_1, \nu_2, \nu_3\rangle$-изчислима, т.с.т.к диаграмата е комутативна}
+\end{figure}
+\end{problem}
+\begin{solution}
+    Кога една функция $S: \mathcal P(\N)^2 \to \mathcal P(\N)$ е $\langle En, En, En\rangle$-изчислима? Точно тогава, когато има изчислими като транслатори $\varphi$, т.ч.:
+    \begin{equation}
+        \forall f,g \in \mathbb T:\; S(En(f), En(g)) = En(\varphi(f, g))
+    \end{equation}
+    (аналогично за $\langle Cf, Cf, Cf\rangle$-изчислимост)
+
+    Нека разгледаме $X = En(f) = Cf(f'),\ Y = En(g) = Cf(g')$
+    \begin{equation}
+        \begin{split}
+            X = \set{f(x) - 1 \mid f(x) > 0} \\
+            Y = \set{g(x) - 1 \mid g(x) > 0}
+        \end{split}
+    \end{equation}
+    \begin{itemize}
+        \item[($En, \cup$)] Нека конструираме:
+              \begin{equation}
+                  \varphi_\cup(s,t)(i) = \begin{cases}
+                      s\left(\frac{i}{2}\right) - 1 & , i \equiv 0 \mod 2\ \&\ s\left(\frac{i}{2}\right) \neq 0   \\
+                      t\left(\frac{i-1}{2}\right)   & , i \equiv 1 \mod 2\ \&\ t\left(\frac{i-1}{2}\right) \neq 0 \\
+                      0                             & , \text{иначе}
+                  \end{cases}
+              \end{equation}
+              Защо $X \cup Y = En(\varphi_\cup(f, g))$? Да разгледаме $En(\varphi_\cup(f, g))$:
+              \begin{equation}
+                  \begin{split}
+                      En(\varphi_\cup(f, g)) = \set{\varphi_\cup(f, g)(i) - 1 \mid \varphi_\cup(f, g)(i) > 0}                          \\
+                      = \bigcup_{r \in \{0, 1\}} \set{\varphi_\cup(f, g)(i) - 1 \mid \varphi_\cup(f, g)(i) > 0\ \&\ i \equiv r \mod 2} \\
+                      = \underbrace{\set{f(x) - 1 \mid f(x) > 0}}_{\text{при } r=0} \cup \underbrace{\set{g(x) - 1 \mid g(x) > 0}}_{\text{при } r=1} = X \cup Y
+                  \end{split}
+              \end{equation}
+              Значи наистина обединението е $\langle En, En, En\rangle$-изчислимо с реализация $\varphi_\cup$.
+
+        \item[($En, \cap$)] Нека конструираме:
+              \begin{equation}
+                  \varphi_\cap(s,t)(i) = \begin{cases}
+                      s\left(i\right) - 1 & , \mu\ r:\; t(r) = s\left(i\right) \downarrow\ \&\ s\left(i\right) \neq 0 \\
+                      0                   & , \text{иначе}
+                  \end{cases}
+              \end{equation}
+              Интуитивно - ако двете редици съдържат едно и също число, значи тое в сечението. Ако някое число се съдържа само в редицата $s$, то минимизацията за търсенето в $t$ няма да завърши и $\varphi_\cap(i)$ ще бъде 0. Ако число се съдържа само в $t$, тогава няма да имаме $i$, при което да го търсим в $s$. Вземаме онези елементи от $X$, които се съдържат в $Y$ (което е точно значението на сечение).
+              \begin{equation}
+                  \begin{split}
+                      En(\varphi_\cap(f, g)) = \set{\varphi_\cup(f, g)(i) - 1 \mid \varphi_\cup(f, g)(i) > 0} \\
+                      = \set{f(i) - 1 \mid \exists j:\; f(i) = g(j) > 0} = X \cap Y
+                  \end{split}
+              \end{equation}
+        \item[($Cf, \cup$)] Нека конструираме:
+              \begin{equation}
+                  \psi_\cup(s, t)(i) = \begin{cases}
+                      0 & , s(i).t(i) = 0 \\
+                      1 & , \text{иначе}
+                  \end{cases}
+              \end{equation}
+              \begin{equation}
+                  \begin{split}
+                      Cf(\psi_\cup(f', g')) = \set{x \mid \psi_\cup(f', g')(x) = 0} \\
+                      = \set{x \mid f'(x) = 0 \lor g'(x) = 0}                       \\
+                      = \set{x \mid f'(x) = 0 } \cup \set{x \mid g'(x) = 0}         \\
+                      = X \cup Y
+                  \end{split}
+              \end{equation}
+        \item[($Cf, \cap$)] Нека конструираме:
+              \begin{equation}
+                  \psi_\cap(s, t)(i) = \begin{cases}
+                      0 & , s(i) = 0\ \&\ t(i) = 0 \\
+                      1 & , \text{иначе}
+                  \end{cases}
+              \end{equation}
+              \begin{equation}
+                  \begin{split}
+                      Cf(\psi_\cup(f', g')) = \set{x \mid \psi_\cup(f', g')(x) = 0} \\
+                      = \set{x \mid f'(x) = 0 } \cap \set{x \mid g'(x) = 0}         \\
+                      = \set{x \mid f'(x) = 0\ \&\ g'(x) = 0} = X \cap Y
+                  \end{split}
+              \end{equation}
+    \end{itemize}
+\end{solution}
+
+\begin{problem}
+Покажете, че допълнението на множества ($\overline X$) в $\mathcal P(\N)$ е $\langle Cf, Cf\rangle$- изчислимо, но не е $\langle En, En\rangle$-изчислимо.
+\end{problem}
+\begin{solution}
+    Ще докажем в 2 части:
+    \begin{itemize}
+        \item[($\langle Cf, Cf\rangle$-изчислимост)] Нека $X = Cf(f)$ за някое $f \in \mathbb T$.
+              \begin{equation}
+                  X = Cf(f) = \set{x \mid f(x) = 0}
+              \end{equation}
+              Тогава нека конструираме:
+              \begin{equation}
+                  \varphi(s)(i) = \begin{cases}
+                      0 & , s(i) \neq 0 \\
+                      1 & , s(i) = 0
+                  \end{cases}
+              \end{equation}
+              \begin{equation}
+                  \begin{split}
+                      Cf(\varphi(f)) = \set{x \mid \varphi(f)(x) = 0} \\
+                      = \set{x \mid f(x) \neq 0} = \overline{X}
+                  \end{split}
+              \end{equation}
+        \item[($\langle En, En\rangle$-изчислимост)] Идея - инективна $f$ с полуразрешим $\ran$ би трябвало да ни свърши работа.
+    \end{itemize}
+\end{solution}
+
+\begin{problem}
+Да се докаже, че $Cf \leq En$, но $En \not\leq Cf$.
+\end{problem}
+\begin{solution}
+    Ще докажем в 2 части:
+    \begin{itemize}
+        \item[($Cf \leq En$)] По дефиниция, това значи, че $id$ е $\langle Cf, En\rangle$-изчислим $\bydef$ има изчислима като транслатор $\varphi: \subseteq \dom Cf\to\dom En$, т.ч. $id(Cf(s)) = En(\varphi(s))$
+              \begin{equation}
+                  \begin{split}
+                      Cf(s) = En(\varphi(s)) \\
+                      \iff \set{x \mid s(x) = 0} = \set{\varphi(s)(i) - 1 \mid \varphi(s)(i) > 0}
+                  \end{split}
+              \end{equation}
+              Конструираме:
+              \begin{equation}
+                  \varphi(s)(i) = \begin{cases}
+                      i + 1 & , s(i) = 0    \\
+                      0     & , s(i) \neq 0
+                  \end{cases}
+              \end{equation}
+              \begin{equation}
+                  En(\varphi(s)) = \set{\varphi(s)(i) - 1 \mid \varphi(s)(i) > 0} = \set{i + 1 - 1 \mid s(i) = 0} = X
+              \end{equation}
+              Значи $Cf \leq En$.
+        \item[($En \not\leq Cf$)] Да допуснем противното - има изчислима като транслатор $\varphi$, т.ч.:
+              \begin{equation}
+                  En(s) = Cf(\varphi(s))
+              \end{equation}
+              Нека разглеждаме $X = \emptyset$ и нека $s$ e $En$-изчислимо име на $X$, значи $\varphi(s)$ е $Cf$-изчислимо име на $X$.
+              \begin{equation}
+                  \forall i\in \N:\; s(i) = 0
+              \end{equation}
+
+              От компактността на изчислението, има крайна функция $\theta_0 \subset s$, т.ч.:
+              \begin{equation}
+                  \forall i\in \dom\theta_0:\; \theta_0(i) = 0
+              \end{equation}
+              Да изберем $t \in \mathbb T$, т.ч. $t$ е $En$-изчислимо име на $Y = \{x\}$ за някое $x > 1 + \max\dom\theta_0$ и $\theta_0 \subset t$. Значи:
+              \begin{equation}
+                  \begin{split}
+                      x \notin \dom\theta_0 \\
+                      t(x) = x + 1          \\
+                      \forall i \in \dom\theta_0:\; \varphi(t)(i) \neq 0
+                  \end{split}
+              \end{equation}
+              От дефиницията за реализация, значи $\varphi(t)$ е $Cf$ име на $Y$.
+              $\varphi(t)(x) = 0 = \varphi(\theta_0)(x) \Rightarrow x \in Cf(\varphi(\theta_0)) = \emptyset$ - абсурд.Допускането не е вярно, значи $En \not\leq Cf$
+    \end{itemize}
+    Можем да направим извод, че $Cf < En$.
+\end{solution}
+
+\begin{problem}
+Докажете, че съществува $\langle Cf, id_\N\rangle$-изчислима функция $f :\mathcal P(\N) \slash \{\emptyset\} \to \N$, такава че $f(X) \in X$ за всяко непразно $X \subseteq \N$.
+\end{problem}
+\begin{solution}
+    По дефиниция $f$ е $\langle Cf, id_\N\rangle$-изчислима, ако съществува изчислима като транслатор $\varphi: \mathbb T \to \N$, т.ч.:
+    \begin{equation}
+        \forall s \in \mathbb T:\; f(Cf(s)) = \varphi(s)
+    \end{equation}
+    Нека $s \in \mathbb T$ е произволно и $X = Cf(s)$. Тогава дефинираме:
+    \begin{equation}
+        \begin{split}
+            f(X) = \min X \\
+            \varphi(s) = \mu\ m:\; s(m) = 0
+        \end{split}
+    \end{equation}
+    Минимизацията винаги ще завърши, защото $X \neq \emptyset$, а наредбата в $\N$ е добра. И по дефинция $f(X) = \min X \in X$.
+\end{solution}
+
+\begin{problem}
+Докажете, не че съществува $\langle En, id_\N\rangle$-изчислима функция $f :\mathcal P(\N) \slash \{\emptyset\} \to \N$, такава че $f(X) \in X$ за всяко непразно $X \subseteq \N$.
+\end{problem}
+\begin{proof}
+    Да допуснем противното - $f$ е $\langle En, id_\N\rangle$-изчислима и  съществува изчислима като транслатор $\varphi: \mathbb T \to \N$, т.ч.:
+    \begin{equation}
+        \forall s \in \mathbb T:\; f(En(s)) = \varphi(s) \in En(s)
+    \end{equation}
+    Нека $s \in \mathbb T,\ En(s) = X = \set{s(i) - 1 | s(i) > 0}$
+
+    \textbf{отново с компактността на изчислението?}
+\end{proof}

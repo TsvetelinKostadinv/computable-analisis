@@ -1,0 +1,33 @@
+\section{Графика на представянията}
+\begin{itemize}
+    \item Представяне на Коши
+          \begin{equation}
+              \rho_C(t) = \alpha \iff \forall i:\; \left|\nu_\Q(t(i)) - \alpha\right| < \frac{1}{i+1}
+          \end{equation}
+    \item Чрез интервали:
+          \begin{equation}
+              \rho(t) = \alpha \iff \left\{\nu_I(t(i)) \mid i\in \N \right\} = \left\{(a, b) \mid a,b\in\Q,\ a < \alpha < b\right\}
+          \end{equation}
+    \item Представяне чрез по-малки/по-големи
+          \begin{equation}
+              \rho_\square(t) = \alpha \iff \left\{ \nu_\Q(t(i)) \mid i \in \N \right\} =  \left\{ q \in \Q \mid q \square \alpha \right\},\ \square \in \{<,\ >,\ \geq,\ \leq\}
+          \end{equation}
+    \item Представяне в основа $b \geq 2$
+          \begin{equation}
+              \rho_b(t) = \alpha \iff \alpha = \sum\limits_{i\in\N} \frac{t(i)}{b^i}
+          \end{equation}
+    \item Представяне чрез верижни дроби
+          \begin{equation}
+              \rho_{cf}(t) = \alpha \iff \alpha = t(0) + \frac{1}{t(1) + \frac{1}{t(2) + \frac{1}{\ddots}}}
+          \end{equation}
+    \item Представяне във факториелна бройна система
+          \begin{equation}
+              \rho_!(t) = \alpha \iff \alpha = \sum\limits_{i\in\N} \frac{t(i)}{i!}
+          \end{equation}
+          % \item Представяне, където на $i$-та позиция поставяме коефициент, с който се умножава поредния индекс в редицата през фиксиран брой позиции. Например, $\langle0.02\rangle_?$ и фискираме разглеждането през $3$ позиции означава, че в десетична репрезентация имаме $\langle 0.0\underline{0}00\underline{2}00\underline{4}\dots \rangle$
+\end{itemize}
+
+По конвенция пропускаме стрелките по транзитивност.
+\include{notes/representations/representations-comparison-figure}
+
+\include{notes/representations/representations-propositions}
